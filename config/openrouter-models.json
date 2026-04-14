@@ -1,0 +1,57 @@
+{
+  "providers": {
+    "openrouter": {
+      "enabled": true,
+      "apiKey": "${OPENROUTER_API_KEY}",
+      "models": [
+        {
+          "id": "openrouter/auto",
+          "name": "OpenRouter Auto",
+          "description": "Automatically selects cheapest model based on prompt complexity",
+          "costPerMillionInputTokens": 0.1,
+          "costPerMillionOutputTokens": 0.3,
+          "tier": "auto",
+          "useCase": "ALL - Default for cost optimization"
+        },
+        {
+          "id": "openrouter/google/gemini-2.5-flash-lite",
+          "name": "Gemini 2.5 Flash Lite",
+          "description": "Fast, cheap model for simple tasks",
+          "costPerMillionInputTokens": 0.075,
+          "costPerMillionOutputTokens": 0.3,
+          "tier": "tier1",
+          "useCase": "Research, summaries, simple queries"
+        },
+        {
+          "id": "openrouter/deepseek/deepseek-chat-v3.1",
+          "name": "Deepseek V3.1",
+          "description": "Balanced performance and cost",
+          "costPerMillionInputTokens": 0.27,
+          "costPerMillionOutputTokens": 1.1,
+          "tier": "tier2",
+          "useCase": "General tasks, moderate reasoning"
+        },
+        {
+          "id": "openrouter/anthropic/claude-sonnet-4.5",
+          "name": "Claude Sonnet 4.5",
+          "description": "Balanced, reliable Claude model",
+          "costPerMillionInputTokens": 3,
+          "costPerMillionOutputTokens": 15,
+          "tier": "tier3",
+          "useCase": "Complex reasoning, multi-step tasks"
+        },
+        {
+          "id": "openrouter/anthropic/claude-opus-4-6",
+          "name": "Claude Opus 4.6",
+          "description": "Most powerful, most expensive",
+          "costPerMillionInputTokens": 5,
+          "costPerMillionOutputTokens": 25,
+          "tier": "premium",
+          "useCase": "ONLY for critical reasoning - reserved use"
+        }
+      ],
+      "defaultModel": "openrouter/auto",
+      "fallbackModel": "openrouter/google/gemini-2.5-flash-lite"
+    }
+  }
+}

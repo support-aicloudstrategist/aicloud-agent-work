@@ -1,0 +1,46 @@
+{
+  "heartbeat": {
+    "enabled": true,
+    "defaultInterval": null,
+    "schedule": [
+      {
+        "name": "morning-check",
+        "time": "09:00",
+        "timezone": "Asia/Calcutta",
+        "description": "Morning email, calendar, notifications check"
+      },
+      {
+        "name": "evening-check",
+        "time": "18:00",
+        "timezone": "Asia/Calcutta",
+        "description": "Evening summary, urgent items check"
+      }
+    ],
+    "optimization": {
+      "model": "openrouter/google/gemini-2.5-flash-lite",
+      "lightContextMode": true,
+      "isolatedSession": true,
+      "maxTokens": 2000,
+      "compactOnCompletion": true,
+      "description": "Lightweight, isolated heartbeats with cheap models only during active hours"
+    },
+    "checks": {
+      "email": {
+        "enabled": true,
+        "rotateWith": ["calendar", "weather"]
+      },
+      "calendar": {
+        "enabled": true,
+        "lookAhead": "48h"
+      },
+      "weather": {
+        "enabled": true,
+        "onlyIfOutdoor": true
+      }
+    },
+    "silentHours": {
+      "start": "21:00",
+      "end": "09:00"
+    }
+  }
+}

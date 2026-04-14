@@ -1,0 +1,46 @@
+{
+  "session": {
+    "contextManagement": {
+      "enabled": true,
+      "maxContextSize": "50k",
+      "autoCompactThreshold": "40k",
+      "compactionStrategy": "summarize",
+      "description": "Automatically compact sessions when context approaches limits"
+    },
+    "tokenLimit": {
+      "maxInputTokens": 50000,
+      "maxOutputTokens": 2000,
+      "enforceLimit": true
+    },
+    "caching": {
+      "enabled": true,
+      "cacheHitThreshold": "80%",
+      "description": "Leverage prompt caching for repeated patterns"
+    },
+    "memory": {
+      "enabled": true,
+      "searchEngine": "qmd",
+      "description": "Use efficient markdown search instead of full-context loading"
+    },
+    "compaction": {
+      "enabled": true,
+      "triggers": [
+        {
+          "name": "time-based",
+          "interval": "12h",
+          "description": "Compact every 12 hours"
+        },
+        {
+          "name": "size-based",
+          "threshold": "40k",
+          "description": "Compact when context reaches 40k tokens"
+        },
+        {
+          "name": "manual",
+          "command": "compact",
+          "description": "Manual compaction via /compact command"
+        }
+      ]
+    }
+  }
+}

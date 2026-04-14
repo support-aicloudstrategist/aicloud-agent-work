@@ -1,0 +1,34 @@
+{
+  "agents": {
+    "default": {
+      "mainModel": "openrouter/auto",
+      "fallbackModel": "openrouter/google/gemini-2.5-flash-lite",
+      "description": "Auto-routing for cost optimization"
+    },
+    "coding-agent": {
+      "mainModel": "openrouter/anthropic/claude-sonnet-4.5",
+      "fallbackModel": "openrouter/deepseek/deepseek-chat-v3.1",
+      "description": "Complex code generation and debugging"
+    },
+    "research-agent": {
+      "mainModel": "openrouter/google/gemini-2.5-flash-lite",
+      "fallbackModel": "openrouter/deepseek/deepseek-chat-v3.1",
+      "description": "Quick research, summaries, information gathering"
+    },
+    "reasoning-agent": {
+      "mainModel": "openrouter/deepseek/deepseek-chat-v3.1",
+      "fallbackModel": "openrouter/google/gemini-2.5-flash-lite",
+      "description": "Multi-step reasoning, planning"
+    },
+    "mail-agent": {
+      "mainModel": "openrouter/google/gemini-2.5-flash-lite",
+      "fallbackModel": "openrouter/google/gemini-2.5-flash-lite",
+      "description": "Email processing, light NLP tasks"
+    },
+    "critical-tasks": {
+      "mainModel": "openrouter/anthropic/claude-opus-4-6",
+      "fallbackModel": "openrouter/anthropic/claude-sonnet-4.5",
+      "description": "RESERVED - Only for critical reasoning tasks that require maximum performance"
+    }
+  }
+}
