@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 
 # Step 1: Verify configurations
 echo -e "${YELLOW}Step 1: Verifying configuration files...${NC}"
-CONFIG_DIR="config"
+CONFIG_DIR="../config"
 REQUIRED_FILES=(
   "openrouter-models.json"
   "agent-models.json"
