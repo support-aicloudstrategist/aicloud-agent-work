@@ -1,0 +1,161 @@
+0:00 - Intro
+
+I'm going to show you the exact setup I use to run it for dirt cheap. Specific models, the settings, and techniques that can cut your build by up to 95%. You see, OpenClaw has two costs. The hosting, which is the machine that it runs on, and the API cost, which is essentially the fuel. So, every time your agent thinks, replies, or checks your email, it's burning tokens. And most people are putting premium race fuel in a car that they're driving to the grocery store. So if you picked Frontier models like Claude Opus 4.6 as your default, you're going to be paying what 15 bucks per million input tokens for a heartbeat check that a simple 10-cent model could handle. The other killer is context accumulation. Every message you send is going to include all of the previous messages in that chat for that agent. So by message 50, you're paying for the weight of every conversation stacked on top of each other. And this is the single biggest hidden cost that most people don't even know is happening. So let me put some real numbers on this. Reddit is full of people sharing their open claw bills. Unoptimized setups running Opus as the default model. I mean, you're going to be looking at what, $300 to $600 a month. And one person on Reddit even reported $3,600 in a single month spent on API credits. But people running the setup that I'm about to show you probably get that down to $6 to $25 a month. The same tool, the same features, just configured properly. So let me show you how to fix it. Starting with the biggest lever.
+
+0:41 - Two Hidden Cost Drivers
+
+0:46 - which is the machine that it runs on, and the API cost, which is essentially the fuel. So, every time your agent thinks, replies, or checks your email, it's burning tokens. And most people are putting premium race fuel in a car that they're driving to the grocery store. So if you picked Frontier models like Claude Opus 4.6 as your default, you're going to be paying what 15 bucks per million input tokens for a heartbeat check that a simple 10-cent model could handle. The other killer is context accumulation. Every message you send is going to include all of the previous messages in that chat for that agent. So by message 50, you're paying for the weight of every conversation stacked on top of each other. And this is the single biggest hidden cost that most people don't even know is happening.
+
+1:03 - if you picked Frontier models like Claude Opus 4.6 as your default, you're going to be paying what 15 bucks per million input tokens for a heartbeat check that a simple 10-cent model could handle. The other killer is context accumulation. Every message you send is going to include all of the previous messages in that chat for that agent. So by message 50, you're paying for the weight of every conversation stacked on top of each other. And this is the single biggest hidden cost that most people don't even know is happening. So let me put some real numbers on this. Reddit
+
+1:34 - Real Spend Examples
+
+1:37 - is full of people sharing their open claw bills. Unoptimized setups running Opus as the default model. I mean, you're going to be looking at what, $300 to $600 a month. And one person on Reddit even reported $3,600 in a single month spent on API credits. But people running the setup that I'm about to show you probably get that down to $6 to $25 a month. The same tool, the same features, just configured properly. So let me show you how to fix it. Starting with the biggest lever.
+
+1:57 - I'm about to show you probably get that down to $6 to $25 a month. The same tool, the same features, just configured properly. So let me show you how to fix it. Starting with the biggest lever. Okay,
+
+2:09 - Install OpenRouter Models
+
+2:10 - so first thing we're going to do is install Open Router. There is no point in using Opus 4.6 for absolutely every single action inside of OpenCore. So I'm going to open up my OpenCore instance. I do use Hostinger. This is a a VPS with a Docker deployment. Uh it's a super easy one-click deployment and I can just simply open this uh enter in my gateway token. Boom. I'm going to be logged in. Now, I'm going to assume that you've already got Open Core set up and running on your computer. Now, if you don't, I've put a full video on my YouTube channel. It's going to be
+
+2:49 - linked in the description of not just how you set up OpenCore, but how you set it up securely. Now, my choice is using a VPS. And you can install it on your computer or VPS. Either way, you do need to go through the security process uh to kind of harden the access because you know that's one of the risks of using openclaw. Okay, so I'm going to assume that you've already got this set up and you're already connected with like a basic install with Telegram connected. Okay, so we're going to head over to Telegram and we're going to start chatting to OpenClaw to get it to
+
+3:24 - install everything that we need it to do to reduce the token usage. If we take a look at Open Router, we can find out some of these models and how much they're typically going to cost, right? So, one of the most recent models that is super cost effective is the Miniax M2.7. So, we're probably going to hook that up. Deepseek V3.2 is a good one. Which other one did I want to take? There's a there's a Kimmy Kimmy model. I think it's 2.5. Yeah, 2.5. So, we can add any model that we want
+
+3:54 - here from Open Router. And if you just take a look at Anthropic Opus 4.6, you can see it's $5 per million input tokens and $25 per million output tokens, which is considerably more expensive than, let's say, Miniax, which is 30 per million input tokens and $120 per million output tokens. So that's a 10x difference. So we're in Telegram and I'm going to ask my bot, this is just a fresh install for me. I'm going to ask my bot to set up Open Router. Hey, can you help me set up Open Routter? I'm going to drop my API key below. Um I want to be able to configure different models
+
+4:31 - um so that we can reduce the the cost of uh using open claw. Okay, so it's working on configuring open router. Now I know that putting your API key in this chat is not the most optimal solution, but because of the security protocol that I've got set up, I I'm not worrying about it. And in any case, I can go ahead and just delete that message after it's set this whole thing up. So, what I'm going to do is I'm actually going to get the model names of the models that I want it to specifically add to my open router, uh, sorry, my open claw instance. So, I'm just going to copy
+
+5:01 - the Miniax. We're going to go for deepseek and then we're going to go for, uh, let's do Kimmy. So, it's just setting all of this up for me and I'll be back when we're up and running. Okay, so that's completed. Just took maybe a minute or so. It's added these default models. So let's just
+
+5:21 - check if we can actually take a look at the models that it's we've got here. I think it's maybe models. Okay, so it's brought back the providers. So if you click open router, you can see we've now got access to these three models. So the first way you're going to be able to reduce your cost
+
+5:33 - Manual Model Switching
+
+5:36 - is by manually switching to one of these three models. So I'm going to select the MMAX M2.7. This model will be used for next message. Let's just check which model are you using right now. Okay, so it's saying that it needs me to adjust the think which is bizarre. So let's stick this
+
+5:55 - at medium and then ask the question again. Okay, you can see it's using miniax M2.7. Excellent. So there is another level that we can go here. Open router has an auto feature.
+
+6:05 - Auto Routing Setup
+
+6:08 - So we can route prompts to open router and it'll automatically determine which model to use based on the complexity of the prompt and the type of tasks that you're asking open core to do inside of the prompt. So whether it's a coding task, it's going to select a better model for that. Or
+
+6:25 - if it's just a really simple request, we're going to go for something that's super cheap. So let me show you how to set this up. Let's ask OpenClaw to set this up for us. Hey, can you set up the open router auto mode? So that when a prompt comes into open claw it then there is a mode in open
+
+6:44 - router called alo that will allow open router to select the model based on the complexity of the prompt. Can you help set this up? So you can see here in the documentation in open router which uh I can put a link to below as well. It's just in the docs you can google this or whatever. You can
+
+6:56 - see using auto mode for cost optimization. So, Open Core agents perform many different types of actions from simple heartbeat processing to complex reasoning tasks. And the whole point of
+
+7:11 - this video is the fact that you don't need to use a powerful model for every action because it's just going to waste money on tasks that don't require these advanced capabilities. So, the open router auto model, which automatically selects the most cost effective model based on your prompt,
+
+7:25 - is ideal for OpenClaw, right? So, it's already in the docs. That's kind of that's how I found it. Um, so let's see if openclaw is going to detect that. Cool. So you can see here got everything I need. Adding open router auto now. So this is basically another model essentially. You can see
+
+7:43 - how it says open router/ miniax. We've got open router/auto. And now it's telling us exactly what it does. So now open router auto is the new default. So whenever we put in a prompt, it's going to automatically reroot that to the most cost effective model. Sounds pretty cool, right?
+
+8:02 - So there are some other things that we can do and to reduce the cost even further. But before we
+
+8:07 - Sponsor VPS Option
+
+8:08 - get into that next step, I want to tell you about today's sponsor of this video, which is Hostinger, who I've worked with for quite a while now, and I use their VPS for anything that I want to run
+
+8:19 - in the cloud, including OpenCore. and they've just released a managed version of OpenCore which takes away all of the headache of setting up OpenCore on a VPS and having to go through the whole security
+
+8:30 - procedure which I've detailed in one of my videos. So instead you get an instant setup. It's like a one-click install, zero maintenance. So you've got all your security handled, your updates, your
+
+8:42 - backups, and your agents are going to run 24/7. Right? If you had this installed on your computer, your agent is only going to run when your computer is awake and open and online, right? And there's a
+
+8:54 - ton of built-in tools, different AI models, web browsing, agentic mailbox already built in with your open core instance, right? So, I think this is one of the easiest ways to get into
+
+9:13 - open core. And yeah, you're not going to have to spend $600, $800 on a brand new Mac Mini. This is going to cost you literally $6 or $9 a month and I'm going to give you an extra 10% off. There's
+
+9:28 - going to be a discount code and a link below in the description if you want to sign up. Now, these are obviously two different options. One's a managed Open Core instance. Another one is a
+
+9:43 - OpenCore on a VPS, right? So, if you were to choose the manage plan, you know, for 2 years, you're looking at 150 bucks, right? And this includes some additional extras here, which you
+
+9:54 - don't have to opt for, but you can if you want. And obviously you can go for a smaller plan as well. It's totally up to you, but it's going to be way more cost effective than buying a Mac Mini and
+
+10:09 - doing that whole setup over there. And the setup is just super easy. Oneclick install. You choose where you like to chat. So whether it's Telegram or WhatsApp, and then it's basically ready to use.
+
+10:21 - see what all the hype is about, then this is going to be the quickest way to get rolling. So, anyway, with that being said, let's get back into the rest of these steps. Okay. So, what I want to do next,
+
+10:29 - Optimize Heartbeats Cheaply
+
+10:31 - if you've got any heartbeats running, we need to optimize the model that we're using for the heartbeat and a few other things. So, first of all, I'm going to ask, do we have any
+
+10:46 - heartbeat? Do we have any heartbeats running? And if not, can we just set one up real quick? Okay, so I've just set up a heartbeat. Now, we're going to optimize this and make sure that we can reduce
+
+11:01 - the token usage for every heartbeat. Now, it's giving me every 30 minutes, which I think is not really necessary. So that's something that you have to consider on on your own. How often
+
+11:21 - do you want the heartbeat to run? And what's like the minimum viable? Is daily okay or like twice a day? For this context, I'm going to go for twice a day. Can you set the heartbeat just to run at
+
+11:35 - not, then you can definitely tell it to incorporate that as well. Can you make sure light context mode is on? We also want to set the isolated session to true. And then we want to set the active hours.
+
+11:48 - Now in this case I've told it to run at 9:00 a.m. and 6:00 p.m. which is going to be the time I'm going to be active. But set active hours so it only runs hobbies while you're actually awake. So
+
+11:58 - I'm awake 9:00 a.m. to 900 p.m. Boom. Okay. So you can see here hobby is running on an interval, not a clock. So it's taken the prompt that I've given it and it's created two cron jobs instead. This
+
+12:14 - could be definitely an option for you if you don't want to run something every 30 minutes or every hour and you just want to run it at a certain time every day. then setting up a chronoprop is
+
+12:28 - going to be way more efficient. Now, it's still going to load the context from the heartbeat MD, but it's going to run it at specific times every day instead of on an interval. That makes sense.
+
+12:41 - Compact Sessions Limit Tokens
+
+12:45 - And compacting your sessions before continuing. Now, if you're just going to use this one chat window here in Telegram, then it's going to be important for you to at the end of a session say,
+
+13:04 - we want to make open claw save any important stuff that we've had in this conversation so far before we end up compacting the session, right? And if we use the command compact,
+
+13:21 - the entire context through every single time. Does that make sense? So the longer your conversation, you're sending you're basically having the AI like read the entire conversation every time
+
+13:33 - you're sending a message, which is basically going to take up too much tokens. Cool. So we're going to run the compact command here. And now it's going to compact the entire context.
+
+13:48 - Now this isn't hasn't been a long chat. This is fresh and it's also just a fresh install. So there's not a lot really going on in this instance. But if you did spend like half a day,
+
+14:02 - a full day going backwards and forwards, this is something that you would absolutely need to do. And whether you pull stuff into an memory MD file or whether you update your identity or your soul,
+
+14:17 - these are all things that is worth considering. Now, I do have a memory system that we're going to get on to in just a second. There is something else that you can ask your open core instance to
+
+14:33 - do. You can come in here and set max token so you don't load of runaway responses. So that's what we're going to do here. here. And you can see, look, it's compacted from 55K to 23K. Okay,
+
+14:48 - going to rain in the length of the responses that you get back. So, your output tokens. Okay. The
+
+14:53 - QMD Search Memory Tool
+
+14:54 - next thing is QMD, which is quick markdown search. This is the GitHub repo here. What I'm going to do is just ask OpenC to install this. Hey, can you install QMD from this GitHub repo? And let's see
+
+15:16 - if it's going to be able to execute on this. So, it's gone ahead and installed QMD, which is basically a local search engine for markdown notes. It turns your markdown notes into like
+
+15:34 - that's not you probably just enter those. So, you could use these as search commands. Now, one thing that I did see in the GitHub repo was to add the agent integrations. So, I'm just going to pop that
+
+15:46 - into Telegram. Hey, can you double check this? You need to add it to the agents.md file. So I should have mentioned that earlier, but it should figure out what it's doing. So it's just going to
+
+16:04 - add this to the agents.mmd file. So it knows to check the QMD search whenever you're maybe asking for something. So the reason why QMD is useful is once you start building up a large range of files,
+
+16:16 - different markdown files, then it's going to take up more tokens to search through those files. So, this is a search method that's going to take much less tokens if you're wanting to reference
+
+16:31 - the memory search tool. Okay, it looks like that that's not functioning. We can go in and fix that if we need to. Let's go with option two. So, you can see we've added that to the agents.md file. So
+
+16:43 - before answering any anything about prior work and decisions, dates, people, preferences or to-dos, it's going to run the QMD search. Uh it's going to run a query. Cool. So that's going to reduce a
+
+16:53 - lot of token usage when it comes to searching for files. Cool. So that is everything. So the keys
+
+16:56 - Recap 95 Percent Savings
+
+16:60 - from this video to install open router to select the heartbeat model as a really cheap model. I'm using open router also to autoroot my prompts to the the cheapest and most cost effective models
+
+17:15 - that are available. Now you may find that you're not getting the performance you want from that so that you can select your models manually and you can also select them for each of the agents
+
+17:32 - that you build as well. So you might have one agent that is specifically for coding and you give them the opus 4.6 model, right? But another model might be on research where you use Kimmy K
+
+17:49 - 2.5. So you can choose whether you want to go the auto route or the manual route. And then we've got the QMD search which is another big part of this process and you should be able to reduce
+
+18:04 - your cost down by 90-95%. In any case, one of the best ways to reduce your cost is to use a VPS. I use Hostinger like I mentioned in this video. You can grab their managed OpenClaw instance for just
+
+18:21 - n8n Mentorship
+
+18:24 - hundreds of dollars a week on Open Core and you're not building anything that either saves you money or makes you more money, then what are you really doing? The people who are actually winning with
+
+18:39 - AI automation are the ones who learn to build these workflows to solve expensive problems. And that's what I teach inside of my AI operator mentorship program. It's 16 weeks and you learn
+
+18:54 - tools like n8n, Claude Code and you learn to think in systems and build production-ready automations that actually work. So, if you are interested in learning more about it, you can click the
+
+19:01 - first link in the description. All right, guys. Thanks for watching. I'll see you in the next one.
