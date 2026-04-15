@@ -2,7 +2,7 @@
 
 A practical 30-item checklist used in real engagements. Most Indian SMBs running AWS find 20–30% savings within the first month by working through these. No tool subscriptions required — every check below uses the AWS Console, AWS CLI, or open-source tooling.
 
-> Built and maintained by [AICloudStrategist](https://aicloudstrategist.com) · Rajiv, Senior Cloud Architect (22 years) · support@aicloudstrategist.com
+> Built and maintained by [AICloudStrategist](https://aicloudstrategist.com) · Founder-led. Enterprise-reviewed. · support@aicloudstrategist.com
 
 ---
 
@@ -92,5 +92,5 @@ If you want help making this a habit instead of a one-off:
 **[Book a free 30-min Cloud Cost Health Check →](https://aicloudstrategist.com/book.html)**
 30 minutes. Free. You leave with the top 3 things to fix this week, even if we never work together.
 
-— Rajiv
+— Anushka B, Founder · AICloudStrategist
 [support@aicloudstrategist.com](mailto:support@aicloudstrategist.com)

@@ -27,7 +27,7 @@ n8n v2.15 HTTPRequest node V4.2 evaluates `jsonBody` expressions differently whe
 
 ## Fix path
 
-Have someone (Rajiv or Comet) open each of the 3 workflows in the n8n UI:
+Have someone (Anushka or Comet) open each of the 3 workflows in the n8n UI:
 1. Go to https://n8n-solq.srv1562252.hstgr.cloud
 2. Open `01_LeadScout`
 3. Click the **Ask Mao (enrich + score)** node → **Body** tab → toggle **Send Body** off then on → select **"JSON"** and paste this for the Body Parameters (keypair style):

@@ -1,69 +1,55 @@
-# aicloud-agent-work
+# aicloud-foundation
 
-Source of truth for Rajiv's AICloudStrategist stack — website, AI agent fabric, outreach automation, lead magnets, business plan.
+Source of truth for the AICloudStrategist business — Anushka B's cloud consulting practice. Founder-led. Enterprise-reviewed.
 
-Owner: Rajiv (support@aicloudstrategist.com) · Delhi/NCR · Founded April 2026.
+This folder is the **local dev mirror** of the GitHub repo at
+https://github.com/support-aicloudstrategist/aicloud-agent-work.
 
 ## Layout
 
 ```
-aicloud-agent-work/
-├── apps/                      ← per-container source + docs
+aicloud-foundation/
+├── apps/                      per-container source + configs
 │   ├── claude-mao/            Claude Code CLI + HTTP shim (the brain)
 │   ├── tg-bot/                Lightweight Telegram front door
-│   ├── n8n/                   Workflow exports (LeadScout, ContentDraft, InvoiceBot)
-│   ├── openclaw/              Legacy runtime (stopped; kept for git workspace only)
-│   └── paperclip/             Reserved for when orchestration is needed
-├── web/                       The live site (served at aicloudstrategist.com)
-├── lead-magnets/              PDFs + markdown sources
-├── docs/                      Business plan, launch plans, session logs
-└── sessions/                  Conversation transcripts (Claude Code work logs)
+│   ├── git-ops/               Tiny git-ops container (replaces openclaw)
+│   ├── n8n/                   Workflow exports + patch scripts
+│   ├── openclaw-skills/       Legacy (reference only)
+│   ├── health-check/          Cloud Cost Health Check prompt + samples
+│   └── outreach/              Outreach playbook (LinkedIn, email, posts)
+├── web/                       Live website (deployed to aicloudstrategist.com)
+├── lead-magnets/              Public downloadable PDFs
+├── docs/                      Business plans, strategic docs
+├── sessions/                  Work-log transcripts
+└── archive/                   Older material kept for reference
 ```
 
-## How the stack connects
+## Related but separate
 
-```
-You (Telegram)
-    ↓
-tg-bot (container, on `ai-ops` Docker net)
-    ↓ HTTP POST + bearer token
-claude-mao shim :8080
-    ↓ spawns
-claude -p --resume <session> --permission-mode bypassPermissions
-    ↓ uses
-WebSearch, WebFetch, Bash, Read/Write/Edit, Glob, Grep, TodoWrite, docker-safe
-    ↓
-Response → tg-bot → Telegram → You
-```
+- `d:/dockers/hostinger/` — the VPS docker-compose files + backup archives for ALL containers running on the Hostinger VPS (plausible, n8n, traefik, webtop, etc.). This is infrastructure, not business source. Not part of this folder.
 
-All three containers (tg-bot, claude-mao, n8n) sit on a shared Docker network `ai-ops` so they can reach each other by name.
+## How to deploy
 
-## Cost model (April 2026)
+Each `apps/<name>/` folder has its own README with deploy commands. In practice, changes flow:
+
+1. Edit locally in `d:/aicloud-foundation/apps/<name>/`
+2. Upload to VPS at `/docker/<name>/`
+3. `docker compose up -d --build` for that service
+
+## Cost model (Apr 2026)
 
 | Line item | Monthly |
 |---|---|
 | Hostinger VPS | ₹522 |
 | Google Workspace Business Starter (1 user) | ₹177 |
-| Claude Max 20x subscription (already paying) | $200 |
-| OpenRouter (not in active use; top up if needed) | ₹0 |
-| **New spend on top of Max sub** | **~₹700/mo** |
+| Claude Max 20x subscription | $200 |
+| OpenRouter (not in active use) | ₹0 |
+| **New incremental spend** | **~₹700/mo** |
 
-## Key live endpoints
+## Live endpoints
 
 - Website: https://aicloudstrategist.com
 - Booking: https://aicloudstrategist.com/book.html (Calendly inline)
-- n8n UI: https://n8n-solq.srv1562252.hstgr.cloud
-- Paperclip UI: https://paperclip-1jd6.srv1562252.hstgr.cloud (not in active use)
-- Telegram bot: @bill_15_bot (tg-bot container)
-
-## Getting started in a new Claude Code session
-
-1. Skim `docs/` for the launch plan context
-2. Skim `sessions/` for the latest conversation transcript
-3. Check `apps/*/README.md` for each component
-
-SSH to VPS:
-```
-plink -ssh -batch -pw '<password>' root@62.72.59.122
-# creds in memory file: reference_vps_hostinger.md
-```
+- Telegram bot: @bill_15_bot
+- n8n: https://n8n-solq.srv1562252.hstgr.cloud (internal)
+- Paperclip: https://paperclip-1jd6.srv1562252.hstgr.cloud (reserved, not in use)

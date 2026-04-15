@@ -1,24 +1,28 @@
-# AICloudStrategist — Outreach Playbook v1.1
+# AICloudStrategist — Outreach Playbook v2.0
+
+**Voice:** Anushka B, Founder. 7+ years DevOps / Cloud / Automation. Tagline: **Founder-led. Enterprise-reviewed.** When depth is relevant, reference "senior-architect oversight — 22+ years of Fortune 500 and global-consulting weight in every review." Never claim the 22 years as personal tenure.
 
 ---
 
-## 1. Warm-Network WhatsApp Voice-Note Script
+## 1. Warm-Network WhatsApp / LinkedIn Opener
 
-### Spoken Script (~60 seconds)
+### Spoken Script (~60 seconds, for people Anushka has worked with in the last 7 years)
 
-> "Hey [Name] — Rajiv here. We worked together back in [2018 / at our old firm / on the [ClientX] engagement] — must be [X] years now. Hope you're doing well, and the family too.
+> "Hey [Name] — Anushka here. We worked together back at [company / on the [ClientX] project] — hope you're doing well.
 >
-> Quick update from my side: after 22 years with Fortune 500 systems integrators and global consulting firms, I've just started my own cloud cost consultancy — AICloudStrategist. The focus is helping Indian companies cut their AWS, Azure, or GCP bills by 20 to 30 percent in about four weeks. FinOps practices, open source tooling — proper analysis, measurable savings.
+> Quick update: I've just launched my own cloud cost consultancy — AICloudStrategist. The focus is helping Indian companies cut their AWS, Azure, or GCP bills by 20 to 30 percent in about four weeks. FinOps practices, open source tooling, measurable savings.
+>
+> The way we've built it: founder-led delivery paired with senior-architect oversight — 22+ years of Fortune 500 and global-consulting weight reviews every engagement. That enterprise-grade review layer is the piece smaller consultancies usually skip.
 >
 > I'm offering a free 30-minute Cloud Cost Health Check right now — no pitch, just a clear look at where the spend is going. If you or anyone in your network is spending a few lakhs a month on cloud, I'd genuinely like to help.
 >
-> Drop me a message when you get a moment. And let's catch up properly regardless — it's been too long."
+> Drop me a message when you get a moment."
 
-### Written Fallback (when voice note is not possible)
+### Written Fallback
 
-"Hey [Name] — Rajiv here, we worked together back in [year / at the old place]. Just launched AICloudStrategist — helping Indian companies cut cloud bills 20-30% in 4 weeks using FinOps, and I'm offering a free 30-min Cloud Cost Health Check right now with no strings attached.
+"Hey [Name] — Anushka here. We worked together at [place]. Just launched AICloudStrategist — helping Indian companies cut cloud bills 20-30% in 4 weeks. Founder-led delivery with senior-architect oversight on every review. Free 30-min Cloud Cost Health Check on right now, no strings.
 
-If you or anyone in your network is spending a few lakhs a month on cloud and wants a second opinion on the bill, I'd genuinely like to help. Good to reconnect."
+If you or anyone in your network is spending a few lakhs a month on cloud and wants a second opinion, happy to help. Good to reconnect."
 
 ---
 
@@ -28,9 +32,9 @@ If you or anyone in your network is spending a few lakhs a month on cloud and wa
 
 *(LinkedIn cap ~300 characters)*
 
-Hi [Name] — we worked together some years back. I've just launched AICloudStrategist, helping Indian SMBs cut cloud costs 20-30% in 4 weeks using FinOps. Would be good to reconnect. — Rajiv
+Hi [Name] — I'm Anushka, founder of AICloudStrategist. We help Indian SMBs cut cloud bills 20-30% in 4 weeks. Founder-led. Enterprise-reviewed. Would be good to connect. — Anushka
 
-*(~192 characters)*
+*(~210 characters)*
 
 ---
 
@@ -40,21 +44,21 @@ Thanks for connecting, [Name].
 
 I put together an AWS Cost Optimisation Checklist — 30 common leak points that come up repeatedly in mid-size cloud setups. No form, just the PDF: aicloudstrategist.com/downloads/aws-cost-cutting-checklist-indian-smbs.pdf.
 
-If your team is on AWS and the bill has been creeping up, it may flag a few quick wins. Happy to talk through anything on it.
+If your team is on AWS and the bill has been creeping up, it may flag a few quick wins. Happy to walk through any of it.
 
-*(~59 words)*
+*(~60 words)*
 
 ---
 
 ### Message 2 — Day 5
 
-[Name], one number worth knowing: the average Reserved Instance coverage ratio in accounts I review is 34%. For stable workloads, it should be above 70%.
+[Name], one number worth knowing: the average Reserved Instance coverage ratio in accounts we review is 34%. For stable workloads, it should be above 70%.
 
 That gap alone typically represents 15-20% in avoidable spend — no re-architecture required.
 
-If cloud costs are on your radar, I offer a free 30-minute Health Check — structured, no sales process. Details: aicloudstrategist.com/book.html.
+If cloud costs are on your radar, we offer a free 30-minute Health Check — structured, no sales process. Details: aicloudstrategist.com/book.html.
 
-*(~63 words)*
+*(~64 words)*
 
 ---
 
@@ -62,11 +66,11 @@ If cloud costs are on your radar, I offer a free 30-minute Health Check — stru
 
 [Name] — the FinOps Maturity Self-Assessment on aicloudstrategist.com/downloads might be worth 10 minutes.
 
-It maps 4 stages of cloud financial management with specific indicators for each. Most mid-market companies I speak to are at Stage 1 and are unaware of it.
+It maps 4 stages of cloud financial management with specific indicators for each. Most mid-market companies we speak to are at Stage 1 and are unaware of it.
 
 The document gives you a baseline — no call required. If it raises questions, I'm easy to reach.
 
-*(~57 words)*
+*(~58 words)*
 
 ---
 
@@ -76,7 +80,7 @@ The document gives you a baseline — no call required. If it raises questions, 
 
 If cloud cost work becomes relevant down the line, I'm at support@aicloudstrategist.com. The free 30-min Health Check and both downloads remain available at aicloudstrategist.com whenever useful.
 
-Wishing you well. — Rajiv
+Wishing you well. — Anushka
 
 *(~48 words)*
 
@@ -94,19 +98,19 @@ Wishing you well. — Rajiv
 
 Hi [First Name],
 
-My name is Rajiv — I run AICloudStrategist, a cloud cost consultancy based in Rohini, Delhi.
+My name is Anushka — I'm the founder of AICloudStrategist, a cloud cost consultancy based in Delhi.
 
 Most Indian companies spending INR 5L+ a month on AWS, Azure, or GCP have 15-30% in avoidable spend. Not from re-architecture — from Reserved Instance gaps, idle compute, and storage that hasn't been reviewed since the original setup.
 
-I offer a free 30-minute Cloud Cost Health Check: a structured look at where the spend is going, no sales process.
+We offer a free 30-minute Cloud Cost Health Check: a structured look at where the spend is going, no sales process. Every engagement pairs founder delivery with senior-architect oversight — 22+ years of Fortune 500 and global-consulting weight in every review. Founder-level responsiveness, enterprise-grade rigour.
 
 Worth a quick conversation?
 
-Rajiv
-AICloudStrategist | aicloudstrategist.com
+Anushka B
+Founder, AICloudStrategist | aicloudstrategist.com
 Rohini, Delhi 110085
 
-*To stop receiving emails from me, reply "unsubscribe."*
+*To stop receiving emails from us, reply "unsubscribe."*
 
 ---
 
@@ -118,17 +122,17 @@ Hi [First Name],
 
 A brief follow-up to my earlier note.
 
-One pattern I see often: companies that moved to cloud during 2020-2022 under pressure and haven't revisited the cost baseline since. The architecture made sense then. Three years of unreviewed auto-scaling and provisioning later, the picture looks different.
+One pattern we see often: companies that moved to cloud during 2020-2022 under pressure and haven't revisited the cost baseline since. The architecture made sense then. Three years of unreviewed auto-scaling and provisioning later, the picture looks different.
 
 A recent engagement took a company from INR 18L to INR 11L per month — same workloads, no re-architecture, four weeks.
 
 Happy to send the FinOps Maturity Assessment if it's useful.
 
-Rajiv
-AICloudStrategist | aicloudstrategist.com
+Anushka B
+Founder, AICloudStrategist | aicloudstrategist.com
 Rohini, Delhi 110085
 
-*To stop receiving emails from me, reply "unsubscribe."*
+*To stop receiving emails from us, reply "unsubscribe."*
 
 ---
 
@@ -146,11 +150,11 @@ The AWS Cost Optimisation Checklist is at aicloudstrategist.com/downloads — fr
 
 Wishing you a good quarter.
 
-Rajiv
-AICloudStrategist | aicloudstrategist.com
+Anushka B
+Founder, AICloudStrategist | aicloudstrategist.com
 Rohini, Delhi 110085
 
-*To stop receiving emails from me, reply "unsubscribe."*
+*To stop receiving emails from us, reply "unsubscribe."*
 
 ---
 
@@ -172,7 +176,7 @@ The remediation took one senior engineer and four weeks. The tooling was Infraco
 
 The CFO had been asking about cloud costs for 18 months. The answer was sitting in Cost Explorer the whole time.
 
-This is the kind of work AICloudStrategist does. If your cloud bill has grown faster than your business and no one's done a structured review — I'd like to take a look. Free 30-min Cloud Cost Health Check, details in bio.
+This is the kind of work AICloudStrategist does. Founder-led. Enterprise-reviewed. If your cloud bill has grown faster than your business and no one's done a structured review — we'd like to take a look. Free 30-min Cloud Cost Health Check, details in bio.
 
 ---
 
@@ -196,27 +200,31 @@ Want help running this across your account? Free 30-min Cloud Cost Health Check 
 
 Indian cloud spending crossed $15 billion in 2024. A significant share of that growth came from companies that were not structured to manage cloud finances at scale.
 
-What I see in conversations across NCR mid-market companies: teams that adopted cloud fast during 2020-2022 are now 3-4 years into architectures that were built for speed, not cost efficiency. No one reviewed the baseline. The bill grew with the business, so it looked normal.
+What we see in conversations across NCR mid-market companies: teams that adopted cloud fast during 2020-2022 are now 3-4 years into architectures that were built for speed, not cost efficiency. No one reviewed the baseline. The bill grew with the business, so it looked normal.
 
 Egress charges, orphaned snapshots, over-provisioned RDS instances — these do not appear as a flagged line item in a quarterly review. They compound quietly. INR 2-3L a month in avoidable spend is not unusual for a 100-person company running a reasonable cloud workload.
 
 The companies getting ahead of this are the ones asking the cost question before the CFO does.
 
-I started AICloudStrategist because I have seen this pattern too many times, and the savings are repeatable once someone actually looks. If this resonates, share it with your CTO or drop me a message.
+I started AICloudStrategist because this pattern repeats everywhere, and the savings are repeatable once someone actually looks — with the right senior-architect review in place. If this resonates, share it with your CTO or drop me a message.
 
 ---
 
 ### Post D — Personal / Why I'm Doing This
 
-After 22 years across Fortune 500 systems integrators and global consulting firms, I have started something of my own.
+After 7+ years in DevOps, cloud engineering, and automation — working across startups and enterprise environments — I've started something of my own.
 
-Not because the work inside large organisations wasn't good — it was. But most of the cloud cost analysis I did, the reviews that saved companies INR 30-50L a year, stayed inside those walls. The mid-market founders and CFOs running INR 5-20L per month cloud bills did not get a senior architect's time. They got a vendor call and a proposal.
+Through those years, one pattern showed up everywhere: the mid-market Indian founder or CFO running an INR 5–20L per month cloud bill rarely gets senior-architect attention. They get a vendor call and a proposal.
 
-AICloudStrategist is one practitioner, direct engagement, and a clear outcome: 20-30% reduction in cloud spend within four weeks. No junior teams handling the actual analysis, no offshore hand-offs, no 20-page readout that no one acts on. Based in Rohini Delhi, working with Indian SMBs and mid-market companies on AWS, Azure, and GCP.
+AICloudStrategist is built to close that gap. Founder-led delivery, direct engagement, and a clear outcome: 20–30% reduction in cloud spend within four weeks. No junior teams handling the actual analysis, no offshore hand-offs, no 20-page readout that no one acts on. And crucially — every engagement carries senior-architect oversight: 22+ years of Fortune 500 and global-consulting weight reviewing every call. **Founder-led. Enterprise-reviewed.**
+
+Based in Rohini Delhi, working with Indian SMBs and mid-market companies on AWS, Azure, and GCP.
 
 April 2026 is the start. The first offer is a free 30-minute Cloud Cost Health Check — a structured look at your setup, no sales process.
 
 If you are spending INR 5L or more a month on cloud and have not had a proper cost review, link is in bio.
+
+— Anushka B, Founder
 
 ---
 
@@ -224,7 +232,7 @@ If you are spending INR 5L or more a month on cloud and have not had a proper co
 
 | Reply Type | Example Phrases | Immediate Next Action |
 |---|---|---|
-| **Ready to schedule** | "Yes, let's connect." / "Set up a call." / "When are you free?" | Reply within 2 hours. Send Calendly link for the 30-min Health Check (aicloudstrategist.com/book.html). Add one sentence on the call format: "We'll pull up Cost Explorer together, I'll identify 3-5 specific areas to investigate, and you'll get a written summary by end of day." |
+| **Ready to schedule** | "Yes, let's connect." / "Set up a call." / "When are you free?" | Reply within 2 hours. Send Calendly link for the 30-min Health Check (aicloudstrategist.com/book.html). Add one sentence on the call format: "We'll pull up Cost Explorer together, identify 3-5 specific areas to investigate, and you'll get a written summary by end of day." |
 | **Soft interest / more info** | "Tell me more." / "Send the checklist." / "What does the Health Check cover?" | Send the relevant PDF link (aicloudstrategist.com/downloads) immediately. Follow with one short paragraph describing the Health Check format. Close with: "Happy to walk through it in 30 minutes, no obligation." Include Calendly link at the bottom. |
 | **Deferred / not now** | "We've sorted this." / "Budget is locked." / "Reach me in Q3." | Acknowledge without pushing. Log a follow-up date in Notion (60-90 days out). Reply: "Understood — I'll check back in [specific month]. Sending the checklist in the meantime, it may be a useful reference when you revisit." Do not contact again before the noted date. |
 

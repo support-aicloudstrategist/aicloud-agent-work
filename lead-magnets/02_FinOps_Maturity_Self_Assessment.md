@@ -2,7 +2,7 @@
 
 A 10-question diagnostic to map where your cloud cost practice stands today — and what it would take to get to the next level. Based on the FinOps Foundation's Crawl / Walk / Run framework, adapted for Indian SMBs and mid-market teams.
 
-> Built and maintained by [AICloudStrategist](https://aicloudstrategist.com) · Rajiv, Senior Cloud Architect (22 years) · support@aicloudstrategist.com
+> Built and maintained by [AICloudStrategist](https://aicloudstrategist.com) · Founder-led. Enterprise-reviewed. · support@aicloudstrategist.com
 
 ---
 
@@ -132,5 +132,5 @@ Bring your assessment score and a recent CUR sample. We'll spend 30 minutes on t
 
 **[Book your call →](https://aicloudstrategist.com/book.html)**
 
-— Rajiv
+— Anushka B, Founder · AICloudStrategist
 [support@aicloudstrategist.com](mailto:support@aicloudstrategist.com)
