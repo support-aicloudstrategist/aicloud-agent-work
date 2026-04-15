@@ -1,1 +1,73 @@
-/proc/self/fd/0
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proof — AICloudStrategist</title>
+<meta name="description" content="Background, anonymized case studies, and the open-source stack used in every engagement.">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/">AICloudStrategist</a>
+  <nav>
+    <a href="/services.html">Services</a>
+    <a href="/proof.html" class="active">Proof</a>
+    <a href="/book.html">Book a call</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <h1>Proof</h1>
+  <p class="lede">22 years across enterprise IT, cloud, and AI. The stack and approach used in every engagement is open-source — so you can verify, audit, and own what gets deployed.</p>
+</section>
+
+<section class="bio">
+  <h2>About</h2>
+  <p>Senior Solution Architect with 22 years in enterprise IT — Tech Mahindra, IBM, HCL, 3i Infotech (and others) across cloud architecture, FinOps, DevOps, observability, security, and AIOps. Now running AICloudStrategist as a focused practice for SMBs and mid-market teams who can't justify enterprise-grade FinOps tooling but are bleeding 20–30% of their cloud spend.</p>
+  <p>Based in Delhi/NCR, serving India primarily and global engagements on request.</p>
+</section>
+
+<section class="cases">
+  <h2>Anonymized engagements</h2>
+  <p class="lede small">Detail removed; structure and outcomes preserved. Full case studies available under NDA.</p>
+
+  <article>
+    <h3>Case 1 — D2C e-commerce, AWS, ~₹35L/month spend</h3>
+    <p><strong>Findings:</strong> 41% of compute on idle instances after a holiday-traffic-driven scale-up that was never reversed. Storage tier mismatch on S3 (Standard for cold archives). EBS volumes orphaned after EC2 termination.</p>
+    <p><strong>Action:</strong> Right-sized 60% of EC2 fleet, lifecycle policies on S3, cleanup automation for orphaned EBS, RI + SP coverage strategy.</p>
+    <p><strong>Outcome:</strong> Verified ₹9.4L/month savings in 5 weeks. Implemented OpenCost + tagging baseline so engineering team owns ongoing cost.</p>
+  </article>
+
+  <article>
+    <h3>Case 2 — B2B SaaS, multi-region GCP, ~₹18L/month spend</h3>
+    <p><strong>Findings:</strong> GKE node pools provisioned for peak QPS that hit only twice a quarter; cross-region egress for analytics queries that could run in source region; persistent disks unattached for 90+ days.</p>
+    <p><strong>Action:</strong> Cluster autoscaler tuning, regional analytics warehouse, disk reclamation cron, committed-use discounts.</p>
+    <p><strong>Outcome:</strong> 27% cloud-bill reduction sustained for 8+ months. Engineering KPI now includes cost-per-tenant.</p>
+  </article>
+</section>
+
+<section class="stack">
+  <h2>Stack used in engagements</h2>
+  <ul>
+    <li><strong>Cost visibility:</strong> OpenCost (CNCF) + native cloud billing exports (FOCUS-conformant)</li>
+    <li><strong>Pre-deploy guardrails:</strong> Infracost in PR pipelines</li>
+    <li><strong>Observability:</strong> OpenTelemetry + Grafana + Prometheus</li>
+    <li><strong>Security baseline:</strong> CIS Controls v8 mapping, AWS Security Hub / Azure Defender / GCP SCC</li>
+    <li><strong>IaC:</strong> Terraform with module catalog, drift detection</li>
+  </ul>
+</section>
+
+<section class="cta-band">
+  <p>Want to see what your bill is hiding?</p>
+  <a class="cta" href="/book.html">Book a free 30-min check →</a>
+</section>
+
+<footer>
+  <p>AICloudStrategist · Delhi/NCR, India · <a href="mailto:support@aicloudstrategist.com">support@aicloudstrategist.com</a></p>
+  <p class="legal"><a href="/privacy.html">Privacy</a> · <a href="/services.html">Services</a> · <a href="/proof.html">Proof</a></p>
+</footer>
+</main>
+</body>
+</html>
