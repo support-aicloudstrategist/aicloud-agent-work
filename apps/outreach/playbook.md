@@ -212,19 +212,26 @@ I started AICloudStrategist because this pattern repeats everywhere, and the sav
 
 ### Post D — Personal / Why I'm Doing This
 
-After 7+ years in DevOps, cloud engineering, and automation — working across startups and enterprise environments — I've started something of my own.
+Seven years into working across DevOps, cloud engineering, and automation — from early-stage startups to enterprise environments — I kept noticing the same thing.
 
-Through those years, one pattern showed up everywhere: the mid-market Indian founder or CFO running an INR 5–20L per month cloud bill rarely gets senior-architect attention. They get a vendor call and a proposal.
+The Indian mid-market founder or CFO running an INR 5–20L per month cloud bill almost never gets senior-architect attention on the cost side. They get a vendor call. They get a 20-page proposal from a big agency. They get dashboards their engineering team never has time to act on.
 
-AICloudStrategist is built to close that gap. Founder-led delivery, direct engagement, and a clear outcome: 20–30% reduction in cloud spend within four weeks. No junior teams handling the actual analysis, no offshore hand-offs, no 20-page readout that no one acts on. And crucially — every engagement carries senior-architect oversight: 22+ years of Fortune 500 and global-consulting weight reviewing every call. **Founder-led. Enterprise-reviewed.**
+Meanwhile the work that actually moves the number — the structured cost review, the RI portfolio, the storage lifecycle, the region topology — sits inside enterprise consulting practices charging ₹30L engagement fees that no mid-market company can justify.
 
-Based in Rohini Delhi, working with Indian SMBs and mid-market companies on AWS, Azure, and GCP.
+That gap is why AICloudStrategist exists.
 
-April 2026 is the start. The first offer is a free 30-minute Cloud Cost Health Check — a structured look at your setup, no sales process.
+It is a focused practice, not an agency. Founder-led delivery means the person scoping your engagement is the person doing the work and writing the summary. No junior teams. No offshore hand-offs. No staffing churn mid-engagement. Every engagement also carries senior-architect oversight — 22+ years of Fortune 500 systems integrator and global-consulting weight, reviewing the findings before they reach your inbox. Founder-level responsiveness, enterprise-grade rigour. That combination is the whole point.
 
-If you are spending INR 5L or more a month on cloud and have not had a proper cost review, link is in bio.
+The outcome is concrete and fixed-scope: a 20 to 30 percent reduction in verified cloud spend within four weeks. Open-source tooling you own when we leave. INR-first pricing. Transparent gain-share when the savings cross a floor.
 
-— Anushka B, Founder
+We are based in Rohini, Delhi, and we work with Indian SMBs and mid-market companies on AWS, Azure, and GCP.
+
+April 2026 is the start. The first offer is a free 30-minute Cloud Cost Health Check — no sales process, no follow-up sequence, just a written two-page summary of what we would attack first, sent to you by end of the same day.
+
+If you are spending INR 5L or more a month on cloud and nobody has run a structured cost review in the last 12 months, this is probably worth 30 minutes of your time. Link is in bio.
+
+— Anushka B, Founder · AICloudStrategist
+*Founder-led. Enterprise-reviewed.*
 
 ---
 

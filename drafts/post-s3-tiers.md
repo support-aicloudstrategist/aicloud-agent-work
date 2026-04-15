@@ -2,25 +2,33 @@
 
 ---
 
-Most teams have cold data aging quietly in S3 Standard. You're paying Standard prices for objects nobody has touched in six months.
+Your S3 bill has a quiet tax built into it.
 
-In ap-south-1, S3 Standard costs $0.025/GB/month. Glacier Instant Retrieval costs $0.005/GB/month — the same millisecond-latency retrieval, one-fifth the price. On 1 TB of cold objects, that's $20.48/month saved, or ~$246/year, for a one-time lifecycle rule.
+It is the data nobody has touched in six months, still sitting in S3 Standard, still charged at Standard prices. Most teams never notice — the line item is one row in a hundred.
 
-**10-minute check you can run now:**
+Here are the ap-south-1 numbers that matter.
+
+S3 Standard: **$0.025 per GB per month.**
+Glacier Instant Retrieval: **$0.005 per GB per month.**
+
+Same millisecond retrieval. One-fifth the price. One lifecycle rule. Zero code change.
+
+On 1 TB of cold objects that is roughly **₹20,500 saved every year** — for a Friday afternoon of work. On 10 TB it is **₹2 lakh**. And most mid-market AWS accounts we have reviewed carry 5 to 50 TB of cold data in Standard.
+
+**The 10-minute check, run it on your own bucket now:**
 
 ```bash
-# List Standard-class objects last modified before 90 days ago
 aws s3api list-objects-v2 \
   --bucket YOUR_BUCKET \
   --query "Contents[?StorageClass=='STANDARD'].[Key,Size,LastModified]" \
   --output text | awk '$3 < "2026-01-15"' | sort -k2 -rn | head -20
 ```
 
-If that returns hundreds of rows, you have a lifecycle gap.
+If that returns hundreds of rows, you are holding cold data at hot prices. Add an S3 Lifecycle rule: transition anything untouched after 30 days to Glacier Instant Retrieval. Use S3 Storage Lens first if you want per-bucket access patterns before committing.
 
-Fix: add an S3 Lifecycle rule — transition objects with zero GET activity after 30 days to Glacier Instant Retrieval. AWS S3 Storage Lens shows per-bucket access patterns if you want data before committing.
+Cold data in Standard is a tax on inattention. Fix it once. It compounds in your favour from that day on.
 
-Cold data in Standard is a tax on inattention.
+— Anushka B, Founder · AICloudStrategist
+*Founder-led. Enterprise-reviewed.*
 
 ---
-*AICloudStrategist | FinOps for AWS teams*

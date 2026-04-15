@@ -1,15 +1,22 @@
-# GCP Cost Optimisation Checklist for Indian SMBs
-## 25 Common Leak Points — AICloudStrategist
+# The GCP Cost Optimisation Checklist for Indian SMBs
 
-*For engineering and finance teams running workloads on Google Cloud, primarily in asia-south1 (Mumbai). Prices reference asia-south1 on-demand rates as of April 2026.*
+## 25 leak points to fix before your next billing cycle
+
+*Built by AICloudStrategist — founder-led, enterprise-reviewed. Pricing references asia-south1 (Mumbai) on-demand rates, April 2026.*
 
 ---
 
-## How to Use This Checklist
+## Why this document exists
 
-Work through each item. Mark **DONE**, **NOT APPLICABLE**, or **ACTION REQUIRED**. Items marked ACTION REQUIRED with a savings estimate above ₹10,000/month should become Jira tickets before this document is filed.
+Most mid-market Indian companies on Google Cloud are running a version of the same bill: a GKE cluster that never scales down at night, a Cloud SQL instance sized for a load test that ended nine months ago, a warehouse in the wrong region silently charging egress on every query. None of it shows up as a flagged line item. All of it compounds.
 
-The 25 items here represent patterns seen repeatedly across Indian SaaS, D2C, and fintech accounts. None require architectural rewrites. Most can be resolved in under a day.
+This checklist is every pattern we have found repeatedly across Indian SaaS, D2C, and fintech accounts — distilled to 25 items, each with a detection command, a fix, and a realistic rupee estimate of what it is costing you today. None of the items require an architectural rewrite. Most can be closed in under a day of engineering time.
+
+## How to use it
+
+Work through each item once. Mark **DONE**, **NOT APPLICABLE**, or **ACTION REQUIRED**. Any ACTION REQUIRED item with a savings estimate above ₹10,000 a month becomes a Jira ticket before this document goes in a drawer. That is the whole playbook.
+
+Run the detection commands against one project first to calibrate. Then extend to the rest of the org.
 
 ---
 

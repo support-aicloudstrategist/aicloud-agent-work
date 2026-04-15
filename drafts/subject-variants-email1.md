@@ -1,8 +1,9 @@
 # Subject Line Variants — Email 1 (Cold Outreach)
 
-**Audience:** Engineering managers, CTOs, DevOps leads at Indian mid-market SaaS/tech companies  
-**Goal:** First-touch cold email, AWS FinOps services  
-**Constraints:** ≤55 chars · no hype words · no "free" · Indian business tone
+**Audience:** CTOs, VPs of Engineering, and DevOps leads at Indian mid-market SaaS and tech companies
+**Goal:** First-touch cold email for AICloudStrategist's AWS / Azure / GCP FinOps engagements
+**Brand voice:** Founder-led. Enterprise-reviewed. Calm, specific, never performative.
+**Hard constraints:** ≤ 55 characters · no hype words · avoid the word "free" (spam trigger) · Indian business register
 
 ---
 
