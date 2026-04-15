@@ -35,16 +35,18 @@
 
   <article>
     <h3>Case 1 — D2C e-commerce, AWS, ~₹35L/month spend</h3>
-    <p><strong>Findings:</strong> 41% of compute on idle instances after a holiday-traffic-driven scale-up that was never reversed. Storage tier mismatch on S3 (Standard for cold archives). EBS volumes orphaned after EC2 termination.</p>
-    <p><strong>Action:</strong> Right-sized 60% of EC2 fleet, lifecycle policies on S3, cleanup automation for orphaned EBS, RI + SP coverage strategy.</p>
-    <p><strong>Outcome:</strong> Verified ₹9.4L/month savings in 5 weeks. Implemented OpenCost + tagging baseline so engineering team owns ongoing cost.</p>
+    <p><strong>Context:</strong> 120-person company on AWS ap-south-1 for three years. CFO flagged a 38% year-on-year increase in cloud spend that did not track revenue growth (which grew 11% in the same window). No prior FinOps review.</p>
+    <p><strong>Findings:</strong> 41% of EC2 compute on idle instances after a Diwali-season scale-up that was never reversed (m5.4xlarge fleet of 22, averaging 8% CPU). 47TB in S3 Standard that had not been queried in 14 months (Glacier candidate). 38 orphaned EBS volumes totalling 4.2TB. Reserved Instance coverage at 12% on a steady-state workload. No resource tagging, so cost-per-team was unknowable.</p>
+    <p><strong>Action (4 weeks, one senior engineer):</strong> Right-sized 60% of EC2 fleet to m5.xlarge / m5.2xlarge based on p95 CPU + memory. S3 lifecycle policies moved cold data to Glacier Instant Retrieval. Cleanup automation for orphaned EBS + snapshot retention policy (30 days). RI + Savings Plan blend sized for 80% baseline coverage with 3-year No-Upfront commitment. Infracost wired into GitHub PR pipeline. OpenCost deployed for EKS workload visibility. Tagging enforced via SCP.</p>
+    <p><strong>Outcome:</strong> Verified <strong>₹9.4L/month savings</strong> (27% of bill) by end of week 5, confirmed against the following two billing cycles. Ongoing cost baseline now owned by engineering — CFO receives a monthly cost-per-order metric instead of a line-item bill.</p>
   </article>
 
   <article>
     <h3>Case 2 — B2B SaaS, multi-region GCP, ~₹18L/month spend</h3>
-    <p><strong>Findings:</strong> GKE node pools provisioned for peak QPS that hit only twice a quarter; cross-region egress for analytics queries that could run in source region; persistent disks unattached for 90+ days.</p>
-    <p><strong>Action:</strong> Cluster autoscaler tuning, regional analytics warehouse, disk reclamation cron, committed-use discounts.</p>
-    <p><strong>Outcome:</strong> 27% cloud-bill reduction sustained for 8+ months. Engineering KPI now includes cost-per-tenant.</p>
+    <p><strong>Context:</strong> 45-person Series A company running a multi-tenant analytics product on GKE across asia-south1 and us-central1. The US region existed only because the first three customers were US-based; 80% of load had since shifted to India. Cost-per-tenant was not measured.</p>
+    <p><strong>Findings:</strong> GKE node pools provisioned for peak QPS that occurred twice a quarter (customer-triggered reports), leaving 71% headroom 24×7. Cross-region egress of ~3.4TB/month because the analytics warehouse sat in us-central1 but queries originated in asia-south1. 18 persistent disks unattached for 90+ days (2.1TB). No committed-use discounts despite three years of stable baseline. Cloud SQL instance oversized by 4× after a historical load test that was never rolled back.</p>
+    <p><strong>Action (6 weeks):</strong> Cluster autoscaler tuned with PodDisruptionBudgets + custom HPA on actual QPS. Replicated analytics warehouse to asia-south1 with scheduled sync (egress dropped 94%). Disk reclamation cron with 7-day quarantine before deletion. 1-year committed-use discount on the India baseline. Cloud SQL right-sized after 30 days of observation. Cost-per-tenant dashboard built on BigQuery billing export.</p>
+    <p><strong>Outcome:</strong> <strong>27% cloud-bill reduction</strong> (~₹4.9L/month) sustained for 8+ months with zero customer-facing incidents during the transition. Engineering OKR now includes cost-per-tenant ceiling; new feature PRs include a cost impact estimate from Infracost.</p>
   </article>
 </section>
 
