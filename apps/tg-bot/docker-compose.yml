@@ -1,0 +1,19 @@
+services:
+  tg-bot:
+    build: .
+    container_name: tg-bot
+    restart: unless-stopped
+    networks:
+      - ai-ops
+    volumes:
+      - ./data:/data
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN}
+      SHIM_TOKEN: ${SHIM_TOKEN}
+      SHIM_URL: http://claude-mao:8080/run
+      ALLOWED_CHAT_IDS: ${ALLOWED_CHAT_IDS}
+      STATE_DIR: /data
+
+networks:
+  ai-ops:
+    external: true
