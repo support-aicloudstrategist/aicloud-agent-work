@@ -1,0 +1,17 @@
+bill_BillingPeriodStartDate,bill_BillingPeriodEndDate,lineItem_UsageStartDate,lineItem_UsageEndDate,lineItem_UsageAccountId,product_productName,product_instanceType,product_region,product_usagetype,lineItem_Operation,lineItem_ResourceId,lineItem_UsageAmount,lineItem_UnblendedCost,lineItem_BlendedCost,pricing_unit
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,m5.4xlarge,ap-south-1,APS3-BoxUsage:m5.4xlarge,RunInstances,i-0abc111,168.00,154.56,154.56,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,m5.4xlarge,ap-south-1,APS3-BoxUsage:m5.4xlarge,RunInstances,i-0abc222,168.00,154.56,154.56,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,m5.4xlarge,ap-south-1,APS3-BoxUsage:m5.4xlarge,RunInstances,i-0abc333,168.00,154.56,154.56,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,m5.4xlarge,ap-south-1,APS3-BoxUsage:m5.4xlarge,RunInstances,i-0abc444,168.00,154.56,154.56,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,m5.4xlarge,ap-south-1,APS3-BoxUsage:m5.4xlarge,RunInstances,i-0abc555,168.00,154.56,154.56,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,m5.4xlarge,ap-south-1,APS3-BoxUsage:m5.4xlarge,RunInstances,i-0abc666,168.00,154.56,154.56,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Block Store,,ap-south-1,APS3-EBS:VolumeUsage.gp2,CreateVolume-Gp2,vol-orphan1,840.00,74.40,74.40,GB-Mo
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Block Store,,ap-south-1,APS3-EBS:VolumeUsage.gp2,CreateVolume-Gp2,vol-orphan2,560.00,49.60,49.60,GB-Mo
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Block Store,,ap-south-1,APS3-EBS:SnapshotUsage,CreateSnapshot,snap-stale-0001,1200.00,62.40,62.40,GB-Mo
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Simple Storage Service,,ap-south-1,APS3-TimedStorage-ByteHrs,StandardStorage,s3-coldbucket,5000000000000.00,11500.00,11500.00,GB-Mo
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Virtual Private Cloud,,ap-south-1,APS3-NatGateway-Hours,NatGateway,nat-gw-abc,168.00,9.87,9.87,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Virtual Private Cloud,,ap-south-1,APS3-NatGateway-Bytes,NatGatewayProcessedBytes,nat-gw-abc,1400.00,63.00,63.00,GB
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon RDS,db.m5.2xlarge,ap-south-1,APS3-InstanceUsage:db.m5.2xl,CreateDBInstance,db-prod-primary,168.00,152.40,152.40,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon RDS,db.m5.2xlarge,ap-south-1,APS3-Multi-AZUsage:db.m5.2xl,CreateDBInstance,db-dev-multiaz,168.00,152.40,152.40,Hrs
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,Amazon Elastic Compute Cloud,,ap-south-1,APS3-DataTransfer-Out-Bytes,InternetDataTransfer,i-0abc111,300.00,38.40,38.40,GB
+2026-04-08,2026-04-15,2026-04-08T00:00:00Z,2026-04-15T00:00:00Z,111122223333,AWS CloudWatch,,ap-south-1,APS3-CW:MetricMonitorUsage,MetricMonitorUsage,cw-logs-verbose,50000.00,22.50,22.50,Metrics
