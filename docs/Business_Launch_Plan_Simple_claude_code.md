@@ -121,7 +121,7 @@ Bot sends you the result on Telegram
 - Both: Write 2 free guides ("AWS cost cutting checklist", "Cloud maturity self-assessment")
 
 ### Week 2 — Reach out
-- **Personal WhatsApp/voice notes to 30 ex-colleagues** (Tech Mahindra, IBM, HCL, etc.) — "Hey, looking for CTOs with high cloud bills. Anyone you can introduce me to?"
+- **Personal WhatsApp/voice notes to 30 ex-colleagues** (your previous Fortune 500 and Tier-1 IT networks) — "Hey, looking for CTOs with high cloud bills. Anyone you can introduce me to?"
 - **Send 20 LinkedIn connection requests per day** to CTOs (manually, with personal note)
 - **Post on LinkedIn** 2 times per week (AI writes draft, you edit, you post)
 

@@ -224,7 +224,7 @@ The Claude blueprint emphasized warm-network reactivation; the GPT report emphas
 - Day 7: Activate openclaw + n8n LeadScout + ContentDraft workflows on the VPS (already 80% built)
 
 **Week 2 — Warm + LinkedIn outbound**
-- 30 personal WhatsApp/voice notes to ex-colleagues (Tech Mahindra, IBM, HCL, 3i Infotech, etc.) — explicit ask: "Looking for CTOs/founders dealing with high cloud bills. Anyone you can intro me to?"
+- 30 personal WhatsApp/voice notes to ex-colleagues (your previous Fortune 500 and Tier-1 IT networks) — explicit ask: "Looking for CTOs/founders dealing with high cloud bills. Anyone you can intro me to?"
 - 20 LinkedIn connection requests/day (manual, with personalized note) to ICP — target ~120 invites/week (under safe limit)
 - Engage 3–5 LinkedIn posts/day in target audience to build feed presence
 - Publish 2 LinkedIn posts/week (AI drafts, you edit, you post): one "lesson from the trenches", one quick FinOps tip
