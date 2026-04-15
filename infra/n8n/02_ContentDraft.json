@@ -1,0 +1,82 @@
+{
+  "name": "02_ContentDraft",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contentdraft",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook (topic + channel)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "url": "http://claude-mao:8080/run",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{$env.SHIM_TOKEN}}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"Draft a {{ $json.body.channel || 'linkedin_post' }} for AICloudStrategist (Rajiv, 22-yr senior cloud architect, FinOps focus, Delhi/NCR, ICP: Indian SMB CTOs/Founders with cloud spend ₹5L-₹50L/month).\\n\\nVoice: confident senior practitioner. No hype. Concrete numbers and examples. No emojis except sparingly. No 'as an AI'. No 'in today's fast-paced world'.\\n\\nTopic / brief:\\n{{ $json.body.brief }}\\n\\nFormat constraints:\\n- LinkedIn post: ≤280 words, hook in line 1, 1-2 white-space breaks, single CTA at end.\\n- Cold outreach DM: ≤80 words, no preamble, value proposition + soft ask.\\n- Email: ≤120 words, plain text, signoff 'Rajiv'.\\n\\nReturn JSON: { \\\"draft\\\": \\\"...\\\", \\\"alternative_hook\\\": \\\"...\\\", \\\"why_this_works\\\": \\\"one sentence\\\" }\",\n  \"max_turns\": 4\n}",
+        "options": {"timeout": 240000}
+      },
+      "id": "2",
+      "name": "Ask Mao (draft)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.result || '';\nconst match = raw.match(/\\{[\\s\\S]*\\}/);\nlet parsed = {};\ntry { parsed = JSON.parse(match ? match[0] : raw); } catch (e) { parsed = { draft: raw, parse_error: e.message }; }\nparsed.brief = $('Webhook (topic + channel)').first().json.body.brief;\nparsed.channel = $('Webhook (topic + channel)').first().json.body.channel || 'linkedin_post';\nparsed.created_at = new Date().toISOString();\nreturn { json: parsed };"
+      },
+      "id": "3",
+      "name": "Parse",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.telegram.org/bot{{$env.BOT_TOKEN}}/sendMessage",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{$env.TG_CHAT_ID}},\n  \"text\": \"📝 Draft for approval [{{ $json.channel }}]\\n\\n────────\\n{{ $json.draft }}\\n────────\\n\\nAlt hook: {{ $json.alternative_hook }}\\nWhy: {{ $json.why_this_works }}\\n\\nReply 'send' to publish, 'edit: <changes>' to revise, or 'kill' to discard.\"\n}"
+      },
+      "id": "4",
+      "name": "Send for approval (Telegram)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($('Parse').first().json) }}"
+      },
+      "id": "5",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1400, 300]
+    }
+  ],
+  "connections": {
+    "Webhook (topic + channel)": {"main": [[{"node": "Ask Mao (draft)", "type": "main", "index": 0}]]},
+    "Ask Mao (draft)": {"main": [[{"node": "Parse", "type": "main", "index": 0}]]},
+    "Parse": {"main": [[{"node": "Send for approval (Telegram)", "type": "main", "index": 0}]]},
+    "Send for approval (Telegram)": {"main": [[{"node": "Respond", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": ["aicloudstrategist", "outreach"]
+}

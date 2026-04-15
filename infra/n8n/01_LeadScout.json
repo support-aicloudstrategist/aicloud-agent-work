@@ -1,0 +1,97 @@
+{
+  "name": "01_LeadScout",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadscout",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook (paste LinkedIn URL)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [200, 300],
+      "webhookId": "leadscout-webhook"
+    },
+    {
+      "parameters": {
+        "url": "http://claude-mao:8080/run",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{$env.SHIM_TOKEN}}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": \"You are a B2B lead enrichment agent for AICloudStrategist (FinOps consulting, Indian SMBs, target ICP: companies with cloud spend ₹5L-₹50L/month, decision-makers CTO/Founder/CFO).\\n\\nLinkedIn URL submitted: {{ $json.body.url }}\\n\\nUse WebFetch to read the public LinkedIn profile. Return strict JSON with these fields:\\n{\\n  \\\"name\\\": \\\"\\\",\\n  \\\"title\\\": \\\"\\\",\\n  \\\"company\\\": \\\"\\\",\\n  \\\"location\\\": \\\"\\\",\\n  \\\"company_size_band\\\": \\\"<10|10-50|50-200|200-500|500-2000|2000+\\\",\\n  \\\"industry\\\": \\\"\\\",\\n  \\\"icp_score\\\": 1-10,\\n  \\\"icp_rationale\\\": \\\"one sentence\\\",\\n  \\\"intent_signals\\\": [\\\"recent_migration\\\", \\\"hiring_devops\\\", \\\"public_incident\\\", \\\"funding_announcement\\\"],\\n  \\\"recommended_outreach_angle\\\": \\\"one sentence\\\",\\n  \\\"do_not_reach_out_reason\\\": null\\n}\\n\\nReturn only the JSON, no preamble.\",\n  \"max_turns\": 6\n}",
+        "options": {"timeout": 300000}
+      },
+      "id": "2",
+      "name": "Ask Mao (enrich + score)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Claude's JSON reply, fall back gracefully\nconst raw = $input.first().json.result || '';\nconst match = raw.match(/\\{[\\s\\S]*\\}/);\nlet parsed = {};\ntry { parsed = JSON.parse(match ? match[0] : raw); }\ncatch (e) { parsed = { parse_error: e.message, raw: raw.slice(0, 500) }; }\nparsed.url = $('Webhook (paste LinkedIn URL)').first().json.body.url;\nparsed.enriched_at = new Date().toISOString();\nreturn { json: parsed };"
+      },
+      "id": "3",
+      "name": "Parse + tag",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "filePath": "/data/leads.jsonl",
+        "options": {"append": true}
+      },
+      "id": "4",
+      "name": "Append to leads.jsonl",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
+      "position": [1100, 200],
+      "disabled": true,
+      "notes": "Replace with Notion/Sheets node when CRM is wired."
+    },
+    {
+      "parameters": {
+        "url": "https://api.telegram.org/bot{{$env.BOT_TOKEN}}/sendMessage",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{$env.TG_CHAT_ID}},\n  \"text\": \"🎯 Lead enriched\\n\\n{{ JSON.stringify($json, null, 2) }}\"\n}"
+      },
+      "id": "5",
+      "name": "Notify Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($('Parse + tag').first().json) }}"
+      },
+      "id": "6",
+      "name": "Respond to webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1400, 300]
+    }
+  ],
+  "connections": {
+    "Webhook (paste LinkedIn URL)": {"main": [[{"node": "Ask Mao (enrich + score)", "type": "main", "index": 0}]]},
+    "Ask Mao (enrich + score)": {"main": [[{"node": "Parse + tag", "type": "main", "index": 0}]]},
+    "Parse + tag": {"main": [[{"node": "Append to leads.jsonl", "type": "main", "index": 0}, {"node": "Notify Telegram", "type": "main", "index": 0}]]},
+    "Notify Telegram": {"main": [[{"node": "Respond to webhook", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": ["aicloudstrategist", "outreach"]
+}
