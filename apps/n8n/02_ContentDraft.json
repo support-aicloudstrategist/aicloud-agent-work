@@ -20,13 +20,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {"name": "Authorization", "value": "=Bearer {{ $env.SHIM_TOKEN }}"},
-            {"name": "Content-Type", "value": "application/json"}
+            {"name": "Authorization", "value": "=Bearer {{ $env.SHIM_TOKEN }}"}
           ]
         },
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ prompt: 'Draft a ' + ($json.body.channel || 'linkedin_post') + ' for AICloudStrategist (Rajiv, 22-yr senior cloud architect, FinOps focus, Delhi/NCR; ICP: Indian SMB CTOs/Founders with cloud spend INR 5-50L/month). Voice: confident senior practitioner. No hype, concrete numbers, no \"as an AI\", no \"in today\\'s fast-paced world\". Brief: ' + $json.body.brief + '. Format: LinkedIn post <=280 words with hook in line 1 and single CTA; cold DM <=80 words; email <=120 words signoff Rajiv. Return strict JSON: {\"draft\":\"...\",\"alternative_hook\":\"...\",\"why_this_works\":\"one sentence\"}', max_turns: 5 }) }}",
+        "specifyBody": "keypair",
+        "bodyParameters": {
+          "parameters": [
+            {"name": "prompt", "value": "=Draft a {{ $json.body.channel || 'linkedin_post' }} for AICloudStrategist (Rajiv, 22-yr senior cloud architect, FinOps focus, Delhi/NCR; ICP: Indian SMB CTOs/Founders with cloud spend INR 5-50L/month). Voice: confident senior practitioner. No hype, concrete numbers, no AI-tells. Brief: {{ $json.body.brief }}. Format: LinkedIn post <=280 words with hook in line 1 and single CTA; cold DM <=80 words; email <=120 words signoff Rajiv. Return strict JSON with keys draft, alternative_hook, why_this_works."},
+            {"name": "max_turns", "value": 5}
+          ]
+        },
+        "contentType": "json",
         "options": {"timeout": 240000}
       },
       "id": "2",

@@ -21,13 +21,18 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {"name": "Authorization", "value": "=Bearer {{ $env.SHIM_TOKEN }}"},
-            {"name": "Content-Type", "value": "application/json"}
+            {"name": "Authorization", "value": "=Bearer {{ $env.SHIM_TOKEN }}"}
           ]
         },
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ prompt: 'You are a B2B lead enrichment agent for AICloudStrategist (FinOps consulting, Indian SMBs; ICP: cloud spend INR 5-50L/month; buyers CTO/Founder/CFO). LinkedIn URL: ' + $json.body.url + '. Use WebFetch to read the public profile. Return strict JSON: {\"name\":\"\",\"title\":\"\",\"company\":\"\",\"location\":\"\",\"company_size_band\":\"<10|10-50|50-200|200-500|500-2000|2000+\",\"industry\":\"\",\"icp_score\":1-10,\"icp_rationale\":\"one sentence\",\"intent_signals\":[],\"recommended_outreach_angle\":\"one sentence\",\"do_not_reach_out_reason\":null}. Return ONLY the JSON object, no preamble.', max_turns: 8 }) }}",
+        "specifyBody": "keypair",
+        "bodyParameters": {
+          "parameters": [
+            {"name": "prompt", "value": "=You are a B2B lead enrichment agent for AICloudStrategist (FinOps consulting, Indian SMBs; ICP: cloud spend INR 5-50L/month; buyers CTO/Founder/CFO). LinkedIn URL: {{ $json.body.url }}. Use WebFetch to read the public profile. Return a strict JSON object with fields: name, title, company, location, company_size_band, industry, icp_score (1-10), icp_rationale, intent_signals (array), recommended_outreach_angle, do_not_reach_out_reason. Return ONLY the JSON object, no preamble."},
+            {"name": "max_turns", "value": 8}
+          ]
+        },
+        "contentType": "json",
         "options": {"timeout": 300000}
       },
       "id": "2",
