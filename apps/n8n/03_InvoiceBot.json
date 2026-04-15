@@ -50,11 +50,16 @@
     },
     {
       "parameters": {
-        "url": "https://api.telegram.org/bot{{$env.BOT_TOKEN}}/sendMessage",
+        "url": "=https://api.telegram.org/bot{{ $env.BOT_TOKEN }}/sendMessage",
         "method": "POST",
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"chat_id\": {{$env.TG_CHAT_ID}},\n  \"text\": \"🧾 Invoice draft\\n\\nCustomer: {{ $json.customer_name }}\\nInvoice #: {{ $json.invoice_number }}\\nSubtotal: ₹{{ $json.subtotal }}\\nGST: ₹{{ ($json.cgst + $json.sgst + $json.igst).toFixed(2) }}\\nTotal: ₹{{ $json.total.toFixed(2) }}\\nDue: {{ $json.due_date }}\\n\\nReply 'send' to dispatch via Zoho, 'edit: ...' to revise.\"\n}"
+        "bodyParameters": {
+          "parameters": [
+            {"name": "chat_id", "value": "={{ $env.TG_CHAT_ID }}"},
+            {"name": "text", "value": "=Invoice draft\n\nCustomer: {{ $json.customer_name }}\nInvoice #: {{ $json.invoice_number }}\nSubtotal: INR {{ $json.subtotal }}\nGST: INR {{ ($json.cgst + $json.sgst + $json.igst).toFixed(2) }}\nTotal: INR {{ $json.total.toFixed(2) }}\nDue: {{ $json.due_date }}\n\nReply 'send' to dispatch via Zoho, 'edit:' to revise."}
+          ]
+        },
+        "contentType": "form-urlencoded"
       },
       "id": "4",
       "name": "Send for approval",

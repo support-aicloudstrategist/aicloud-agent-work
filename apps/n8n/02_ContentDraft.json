@@ -20,13 +20,13 @@
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
-            {"name": "Authorization", "value": "=Bearer {{$env.SHIM_TOKEN}}"},
+            {"name": "Authorization", "value": "=Bearer {{ $env.SHIM_TOKEN }}"},
             {"name": "Content-Type", "value": "application/json"}
           ]
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"prompt\": \"Draft a {{ $json.body.channel || 'linkedin_post' }} for AICloudStrategist (Rajiv, 22-yr senior cloud architect, FinOps focus, Delhi/NCR, ICP: Indian SMB CTOs/Founders with cloud spend ₹5L-₹50L/month).\\n\\nVoice: confident senior practitioner. No hype. Concrete numbers and examples. No emojis except sparingly. No 'as an AI'. No 'in today's fast-paced world'.\\n\\nTopic / brief:\\n{{ $json.body.brief }}\\n\\nFormat constraints:\\n- LinkedIn post: ≤280 words, hook in line 1, 1-2 white-space breaks, single CTA at end.\\n- Cold outreach DM: ≤80 words, no preamble, value proposition + soft ask.\\n- Email: ≤120 words, plain text, signoff 'Rajiv'.\\n\\nReturn JSON: { \\\"draft\\\": \\\"...\\\", \\\"alternative_hook\\\": \\\"...\\\", \\\"why_this_works\\\": \\\"one sentence\\\" }\",\n  \"max_turns\": 4\n}",
+        "jsonBody": "={{ JSON.stringify({ prompt: 'Draft a ' + ($json.body.channel || 'linkedin_post') + ' for AICloudStrategist (Rajiv, 22-yr senior cloud architect, FinOps focus, Delhi/NCR; ICP: Indian SMB CTOs/Founders with cloud spend INR 5-50L/month). Voice: confident senior practitioner. No hype, concrete numbers, no \"as an AI\", no \"in today\\'s fast-paced world\". Brief: ' + $json.body.brief + '. Format: LinkedIn post <=280 words with hook in line 1 and single CTA; cold DM <=80 words; email <=120 words signoff Rajiv. Return strict JSON: {\"draft\":\"...\",\"alternative_hook\":\"...\",\"why_this_works\":\"one sentence\"}', max_turns: 5 }) }}",
         "options": {"timeout": 240000}
       },
       "id": "2",
@@ -47,11 +47,16 @@
     },
     {
       "parameters": {
-        "url": "https://api.telegram.org/bot{{$env.BOT_TOKEN}}/sendMessage",
+        "url": "=https://api.telegram.org/bot{{ $env.BOT_TOKEN }}/sendMessage",
         "method": "POST",
         "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={\n  \"chat_id\": {{$env.TG_CHAT_ID}},\n  \"text\": \"📝 Draft for approval [{{ $json.channel }}]\\n\\n────────\\n{{ $json.draft }}\\n────────\\n\\nAlt hook: {{ $json.alternative_hook }}\\nWhy: {{ $json.why_this_works }}\\n\\nReply 'send' to publish, 'edit: <changes>' to revise, or 'kill' to discard.\"\n}"
+        "bodyParameters": {
+          "parameters": [
+            {"name": "chat_id", "value": "={{ $env.TG_CHAT_ID }}"},
+            {"name": "text", "value": "=Draft for approval [{{ $json.channel }}]\n\n{{ $json.draft }}\n\nAlt hook: {{ $json.alternative_hook }}\nWhy: {{ $json.why_this_works }}\n\nReply 'send' to publish, 'edit: <changes>' to revise, or 'kill' to discard."}
+          ]
+        },
+        "contentType": "form-urlencoded"
       },
       "id": "4",
       "name": "Send for approval (Telegram)",
