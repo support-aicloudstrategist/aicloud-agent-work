@@ -1,0 +1,19 @@
+📦 Service Offerings — Draft Pack Complete
+
+6 documents saved to /docker/task-queue/data/drafts/service-offerings/:
+
+1. 01-finops-quickstart.md — FinOps QuickStart (₹75K–₹1.5L | 2 weeks) — 2,910 words
+2. 02-reliability-observability-sprint.md — Reliability & Observability Sprint (₹1L–₹2L | 3 weeks) — 2,264 words
+3. 03-cloud-security-posture-review.md — Cloud Security Posture Review (₹2.5L–₹5L | 2 weeks) — 2,384 words
+4. 04-implementation-sprint.md — Implementation Sprint (₹1.5L–₹3L/workstream | 4–6 weeks) — 3,976 words
+5. 05-migration-rearchitecture.md — Migration & Re-Architecture (₹9L–₹28L | 8–16 weeks) — 3,314 words
+6. 06-managed-finops-retainer.md — Managed FinOps Retainer (₹45K–₹1.5L/mo | ongoing) — 2,499 words
+
+Total word count across 6 docs: 17,347 words
+
+README.md (consolidated index): 1,414 words
+
+3 most-cited authoritative sources (appear across 4 of 6 docs each):
+• AWS Well-Architected Framework (finops.org/wellarchitected) — cited in Cost, Security, Implementation, and Migration docs
+• FinOps Foundation (finops.org) — State of FinOps, Framework, Maturity Model, FOCUS spec; underpins QuickStart and Retainer
+• OpenCost + Infracost (opencost.io / infracost.io) — cited in QuickStart, Implementation Sprint, and Managed Retainer
