@@ -20,73 +20,58 @@
 
 ---
 
-## Section 2 — Microsoft AI Cloud Partner Program (actually free, apply now)
+## Section 2 — Microsoft AI Cloud Partner Program: SKIP at our stage
 
-**What it is:**
-- Microsoft's partner program (formerly MPN) has a free base tier as of 2026
-- No annual fee required to get a Partner ID
-- Gives: Partner ID for marketing collateral, limited Azure credits, access to marketing resources
-- Does NOT give: "Solutions Partner" badges (those require paid Action Pack at ~$500/year + skill attainment)
+**What I re-verified (2026-04-16):**
+- Enrollment is technically free — gets you Partner Center backend access and training resources
+- BUT there is NO free marketing-useful tier. You don't get a Partner ID to put on your site without paying for a benefits package.
+- Actual pricing (as of 2026 after Action Pack was discontinued Jan 2025):
+  - **Partner Launch Benefits: $350/year** (~₹29K)
+  - **Partner Success Core Benefits: $925/year** (~₹77K)
+  - **Partner Success Expanded Benefits: $4,125/year** (~₹3.4L)
+  - **Solution Partner Designation: $4,875/year** (~₹4L)
 
-**Is it worth it for us?**
-- **Yes** for the Partner ID alone — we serve Azure workloads per services.html, so having a Microsoft Partner ID in our marketing footer is a legitimate signal
-- Zero cost, ~45 minutes to set up
+**Our decision:** Skip. Same logic as AWS Partner Network — the cheapest tier ($350/year) might be worth it once we have 1 paying customer and are specifically losing deals to "are you a Microsoft Partner?" questions. Not before.
 
-**How to apply:**
-1. Go to https://partner.microsoft.com/en-US/partnership
-2. Sign in with Microsoft account (Rajiv can create one on support@aicloudstrategist.com)
-3. Click "Join the Microsoft AI Cloud Partner Program"
-4. Fill organisation details (legal entity, address, tax info)
-5. Accept partner agreement
-6. Receive Partner ID within ~24 hours
+**When to revisit:** Month 3 if we have ≥2 Azure-using customers signed. Otherwise skip.
 
-**What we put on the site:** "Microsoft AI Cloud Partner Program Member" in footer of /services.html (small text, no big logo claim)
-
-**Action:** Rajiv applies this week. 45 min. ₹0.
+**Source:** [Microsoft AI Cloud Partner Program 2026 pricing (Maven Collective Marketing breakdown)](https://mavencollectivemarketing.com/insights/blog/microsoft-ai-cloud-partner-program-benefits-and-pricing/)
 
 ---
 
-## Section 3 — Google Cloud Partner Advantage (free application, worth trying)
+## Section 3 — Google Cloud Partner Advantage: SKIP (NDA-gated pricing, unknown cost)
 
-**What it is:**
-- Google Cloud's partner program has no disclosed base fee
-- Application-based — they evaluate fit
-- Gets you: Partner ID, co-sell introductions if they see fit, access to training materials
+**What I re-verified (2026-04-16):**
+- Enrollment is application-based
+- **Pricing is not publicly disclosed.** Google requires an NDA during the enrollment process before sharing program costs
+- Multiple sources confirm there is no free marketing-useful tier; you need to reach "Partner" level which has revenue thresholds
+- Community reports (unverified) suggest costs comparable to AWS / Microsoft ($2-5K/year range) for meaningful tiers
 
-**Realistic expectation:** At our size (solo founder, no existing GCP deals) Google may not approve us for the main partner tier. There is a "Partner Skills" portal that anyone can access for free which is the fallback.
+**Our decision:** Skip. We cannot validate the actual cost without applying and being quoted, which consumes effort for unclear return. Not a sprint-worthy use of time.
 
-**Action:**
-1. Apply at https://cloud.google.com/partners — takes 30 min
-2. If approved: Partner ID in the footer
-3. If rejected: note and move on, reapply at Month 6
-
-**Action:** Rajiv applies this week. 30 min. ₹0.
+**When to revisit:** Month 3+ if we have GCP customers. A GCP-focused customer could introduce us to their Google Partner manager who can give us actual pricing, which is better than blind application.
 
 ---
 
-## Section 4 — FinOps Foundation (community Slack is free; full membership is not a fit for consultants)
+## Section 4 — FinOps Foundation: CANNOT join free as consultants
 
-**What we learned:**
-- FinOps Foundation's **Practitioner** membership is free but specifically for people working IN finance teams — consultants like us don't qualify
-- Vendor membership is paid (tiered, starts at ~$8K/year) — way too expensive
-- **BUT** the community Slack is free to join as an observer/contributor via https://www.finops.org/community/community-slack/
+**What I re-verified (2026-04-16):**
+Directly from [finops.org/membership/consultants](https://www.finops.org/membership/consultants/) and eligibility rules:
 
-**What works for us:**
-- Join community Slack as an individual contributor (not as a company) — Anushka joins using her email, not as "AICloudStrategist"
-- Be known as a helpful voice in channels for 3-6 months
-- Eventually propose content for their blog/podcast — this is the real credibility payoff
+- **Free "Practitioner" membership explicitly excludes consultants.** The eligibility rule states: *"those who work for consultancies or cloud-related technology vendors are not eligible to join the community as a Practitioner"*
+- Individual **FinOps Certified Practitioner consultants** are allowed up to 3 per organisation with "limited access" before a **Vendor Membership** is required
+- Vendor Membership pricing is not publicly disclosed but Enterprise-tier membership is known to start at ~$10K+/year
 
-**Why this is worth time even though we don't get a badge:**
-- FinOps practitioners ARE our buyers — they're inside mid-to-large companies managing cost
-- Personal reputation in that Slack = direct pipeline
-- Being cited by the FinOps Foundation (even a quote in a case study) is worth more than any paid partner badge
+**Our decision:** We cannot legitimately join as individuals masquerading as practitioners — our company AICloudStrategist is explicitly a consultancy. The best we can do:
 
-**Practitioner certification ($250 exam):**
-- Worth considering at Month 2 once we have runway
-- Not required to be effective; required if we want to cite "FinOps Certified" on the site
-- Cheap enough to revisit soon. Not urgent today.
+- **Anushka can earn the FinOps Certified Practitioner certification** ($250 exam, self-paced), which gets her *limited* community access. Not a sprint-urgent spend.
+- Attend free FinOps Connect events (run by a different community, open to anyone)
+- Citing FinOps Foundation content on our blog is still fair game — we don't need membership to reference their work publicly
 
-**Action:** Anushka joins Slack this week. Lurks for 2 weeks, starts contributing in week 3.
+**When to revisit:** Month 2 for the $250 certification, Month 6+ for Vendor Membership (if the ROI becomes clear).
+
+**Alternative: FinOps Connect (genuinely free, not FinOps Foundation)**
+[FinOps Connect](https://finopsconnect.com/) is an independent open forum for anyone interested in FinOps. Free. Quarterly virtual events. Smaller audience than FinOps Foundation but actually accessible to consultants.
 
 ---
 
@@ -204,44 +189,80 @@ Rajiv's existing HN account (needs 90+ days old + some activity). Use for:
 
 ---
 
-## Revised tracker actions (replaces earlier AWS Partner Network advice)
+## Revised tracker actions (after double-verification 2026-04-16 evening)
+
+After Rajiv pushed back on "AWS Partner Network is free," I re-verified every item in this doc directly against official pricing pages. Here is the honest verified list.
+
+**GENUINELY FREE AND MARKETING-USEFUL (do these):**
 
 ```bash
-# DELETE old task if exists
-vk done <task_id_for_AWS_Partner_Network>   # with description "skipping, too expensive, revisit Month 6"
+# 1. AWS Community Builder (best-verified free lever — comes with AWS cert vouchers!)
+vk add 7 "Apply AWS Community Builder when applications open" "https://aws.amazon.com/developer/community/community-builders/ — application cycle, free, comes with 100% AWS cert voucher coverage + free CloudAcademy + private Slack"
+vk label <id> waiting-on-anushka
+vk prio <id> 4
 
-# Add the right ones
-vk add 7 "Apply Microsoft AI Cloud Partner Program (free, 45 min)" "https://partner.microsoft.com/en-US/partnership — Partner ID for /services.html footer"
-vk label <id> rajiv-owns
-
-vk add 7 "Apply Google Cloud Partner Advantage (free)" "https://cloud.google.com/partners — 30 min; may reject at our size but free to try"
-vk label <id> rajiv-owns
-
-vk add 7 "Join FinOps Foundation community Slack (free)" "https://www.finops.org/community/community-slack/ — join as individual, lurk 2 weeks then contribute"
+# 2. AWS User Groups — volunteer meetups, NOT AWS Partner Network
+vk add 7 "Join AWS User Group Delhi + Bengaluru + Mumbai on Meetup.com" "Volunteer-run, free, virtual events monthly. Goal: get on speaker roster in 3-6 months."
 vk label <id> waiting-on-anushka
 
-vk add 7 "Join AWS User Group Delhi + Bengaluru + Mumbai (meetup.com, free)" "Virtual events only; aim: get on speaker roster at 1 of them in 3 months"
+# 3. Indie Hackers — verified free
+vk add 7 "Create Indie Hackers profile + first post (after 5+ comments)" "https://www.indiehackers.com/ — merit-based posting, contribute in comments first"
 vk label <id> waiting-on-anushka
 
-vk add 7 "Apply AWS Community Builder when applications open" "https://aws.amazon.com/developer/community/community-builders/ — check cycle; free, recognition-based"
-vk label <id> waiting-on-anushka
-
-vk add 7 "Create Indie Hackers profile + first post" "https://www.indiehackers.com/ — gain-share post from 07-reddit-posts.md"
-vk label <id> waiting-on-anushka
-
-vk add 7 "Pitch 3 podcasts with specific episode topics" "Matrix Moments, Prime VP, AnalyticsIndiaMag — topic: 'Indian mid-market cloud bills double before optimised'"
-vk label <id> rajiv-owns
-
-vk add 7 "Submit guest post to Inc42 (editorial@inc42.com)" "Adapt RI-coverage post to their house style; byline = Anushka B, Founder"
+# 4. Inc42/YourStory guest post — verified free editorial submission
+vk add 7 "Submit guest post to Inc42 (editorial@inc42.com)" "Adapt RI-coverage post. Byline = Anushka B, Founder"
 vk label <id> claude-owns
+
+# 5. Podcast guest pitches — free beyond 30 min
+vk add 7 "Pitch 3 podcasts with specific episode topics" "Matrix Moments, Prime VP, AnalyticsIndiaMag"
+vk label <id> rajiv-owns
+
+# 6. FinOps Connect (the genuinely-free one, not FinOps Foundation Slack)
+vk add 7 "Register for next FinOps Connect event" "https://finopsconnect.com/ — free, open forum"
+vk label <id> waiting-on-anushka
+```
+
+**SKIP (paywalled / NDA'd — I was wrong to recommend these earlier):**
+
+```bash
+# AWS Partner Network — $2,500/yr for Confirmed tier
+# Microsoft AI Cloud Partner — $350-$4,875/yr for marketing-useful tier (free enrollment is backend-only)
+# Google Cloud Partner Advantage — NDA-gated, cost unknown
+# FinOps Foundation Slack — consultants explicitly excluded from free Practitioner tier; Vendor Membership is paid
+```
+
+**POSSIBLE FUTURE SPEND (not sprint-urgent):**
+
+```bash
+# FinOps Certified Practitioner exam — $250 (~₹21K) — Month 2 if runway allows
+# AWS certs via Community Builder voucher — ₹0 if we get into the program first
 ```
 
 ---
 
-## Total ₹ investment: zero (until Month 3)
+## Total ₹ investment through Month 3 (honest estimate)
 
-Everything in this doc is either free or application-based. No cash outlay until:
-- FinOps Certified Practitioner exam ($250 / ~₹21K) — Month 2 optional
-- AWS Partner Network Confirmed ($2,500/year / ~₹2.1L) — Month 6+ if ROI obvious
+**₹0 cash outlay possible if we stick to the 6 genuinely-free channels above.**
 
-Until then, credibility compounds via content + community + being genuinely helpful. That is the bootstrap consultant's playbook — nothing fancier works.
+If we choose to add the $250 FinOps cert (~₹21K), that's the first optional spend worth considering at Month 2.
+
+All partner-program badges (AWS, Microsoft, Google) are skipped until Month 3+ when revenue changes the ROI math. The earlier advice in this doc to "apply to Microsoft / GCP for free Partner ID" was wrong — verified this by hitting actual pricing pages. Microsoft's free enrollment doesn't give you a public-facing Partner ID; you need at least the $350/year Partner Launch Benefits. GCP's pricing is NDA-gated.
+
+**The bootstrap consultant's honest playbook:**
+1. Be genuinely helpful in public (blog, Reddit, Twitter, podcasts, guest posts)
+2. Contribute to communities where buyers hang out (AWS User Groups, FinOps Connect, Indie Hackers)
+3. Apply to free recognition programs (AWS Community Builder is the standout)
+4. Skip all paid partner programs until revenue obviously supports them
+
+That's it. Nothing fancier moves the needle at our stage.
+
+---
+
+## Audit trail for future me
+
+This doc was revised **twice** in one day:
+1. First version recommended AWS Partner Network as "free"
+2. Rajiv called it out — I re-verified and found $2,500/year fee; removed AWS, kept Microsoft + GCP as "free"
+3. Rajiv challenged "is all this really free?" — I hit actual pricing pages and verified Microsoft requires $350-$4,875/yr for marketing-useful tier, GCP is NDA-gated, FinOps Slack excludes consultants
+
+**Lesson:** before claiming "free" on any partner program, fetch the pricing page directly. "Free enrollment" usually means free backend access, not free marketing badge.
