@@ -1,0 +1,250 @@
+#!/bin/bash
+# vk - Vikunja CLI helper for AICloudStrategist tracker
+#
+# Usage:
+#   vk projects                          - list all projects with IDs
+#   vk tree                              - project tree with task counts
+#   vk tasks <project_id>                - list tasks in a project
+#   vk task <task_id>                    - show one task as JSON
+#   vk add <project_id> "title" [desc]   - create a task
+#   vk done <task_id>                    - mark task done
+#   vk reopen <task_id>                  - mark task undone
+#   vk label <task_id> <label_name>      - attach label to task
+#   vk prio <task_id> <1-5>              - priority (5=do now, 1=low)
+#   vk due <task_id> <YYYY-MM-DD>        - set due date
+#   vk create-project <title> [desc]     - create new project
+#   vk labels                            - list all labels
+#   vk create-label <name> [hex_color]   - create a label
+#   vk search "<query>"                  - search tasks
+#
+# Token read from /docker/vikunja/.admin-creds.
+
+set -euo pipefail
+
+API="https://tracker.srv1562252.hstgr.cloud/api/v1"
+TOKEN=$(grep '^api_token:' /docker/vikunja/.admin-creds | awk '{print $2}')
+if [ -z "$TOKEN" ]; then
+    echo "ERROR: no api_token in /docker/vikunja/.admin-creds" >&2
+    exit 1
+fi
+
+H_AUTH="Authorization: Bearer ${TOKEN}"
+H_JSON="Content-Type: application/json"
+
+cmd="${1:-}"
+shift || true
+
+py() {
+    python3 -c "$1"
+}
+
+case "$cmd" in
+projects)
+    curl -s -H "$H_AUTH" "$API/projects" | py '
+import sys, json
+for p in json.load(sys.stdin) or []:
+    pid = p.get("id")
+    title = p.get("title", "")
+    arch = "(archived)" if p.get("is_archived") else ""
+    line = "%4d  %s %s" % (pid, title, arch)
+    print(line.rstrip())
+'
+    ;;
+
+tree)
+    curl -s -H "$H_AUTH" "$API/projects" | TOKEN="$TOKEN" API="$API" py '
+import os, sys, json, urllib.request
+API = os.environ["API"]
+TOKEN = os.environ["TOKEN"]
+for p in json.load(sys.stdin) or []:
+    pid = p.get("id")
+    title = p.get("title", "")
+    arch = "(archived)" if p.get("is_archived") else ""
+    req = urllib.request.Request(API + "/projects/" + str(pid) + "/tasks", headers={"Authorization": "Bearer " + TOKEN})
+    try:
+        tasks = json.loads(urllib.request.urlopen(req, timeout=10).read()) or []
+    except Exception:
+        tasks = []
+    open_n = sum(1 for t in tasks if not t.get("done"))
+    done_n = sum(1 for t in tasks if t.get("done"))
+    print("%4d  %s %s - open: %d, done: %d" % (pid, title, arch, open_n, done_n))
+'
+    ;;
+
+tasks)
+    pid="${1:-}"
+    if [ -z "$pid" ]; then echo "usage: vk tasks <project_id>"; exit 1; fi
+    curl -s -H "$H_AUTH" "$API/projects/$pid/tasks" | py '
+import sys, json
+tasks = json.load(sys.stdin) or []
+if not tasks:
+    print("(no tasks)")
+    sys.exit(0)
+tasks.sort(key=lambda t: (t.get("done", False), -(t.get("priority") or 0), t.get("id")))
+for t in tasks:
+    tid = t.get("id")
+    mark = "[x]" if t.get("done") else "[ ]"
+    title = t.get("title", "")
+    prio = t.get("priority") or 0
+    due = t.get("due_date", "") or ""
+    due_s = " due:" + due[:10] if due and not due.startswith("0001-01-01") else ""
+    prio_s = " p%d" % prio if prio else ""
+    labels = t.get("labels") or []
+    lab_s = ""
+    if labels:
+        lab_s = " [" + ", ".join(l.get("title", "") for l in labels) + "]"
+    print("%5d  %s %s%s%s%s" % (tid, mark, title, prio_s, due_s, lab_s))
+'
+    ;;
+
+task)
+    tid="${1:-}"
+    if [ -z "$tid" ]; then echo "usage: vk task <task_id>"; exit 1; fi
+    curl -s -H "$H_AUTH" "$API/tasks/$tid" | python3 -m json.tool
+    ;;
+
+add)
+    pid="${1:-}"
+    title="${2:-}"
+    desc="${3:-}"
+    if [ -z "$pid" ] || [ -z "$title" ]; then
+        echo 'usage: vk add <project_id> "title" [description]'; exit 1
+    fi
+    body=$(TITLE="$title" DESC="$desc" py '
+import os, json
+print(json.dumps({"title": os.environ["TITLE"], "description": os.environ.get("DESC", "")}))
+')
+    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/projects/$pid/tasks" | py '
+import sys, json
+t = json.load(sys.stdin)
+print("created task " + str(t.get("id")) + ": " + str(t.get("title", "")))
+'
+    ;;
+
+done)
+    tid="${1:-}"
+    if [ -z "$tid" ]; then echo "usage: vk done <task_id>"; exit 1; fi
+    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d '{"done":true}' "$API/tasks/$tid" | py '
+import sys, json
+t = json.load(sys.stdin)
+print("done: [" + str(t.get("id")) + "] " + str(t.get("title", "")))
+'
+    ;;
+
+reopen)
+    tid="${1:-}"
+    if [ -z "$tid" ]; then echo "usage: vk reopen <task_id>"; exit 1; fi
+    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d '{"done":false}' "$API/tasks/$tid" | py '
+import sys, json
+t = json.load(sys.stdin)
+print("reopened: [" + str(t.get("id")) + "] " + str(t.get("title", "")))
+'
+    ;;
+
+prio)
+    tid="${1:-}"
+    p="${2:-}"
+    if [ -z "$tid" ] || [ -z "$p" ]; then echo "usage: vk prio <task_id> <1-5>"; exit 1; fi
+    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d "{\"priority\":$p}" "$API/tasks/$tid" >/dev/null
+    echo "priority set to $p"
+    ;;
+
+due)
+    tid="${1:-}"
+    d="${2:-}"
+    if [ -z "$tid" ] || [ -z "$d" ]; then echo "usage: vk due <task_id> <YYYY-MM-DD>"; exit 1; fi
+    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d "{\"due_date\":\"${d}T00:00:00Z\"}" "$API/tasks/$tid" >/dev/null
+    echo "due date set to $d"
+    ;;
+
+label)
+    tid="${1:-}"
+    lname="${2:-}"
+    if [ -z "$tid" ] || [ -z "$lname" ]; then echo "usage: vk label <task_id> <label_name>"; exit 1; fi
+    lid=$(curl -s -H "$H_AUTH" "$API/labels" | LNAME="$lname" py '
+import os, sys, json
+name = os.environ["LNAME"].lower()
+for l in json.load(sys.stdin) or []:
+    if l.get("title", "").lower() == name:
+        print(l.get("id"))
+        break
+')
+    if [ -z "$lid" ]; then
+        body=$(LNAME="$lname" py '
+import os, json
+print(json.dumps({"title": os.environ["LNAME"]}))
+')
+        lid=$(curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/labels" | py '
+import sys, json
+print(json.load(sys.stdin).get("id"))
+')
+        echo "created label '$lname' id=$lid"
+    fi
+    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "{\"label_id\":$lid}" "$API/tasks/$tid/labels" >/dev/null
+    echo "labeled task $tid with '$lname'"
+    ;;
+
+create-project)
+    title="${1:-}"
+    desc="${2:-}"
+    if [ -z "$title" ]; then echo "usage: vk create-project <title> [desc]"; exit 1; fi
+    body=$(TITLE="$title" DESC="$desc" py '
+import os, json
+print(json.dumps({"title": os.environ["TITLE"], "description": os.environ.get("DESC", "")}))
+')
+    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/projects" | py '
+import sys, json
+p = json.load(sys.stdin)
+print("created project " + str(p.get("id")) + ": " + str(p.get("title", "")))
+'
+    ;;
+
+labels)
+    curl -s -H "$H_AUTH" "$API/labels" | py '
+import sys, json
+for l in json.load(sys.stdin) or []:
+    color = l.get("hex_color") or "-"
+    print("%4d  %s  (%s)" % (l.get("id"), l.get("title", ""), color))
+'
+    ;;
+
+create-label)
+    name="${1:-}"
+    color="${2:-}"
+    if [ -z "$name" ]; then echo "usage: vk create-label <name> [hex_color]"; exit 1; fi
+    body=$(NAME="$name" COLOR="$color" py '
+import os, json
+d = {"title": os.environ["NAME"]}
+if os.environ.get("COLOR"):
+    d["hex_color"] = os.environ["COLOR"]
+print(json.dumps(d))
+')
+    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/labels" | py '
+import sys, json
+l = json.load(sys.stdin)
+print("created label " + str(l.get("id")) + ": " + str(l.get("title", "")))
+'
+    ;;
+
+search)
+    q="${1:-}"
+    if [ -z "$q" ]; then echo 'usage: vk search "<query>"'; exit 1; fi
+    qenc=$(Q="$q" py 'import os, urllib.parse; print(urllib.parse.quote(os.environ["Q"]))')
+    curl -s -H "$H_AUTH" "$API/tasks/all?s=$qenc" | py '
+import sys, json
+for t in json.load(sys.stdin) or []:
+    mark = "[x]" if t.get("done") else "[ ]"
+    print("%5d  %s %s" % (t.get("id"), mark, t.get("title", "")))
+'
+    ;;
+
+""|help|-h|--help)
+    sed -n '2,20p' "$0" | sed 's|^# \{0,1\}||'
+    ;;
+
+*)
+    echo "unknown command: $cmd" >&2
+    echo "try: vk help" >&2
+    exit 1
+    ;;
+esac

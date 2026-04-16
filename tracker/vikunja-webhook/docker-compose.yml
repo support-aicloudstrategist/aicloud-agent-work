@@ -1,0 +1,20 @@
+services:
+  vikunja-webhook:
+    build: .
+    image: vikunja-webhook:latest
+    container_name: vikunja-webhook
+    restart: unless-stopped
+    environment:
+      BOT_TOKEN: "${BOT_TOKEN}"
+      CHAT_ID: "-4955349765"
+      WEBHOOK_SECRET: "${WEBHOOK_SECRET}"
+      PORT: "8090"
+      TRACKER_URL: "https://tracker.srv1562252.hstgr.cloud"
+    networks:
+      - ai-ops
+    expose:
+      - "8090"
+
+networks:
+  ai-ops:
+    external: true

@@ -1,0 +1,30 @@
+services:
+  vikunja:
+    image: vikunja/vikunja:latest
+    container_name: vikunja
+    restart: unless-stopped
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: "https://tracker.srv1562252.hstgr.cloud/"
+      VIKUNJA_DATABASE_TYPE: "sqlite"
+      VIKUNJA_DATABASE_PATH: "/app/vikunja/files/vikunja.db"
+      VIKUNJA_SERVICE_SECRET: "REDACTED_SET_IN_ENV"
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: "false"
+      VIKUNJA_MAILER_ENABLED: "false"
+      VIKUNJA_WEBHOOKS_ALLOWNONROUTABLEIPS: "true"
+      VIKUNJA_OUTGOINGREQUESTS_ALLOWNONROUTABLEIPS: "true"
+      VIKUNJA_SERVICE_TIMEZONE: "Asia/Kolkata"
+    volumes:
+      - /docker/vikunja/files:/app/vikunja/files
+    networks:
+      - ai-ops
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: "ai-ops"
+      traefik.http.routers.vikunja.entrypoints: "websecure"
+      traefik.http.routers.vikunja.rule: "Host(`tracker.srv1562252.hstgr.cloud`)"
+      traefik.http.routers.vikunja.tls.certresolver: "letsencrypt"
+      traefik.http.services.vikunja.loadbalancer.server.port: "3456"
+
+networks:
+  ai-ops:
+    external: true
