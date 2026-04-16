@@ -9,13 +9,31 @@
   <copyright>Copyright 2026 AICloudStrategist</copyright>
   <managingEditor>support@aicloudstrategist.com (Anushka B)</managingEditor>
   <webMaster>support@aicloudstrategist.com (Anushka B)</webMaster>
-  <lastBuildDate>Wed, 10 Jun 2026 04:30:00 +0000</lastBuildDate>
+  <lastBuildDate>Wed, 24 Jun 2026 04:30:00 +0000</lastBuildDate>
   <category>Cloud Computing</category>
   <category>FinOps</category>
   <category>DevOps</category>
   <category>AI Infrastructure</category>
   <generator>regen-feed.sh</generator>
 
+
+  <item>
+    <title>How We Structure Gain-Share on FinOps Engagements (And Why Most Consultancies Don&apos;t Offer It)</title>
+    <link>https://aicloudstrategist.com/blog/gainshare-structure.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/gainshare-structure.html</guid>
+    <pubDate>Wed, 24 Jun 2026 04:30:00 +0000</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <description>By Anushka B</description>
+  </item>
+
+  <item>
+    <title>Why Indian Mid-Market Cloud Spend Will Double Before It Gets Optimised</title>
+    <link>https://aicloudstrategist.com/blog/indian-cloud-gap.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/indian-cloud-gap.html</guid>
+    <pubDate>Wed, 17 Jun 2026 04:30:00 +0000</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <description>By Anushka B</description>
+  </item>
 
   <item>
     <title>The Five Kubernetes Cost Questions Nobody on Your Platform Team Can Answer</title>
