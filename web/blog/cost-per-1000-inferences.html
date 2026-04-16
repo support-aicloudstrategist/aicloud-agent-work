@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cost-Per-1000-Inferences: The One Number Every AI Product Team Should Know — AICloudStrategist</title>
+<meta name="description" content="Nine out of ten AI founders can't tell you what it costs to serve one user action. Cost-per-1000-inferences is the unit economics of your AI product. Worked example across Claude Haiku, GPT-4o, and self-hosted Llama 70B.">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="canonical" href="https://aicloudstrategist.com/blog/cost-per-1000-inferences.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aicloudstrategist.com/blog/cost-per-1000-inferences.html">
+<meta property="og:title" content="Cost-Per-1000-Inferences: The One Number Every AI Product Team Should Know">
+<meta property="og:description" content="Worked example across Claude Haiku, GPT-4o, and self-hosted Llama 70B. The crossover point. How to instrument it. Why pricing decisions depend on it.">
+<meta property="og:site_name" content="AICloudStrategist">
+<meta property="article:published_time" content="2026-05-06">
+<meta property="article:author" content="Anushka B">
+<script defer data-domain="aicloudstrategist.com" src="https://analytics.aicloudstrategist.com/js/script.outbound-links.js"></script>
+<link rel="alternate" type="application/rss+xml" title="AICloudStrategist Writing" href="/feed.xml">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/">AICloudStrategist</a>
+  <nav>
+    <a href="/services.html">Services</a>
+    <a href="/proof.html">Proof</a>
+    <a href="/compare.html">Compare</a>
+    <a href="/blog.html">Writing</a>
+    <a href="/book.html">Book a call</a>
+  </nav>
+</header>
+
+<main>
+<article class="blog-post">
+
+<header class="blog-header">
+  <p class="lede small"><a href="/blog.html">← All writing</a></p>
+  <h1>Cost-Per-1000-Inferences: The One Number Every AI Product Team Should Know</h1>
+  <p class="lede small">By Anushka B · Published 6 May 2026 · 7 min read</p>
+</header>
+
+<p>Ask a founder how much their AI feature costs to run. Nine out of ten will tell you the monthly API bill. Maybe they'll quote the GPU spend. What almost none of them can tell you is the cost to serve one user action — one summarisation, one recommendation, one chat completion.</p>
+
+<p>That number is <strong>cost-per-1000-inferences (CP1Ki)</strong>. It is the unit economics of your AI product. Without it, you cannot price correctly. You cannot decide when to switch models. You cannot tell your CFO why the AI line item jumped 40 percent last quarter without looking like you've lost control of the system you built.</p>
+
+<p>This post walks through exactly how to calculate it, shows a worked comparison across three common stacks, and explains how to instrument it so the number updates itself.</p>
+
+<h2>What "inference" means here</h2>
+
+<p>One inference = one round-trip through your model: prompt in, completion out. A user clicking "Summarise this document" triggers one inference. A multi-turn chat session that generates ten responses triggers ten. For batch jobs, each item processed is one inference.</p>
+
+<p><strong>CP1Ki = total cost to serve 1,000 inferences in a given period.</strong></p>
+
+<p>That is it. Simple denominator, hard-to-get numerator — because the numerator varies by model, by hosting mode, by utilisation, and by prompt design.</p>
+
+<h2>The calculation: managed APIs</h2>
+
+<p>For managed APIs (Anthropic Claude, OpenAI, Google Gemini via their direct or cloud endpoints), the cost structure is token-based:</p>
+
+<p><strong>Total cost = (input tokens × input price) + (output tokens × output price)</strong></p>
+
+<p>To get CP1Ki, you need two more things: average tokens per inference, and the model's published rate.</p>
+
+<p><strong>Formula:</strong></p>
+
+<pre><code>CP1Ki = ((avg_input_tokens × input_$/1M) + (avg_output_tokens × output_$/1M)) × 1000 / 1,000,000</code></pre>
+
+<p>Or simplified: <code>CP1Ki = (avg_tokens_per_inference × blended_$/1M_tokens) / 1000</code></p>
+
+<p>The blended rate depends heavily on your input/output ratio. Most product use cases are input-heavy — system prompts, document context, retrieved chunks. A summarisation task might be 2,000 input tokens to 300 output tokens. A coding assistant might flip that ratio. Measure your actual distribution before benchmarking.</p>
+
+<h2>Worked example: same task, three stacks</h2>
+
+<p><strong>Task:</strong> Document summarisation — 1,800 input tokens (system prompt + document), 400 output tokens. Medium complexity, no streaming edge cases. Target: 10,000 inferences/day.</p>
+
+<h3>Stack 1 — Claude Haiku 3.5 (Anthropic API)</h3>
+
+<ul>
+  <li>Input: $0.80 / 1M tokens</li>
+  <li>Output: $4.00 / 1M tokens</li>
+  <li>Per inference: (1800 × 0.80 + 400 × 4.00) / 1,000,000 = ($1.44 + $1.60) / 1,000,000 = $0.00304</li>
+  <li><strong>CP1Ki: $3.04</strong></li>
+  <li>Daily cost at 10K inferences: <strong>$30.40</strong></li>
+</ul>
+
+<h3>Stack 2 — GPT-4o (OpenAI API)</h3>
+
+<ul>
+  <li>Input: $2.50 / 1M tokens</li>
+  <li>Output: $10.00 / 1M tokens</li>
+  <li>Per inference: (1800 × 2.50 + 400 × 10.00) / 1,000,000 = ($4.50 + $4.00) / 1,000,000 = $0.0085</li>
+  <li><strong>CP1Ki: $8.50</strong></li>
+  <li>Daily cost at 10K inferences: <strong>$85.00</strong></li>
+</ul>
+
+<h3>Stack 3 — Llama 3 70B, self-hosted on AWS g5.xlarge</h3>
+
+<p>The g5.xlarge has one A10G GPU (24GB VRAM). Llama 70B in 4-bit quantisation fits, but barely — you will see throughput drop under concurrent load.</p>
+
+<ul>
+  <li>On-Demand rate (us-east-1): $1.006/hour. 1-year Reserved: ~$0.636/hour. Use Reserved for any steady-state workload.</li>
+  <li>At Reserved rate, monthly GPU cost: $0.636 × 730 = <strong>$464/month</strong></li>
+  <li>Add: EC2 storage (50GB gp3) ≈ $4/month, data transfer ≈ $5/month (internal traffic), monitoring overhead ≈ $3/month</li>
+  <li><strong>Total infrastructure: ~$476/month</strong></li>
+  <li>At 10K inferences/day × 30 days = 300,000 inferences/month</li>
+  <li><strong>CP1Ki: ($476 / 300,000) × 1,000 = $1.59</strong></li>
+</ul>
+
+<p>On paper, self-hosted wins by 2x on CP1Ki at this volume. But there are four numbers this calculation does not include: engineer time to maintain vLLM config and model updates (~4 hrs/month at senior rates), the cost of the g5.xlarge sitting at 30 percent utilisation on weekends, latency SLA misses when the single instance queues up under burst load, and the on-call rotation that now owns a GPU. At 300K inferences/month, the self-hosted advantage often disappears once you account for fully-loaded operational cost.</p>
+
+<p>The crossover point — where self-hosted infrastructure genuinely beats managed API cost including ops overhead — is typically above <strong>2–3M inferences/day</strong> for a team without existing MLOps tooling. Our <a href="/ai-gpu-audit.html">AI/GPU Cost Audit Checklist</a> has a worksheet that lets you plug in your actual volumes and team rates to find your specific crossover.</p>
+
+<h2>Why CP1Ki changes your pricing decisions</h2>
+
+<p>Most AI product teams price on intuition or competitor benchmarking. Neither is a business model.</p>
+
+<p>If your CP1Ki is $3.04 (Haiku stack above) and your product charges ₹299/month for unlimited summarisations, you need to know how many summarisations a power user runs before you're underwater. At ₹299 ≈ $3.60 and CP1Ki of $3.04, you have exactly $0.56 of gross margin before you pay for servers, support, and salary. One user who runs 1,000 summarisations/month wipes out 92 paying users' margin.</p>
+
+<p>This is not a hypothetical. I see it regularly in FinOps audits of AI-native startups. The unit economics were never calculated; the product was priced on vibes.</p>
+
+<p>CP1Ki also tells you when to switch models mid-product. If your quality threshold is met by Haiku, there is no business case for GPT-4o at 2.8x the cost per inference. But if a specific feature — legal clause analysis, code generation — requires GPT-4o quality, you can route that feature specifically to the expensive model and keep the rest of the product on Haiku. That routing decision needs CP1Ki to justify itself in a board update.</p>
+
+<h2>How to instrument it</h2>
+
+<p>You cannot manage what you do not measure at the right granularity. API bills and GPU invoices tell you monthly totals. You need per-feature, per-inference data.</p>
+
+<p><strong>Step 1: Tag every inference call at the point of code.</strong></p>
+
+<p>Add a metadata tag to every API call that identifies the feature generating it:</p>
+
+<pre><code>response = client.messages.create(
+    model="claude-haiku-3-5",
+    max_tokens=500,
+    messages=[...],
+    metadata={"user_id": user_id}  # Anthropic API
+)
+# Log separately: feature_tag="document_summariser", tokens_in=X, tokens_out=Y</code></pre>
+
+<p>For self-hosted models behind vLLM or Triton, tag at the reverse proxy layer (Nginx, Envoy) or in your application middleware before the model call. The tag should carry: feature name, user tier, model version, timestamp.</p>
+
+<p><strong>Step 2: Export billing data by tag into your data warehouse.</strong></p>
+
+<p>For managed APIs: pull usage logs from the provider's API (Anthropic Usage API, OpenAI Usage endpoint, AWS Cost and Usage Report for Bedrock). Join on timestamp to your application log's feature tag. For self-hosted: allocate GPU cost by the fraction of total requests that feature generated in that billing period.</p>
+
+<p>A simple dbt model or even a spreadsheet pivot on feature_tag × (tokens_in + tokens_out) × rate gives you CP1Ki per feature, updated daily.</p>
+
+<p><strong>Step 3: Alert on CP1Ki drift.</strong></p>
+
+<p>Set a threshold alert: if CP1Ki for any feature exceeds 120 percent of its 30-day baseline, page the on-call engineer. Common causes — prompt bloat (someone added 800 tokens to the system prompt), model version change, or a bug causing retry storms. Catching this early has saved clients $8,000–$15,000 in a single incident.</p>
+
+<h2>The number you owe your team</h2>
+
+<p>CP1Ki is not a finance metric. It is an engineering metric that finance can read. It tells your CTO where the AI spend is going. It tells your product manager which features are subsidising which. It tells your pricing team the floor below which a plan cannot be profitable.</p>
+
+<p>If you cannot answer "what does it cost us to serve 1,000 of these AI responses?" for every AI feature in production, you are flying blind.</p>
+
+<h2>Book an AI Architecture Review</h2>
+
+<p>Our AI Architecture Review service calculates CP1Ki across your full model stack, identifies the routing decisions that would cut your inference cost by 30–60 percent, and delivers a prioritised implementation plan in two to three weeks.</p>
+
+<p>Download the <a href="/ai-gpu-audit.html">AI/GPU Cost Audit Checklist</a> first — it gives you the data you'll need to walk into that conversation.</p>
+
+<p><strong><a href="/book.html">Book a free 30-min Cloud Cost Health Check → aicloudstrategist.com/book.html</a></strong></p>
+
+<hr>
+
+<p class="lede small"><em>AICloudStrategist · Founder-led. Enterprise-reviewed. · Written by Anushka B, Founder.</em></p>
+
+</article>
+
+<section class="cta-band">
+  <p>More writing every Tuesday and Thursday.</p>
+  <a class="cta" href="/blog.html">See all writing →</a>
+</section>
+
+<footer>
+  <p>AICloudStrategist · Rohini, Delhi 110085 · <a href="mailto:support@aicloudstrategist.com">support@aicloudstrategist.com</a></p>
+  <p class="legal"><a href="/privacy.html">Privacy</a> · <a href="/services.html">Services</a> · <a href="/proof.html">Proof</a> · <a href="/compare.html">Compare</a> · <a href="/blog.html">Writing</a></p>
+</footer>
+</main>
+</body>
+</html>

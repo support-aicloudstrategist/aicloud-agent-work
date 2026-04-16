@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title>AICloudStrategist — Writing</title>
+  <link>https://aicloudstrategist.com/blog.html</link>
+  <atom:link href="https://aicloudstrategist.com/feed.xml" rel="self" type="application/rss+xml" />
+  <description>Practitioner writing on FinOps, cloud architecture, AI infrastructure, and DevOps for Indian engineering leaders and CFOs. Founder-led. Enterprise-reviewed.</description>
+  <language>en-IN</language>
+  <copyright>Copyright 2026 AICloudStrategist</copyright>
+  <managingEditor>support@aicloudstrategist.com (Anushka B)</managingEditor>
+  <webMaster>support@aicloudstrategist.com (Anushka B)</webMaster>
+  <lastBuildDate>Wed, 20 May 2026 10:00:00 +0530</lastBuildDate>
+  <category>Cloud Computing</category>
+  <category>FinOps</category>
+  <category>DevOps</category>
+  <category>AI Infrastructure</category>
+  <generator>AICloudStrategist manual build</generator>
+
+  <item>
+    <title>Why 70% of Indian Mid-Market Cloud Accounts Have Reserved Instance Coverage Below 30%</title>
+    <link>https://aicloudstrategist.com/blog/ri-coverage-india-governance.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/ri-coverage-india-governance.html</guid>
+    <pubDate>Wed, 20 May 2026 10:00:00 +0530</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <category>FinOps</category>
+    <category>AWS</category>
+    <category>Reserved Instances</category>
+    <description>Not a technical problem — a coordination problem dressed up as a cloud problem. Engineering knows the instances. Finance controls the budget. Nobody owns the intersection. The governance framework plus a one-afternoon action plan that moves coverage from 22% to 70%.</description>
+  </item>
+
+  <item>
+    <title>DORA Metrics for the CFO: Translating DevOps Performance to Business Outcomes</title>
+    <link>https://aicloudstrategist.com/blog/dora-metrics-for-cfo.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/dora-metrics-for-cfo.html</guid>
+    <pubDate>Wed, 13 May 2026 10:00:00 +0530</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <category>DevOps</category>
+    <category>DORA</category>
+    <category>Engineering Leadership</category>
+    <description>CFOs do not read engineering dashboards. Worked INR example shows a Low-tier team carrying ₹37L per year in hidden cost — deferred revenue, rework, downtime, and churn risk. The four numbers that turn a DevOps budget request into a funded project.</description>
+  </item>
+
+  <item>
+    <title>Cost-Per-1000-Inferences: The One Number Every AI Product Team Should Know</title>
+    <link>https://aicloudstrategist.com/blog/cost-per-1000-inferences.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/cost-per-1000-inferences.html</guid>
+    <pubDate>Wed, 06 May 2026 10:00:00 +0530</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <category>AI Infrastructure</category>
+    <category>FinOps</category>
+    <category>Unit Economics</category>
+    <description>Nine out of ten AI founders cannot tell you what it costs to serve one user action. Worked comparison across Claude Haiku, GPT-4o, and self-hosted Llama 70B. The crossover point, the instrumentation, and why pricing decisions depend on it.</description>
+  </item>
+
+  <item>
+    <title>The Cross-Region Egress Mistake That Quietly Tripled a GCP Bill</title>
+    <link>https://aicloudstrategist.com/blog/cross-region-egress-mistake.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/cross-region-egress-mistake.html</guid>
+    <pubDate>Wed, 29 Apr 2026 10:00:00 +0530</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <category>GCP</category>
+    <category>FinOps</category>
+    <category>Networking</category>
+    <description>Two line items. One billing export query. ₹14 lakh recovered per year. A funded SaaS company watched their GCP bill triple over eight months — the cause was one region flag in one Terraform file. Includes the BigQuery query to detect the pattern yourself.</description>
+  </item>
+
+  <item>
+    <title>Orphaned EBS Volumes: The Quiet Compounding Cost Indian Engineering Teams Keep Missing</title>
+    <link>https://aicloudstrategist.com/blog/orphaned-ebs-volumes.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/orphaned-ebs-volumes.html</guid>
+    <pubDate>Wed, 22 Apr 2026 10:00:00 +0530</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <category>AWS</category>
+    <category>FinOps</category>
+    <category>EBS</category>
+    <description>38 volumes, 4.2 TB, ₹4.2 lakh a year — for infrastructure nobody had touched in months. A pattern study on the most common overlooked line item in mid-market AWS accounts, the 10-minute detection command, and the governance fix that prevents recurrence.</description>
+  </item>
+
+  <item>
+    <title>Your Reserved Instance Coverage Is Probably Under 30 Percent. Here Is Why That Matters.</title>
+    <link>https://aicloudstrategist.com/blog/ri-coverage-under-30-percent.html</link>
+    <guid isPermaLink="true">https://aicloudstrategist.com/blog/ri-coverage-under-30-percent.html</guid>
+    <pubDate>Wed, 16 Apr 2026 10:00:00 +0530</pubDate>
+    <dc:creator>Anushka B</dc:creator>
+    <category>AWS</category>
+    <category>FinOps</category>
+    <category>Reserved Instances</category>
+    <description>Every AWS account we audit has the same conversation. Engineering teams believe coverage is 70%; the billing data shows 28%. The gap is the single most expensive blind spot in mid-market AWS accounts. The 15-minute Cost Explorer check and the ap-south-1 pricing math.</description>
+  </item>
+
+</channel>
+</rss>
