@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://aicloudstrategist.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/services.html</loc><priority>0.9</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/proof.html</loc><priority>0.9</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/book.html</loc><priority>0.9</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/privacy.html</loc><priority>0.4</priority><changefreq>yearly</changefreq><lastmod>2026-04-15</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/blog.html</loc><priority>0.8</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/compare.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/faq.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/finops-assessment.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/aws-checklist.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/azure-checklist.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/ai-gpu-audit.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/aws-checklist.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/azure-checklist.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog.html</loc><priority>0.9</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/book.html</loc><priority>0.9</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/compare.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/devops-assessment.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/faq.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/finops-assessment.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/one-pager.html</loc><priority>0.6</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/privacy.html</loc><priority>0.4</priority><changefreq>yearly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/proof.html</loc><priority>0.9</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/services.html</loc><priority>0.9</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/cost-explorer-blindspots.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/cost-per-1000-inferences.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/cross-region-egress-mistake.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/dora-metrics-for-cfo.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/k8s-cost-questions.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/orphaned-ebs-volumes.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/ri-coverage-india-governance.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/blog/ri-coverage-under-30-percent.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/blog/orphaned-ebs-volumes.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-22</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/blog/cross-region-egress-mistake.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-29</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/blog/cost-per-1000-inferences.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-05-06</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/blog/dora-metrics-for-cfo.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-05-13</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/blog/ri-coverage-india-governance.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-05-20</lastmod></url>
-  <url><loc>https://aicloudstrategist.com/downloads/aws-cost-cutting-checklist-indian-smbs.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://aicloudstrategist.com/downloads/finops-maturity-self-assessment.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://aicloudstrategist.com/downloads/aicloudstrategist-services-one-pager.pdf</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://aicloudstrategist.com/downloads/azure-cost-cutting-checklist-indian-smbs.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://aicloudstrategist.com/downloads/ai-gpu-cost-audit-checklist.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://aicloudstrategist.com/downloads/devops-maturity-self-assessment.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://aicloudstrategist.com/blog/weekly-review.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/downloads/ai-gpu-cost-audit-checklist.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/downloads/aicloudstrategist-services-one-pager.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/downloads/aws-cost-cutting-checklist-indian-smbs.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-15</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/downloads/azure-cost-cutting-checklist-indian-smbs.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/downloads/devops-maturity-self-assessment.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/downloads/finops-maturity-self-assessment.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-15</lastmod></url>
 </urlset>

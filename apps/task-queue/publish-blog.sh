@@ -73,10 +73,11 @@ BODY_HTML=$(mktemp)
 SRC_IN_MAO="/tmp/publish-blog-src-$$.md"
 BODY_IN_MAO="/tmp/publish-blog-body-$$.html"
 docker cp "$SRC" "claude-mao:${SRC_IN_MAO}"
+docker exec -u root claude-mao chown mao:mao "${SRC_IN_MAO}" 2>/dev/null || true
 # Skip the first H1 (we use our own header block) and pipe through pandoc inside container
 docker exec claude-mao bash -c "tail -n +2 '${SRC_IN_MAO}' | pandoc -f markdown -t html5 --no-highlight > '${BODY_IN_MAO}'"
 docker cp "claude-mao:${BODY_IN_MAO}" "$BODY_HTML"
-docker exec claude-mao rm -f "${SRC_IN_MAO}" "${BODY_IN_MAO}"
+docker exec -u root claude-mao rm -f "${SRC_IN_MAO}" "${BODY_IN_MAO}"
 
 # Build the final HTML file
 cat > "$OUT" <<HEAD
@@ -149,8 +150,9 @@ TAIL
 rm -f "$BODY_HTML"
 chmod 644 "$OUT"
 
-# Regenerate feed
+# Regenerate feed and sitemap
 /docker/task-queue/bin/regen-feed.sh
+/docker/task-queue/bin/regen-sitemap.sh
 
 # Ping Telegram
 BOT=$(grep '^BOT_TOKEN=' /docker/tg-bot/.env | cut -d= -f2-)

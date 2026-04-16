@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Five Kubernetes Cost Questions Nobody on Your Platform Team Can Answer — AICloudStrategist</title>
+<meta name="description" content="By Anushka B">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="canonical" href="https://aicloudstrategist.com/blog/k8s-cost-questions.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aicloudstrategist.com/blog/k8s-cost-questions.html">
+<meta property="og:title" content="The Five Kubernetes Cost Questions Nobody on Your Platform Team Can Answer">
+<meta property="og:description" content="By Anushka B">
+<meta property="og:site_name" content="AICloudStrategist">
+<meta property="article:published_time" content="2026-06-10">
+<meta property="article:author" content="Anushka B">
+<script defer data-domain="aicloudstrategist.com" src="https://analytics.aicloudstrategist.com/js/script.outbound-links.js"></script>
+<link rel="alternate" type="application/rss+xml" title="AICloudStrategist Writing" href="/feed.xml">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/">AICloudStrategist</a>
+  <nav>
+    <a href="/services.html">Services</a>
+    <a href="/proof.html">Proof</a>
+    <a href="/compare.html">Compare</a>
+    <a href="/blog.html">Writing</a>
+    <a href="/book.html">Book a call</a>
+  </nav>
+</header>
+
+<main>
+<article class="blog-post">
+
+<header class="blog-header">
+  <p class="lede small"><a href="/blog.html">← All writing</a></p>
+  <h1>The Five Kubernetes Cost Questions Nobody on Your Platform Team Can Answer</h1>
+  <p class="lede small">By Anushka B · Published 10 June 2026 · 7 min read</p>
+</header>
+
+<p><em>By Anushka B</em></p>
+<hr />
+<p>Here’s a situation that plays out in engineering retrospectives
+across India every quarter.</p>
+<p>A senior platform engineer pulls up the AWS or GCP bill. The number
+has climbed — again. ₹18 lakh last month, ₹22 lakh this month.
+Leadership wants a breakdown. The platform team goes quiet. Not because
+they don’t care, but because the honest answer is: <em>we don’t know
+where it went.</em></p>
+<p>You have observability for everything. Grafana dashboards. Datadog
+traces. PagerDuty alerts at 2 AM. You know exactly when your p99 latency
+spikes. You can tell which pod restarted and why. But ask your platform
+team what it cost to serve Tenant A last week versus Tenant B, and
+they’ll stare at their laptops like the answer might crawl out of the
+terminal if they wait long enough.</p>
+<p>This is the Kubernetes cost visibility gap — and it’s not a niche
+problem. It’s endemic to any team running 100+ pods across shared
+clusters without proper cost attribution tooling. You’ve built excellent
+operational intelligence. You’ve built almost zero financial
+intelligence.</p>
+<p>The consequences compound quietly. Engineering leaders can’t make
+resource trade-offs on data. Product teams can’t price features
+accurately. FinOps reviews turn into guesswork sessions with
+spreadsheets. And the cloud bill keeps climbing because no one can point
+to <em>exactly</em> what changed and <em>exactly</em> what it cost.</p>
+<p>Let’s go through the five questions your platform team almost
+certainly cannot answer right now — and the commands and queries that
+start changing that.</p>
+<hr />
+<h2 id="question-1-what-does-one-tenant-cost-to-serve">Question 1: What
+Does One Tenant Cost to Serve?</h2>
+<p>This is the foundational question for any SaaS platform on
+Kubernetes. If you’re multi-tenant with namespaces or labels per tenant,
+you should be able to say: “Serving Tenant Acme Corp cost us ₹47,000
+last month.” Almost nobody can.</p>
+<p>Without tenant-level cost attribution, you cannot have cost-based
+pricing conversations. You cannot identify your most expensive
+customers. You cannot tell whether that enterprise discount you gave is
+actually margin-positive.</p>
+<p><strong>With OpenCost:</strong></p>
+<pre class="bash"><code># Query cost allocation by tenant label over the last 30 days
+curl -G http://opencost.kube-system.svc:9003/allocation \
+  --data-urlencode &#39;window=30d&#39; \
+  --data-urlencode &#39;aggregate=label:tenant&#39; \
+  --data-urlencode &#39;accumulate=true&#39; | jq &#39;.data[] | {name: .name, totalCost: .totalCost}&#39;</code></pre>
+<p>This requires your pods to carry a <code>tenant</code> label — which
+they should if you’re multi-tenant. If they don’t, that’s your first
+infrastructure debt to address.</p>
+<p>What you’ll get back: per-tenant CPU cost, memory cost, GPU cost (if
+applicable), network, and PV storage — all denominated in dollars by
+default, which you convert at the prevailing USD/INR rate. A tenant
+consuming ₹2.4 lakh/month on a shared ₹15 lakh cluster is information
+that changes pricing conversations immediately.</p>
+<hr />
+<h2 id="question-2-which-namespace-is-most-expensive">Question 2: Which
+Namespace Is Most Expensive?</h2>
+<p>This sounds trivial. It is not. Namespace-level cost visibility is
+where most teams think they have coverage, and most teams are wrong.</p>
+<p><code>kubectl top pods -n payments</code> gives you current resource
+<em>usage</em>. It tells you nothing about cost. Your actual spend
+depends on resource <em>requests</em> (what Kubernetes reserves for
+scheduling), usage (what the pod actually consumes), and the blended
+compute cost of the nodes those pods land on.</p>
+<p><strong>With kubectl and metrics-server (usage only):</strong></p>
+<pre class="bash"><code># Aggregate CPU and memory requests by namespace
+kubectl get pods --all-namespaces -o json | \
+  jq -r &#39;.items[] | [.metadata.namespace, 
+    (.spec.containers[].resources.requests.cpu // &quot;0&quot;), 
+    (.spec.containers[].resources.requests.memory // &quot;0&quot;)] | @tsv&#39; | \
+  sort | awk &#39;{ns[$1]+=$2; mem[$1]+=$3} END {for (n in ns) print n, ns[n], mem[n]}&#39;</code></pre>
+<p><strong>With OpenCost (actual cost attribution):</strong></p>
+<pre class="bash"><code>curl -G http://opencost.kube-system.svc:9003/allocation \
+  --data-urlencode &#39;window=7d&#39; \
+  --data-urlencode &#39;aggregate=namespace&#39; \
+  --data-urlencode &#39;accumulate=true&#39; | \
+  jq &#39;.data[] | {namespace: .name, totalCost: .totalCost, cpuCost: .cpuCost, memoryCost: .memoryCost}&#39; | \
+  sort -t: -k2 -rn</code></pre>
+<p>In teams we’ve worked with, the answer is almost always surprising.
+The <code>data-pipeline</code> namespace running batch jobs nobody
+monitors is frequently the most expensive. Not the customer-facing APIs
+everyone obsesses over.</p>
+<p>At ₹18 lakh/month cluster spend, knowing that one namespace accounts
+for ₹6.2 lakh — and that it could be optimised with smarter job
+scheduling — is actionable intelligence.</p>
+<hr />
+<h2
+id="question-3-what-percentage-of-cluster-capacity-is-idle-overnight">Question
+3: What Percentage of Cluster Capacity Is Idle Overnight?</h2>
+<p>Indian SaaS companies predominantly serve Indian customers. Traffic
+drops sharply between midnight and 7 AM. But most Kubernetes clusters
+run at their daytime provisioning levels 24/7.</p>
+<p>If your cluster is sized for peak daytime load and you’re not scaling
+down overnight, you’re paying full price for empty capacity —
+potentially 30–40% of your monthly bill.</p>
+<p><strong>Check actual node utilisation right now:</strong></p>
+<pre class="bash"><code># Node-level CPU and memory utilisation
+kubectl top nodes
+
+# Requested vs allocatable capacity per node
+kubectl describe nodes | grep -A 5 &quot;Allocated resources&quot;</code></pre>
+<p><strong>Get a cleaner picture of request-to-allocatable
+ratio:</strong></p>
+<pre class="bash"><code>kubectl get nodes -o json | jq -r &#39;.items[] | 
+  .metadata.name + &quot; &quot; + 
+  .status.allocatable.cpu + &quot; &quot; + 
+  .status.allocatable.memory&#39;</code></pre>
+<p>Cross-reference this with your actual <code>kubectl top nodes</code>
+output at 2 AM. The delta is your idle capacity tax. For a team on a
+20-node cluster at ₹4,500/node/month (typical GKE n2-standard-4
+equivalent in Mumbai region), 8 hours of idle overnight across 8 nodes
+is roughly ₹14,400/month in pure waste. Across a year: ₹1.7 lakh, just
+for leaving the lights on.</p>
+<p>Horizontal Pod Autoscaler and Cluster Autoscaler with appropriate
+<code>--scale-down-delay</code> settings fix this. But you can’t
+prioritise what you can’t see.</p>
+<hr />
+<h2
+id="question-4-which-services-are-over-requested-vs-actual-usage">Question
+4: Which Services Are Over-Requested vs Actual Usage?</h2>
+<p>This is where most Kubernetes cost waste hides — not in dramatically
+over-provisioned nodes, but in the quiet accumulation of conservative
+resource requests that developers set once and never revisit.</p>
+<p>A service that requests 2 CPUs and 4Gi memory but consistently uses
+0.3 CPUs and 600Mi memory is holding 1.7 CPUs and 3.4Gi memory hostage
+from the scheduler. Multiply this across 40 microservices and you’re
+paying for a cluster that’s 2–3x larger than it needs to be.</p>
+<p><strong>Find the worst offenders:</strong></p>
+<pre class="bash"><code># Compare requests vs actual usage per pod
+kubectl top pods --all-namespaces --sort-by=cpu | head -40
+
+# For a specific namespace, get request vs limit ratio
+kubectl get pods -n production -o json | jq -r &#39;
+  .items[] | .metadata.name as $name |
+  .spec.containers[] | 
+  [$name, .name, 
+   (.resources.requests.cpu // &quot;none&quot;), 
+   (.resources.limits.cpu // &quot;none&quot;)] | @tsv&#39;</code></pre>
+<p><strong>With OpenCost efficiency metrics:</strong></p>
+<pre class="bash"><code>curl -G http://opencost.kube-system.svc:9003/allocation \
+  --data-urlencode &#39;window=7d&#39; \
+  --data-urlencode &#39;aggregate=pod&#39; \
+  --data-urlencode &#39;accumulate=true&#39; | \
+  jq &#39;.data[] | select(.cpuEfficiency &lt; 0.3) | 
+    {pod: .name, cpuEfficiency: .cpuEfficiency, 
+     memorEfficiency: .ramEfficiency, waste: .totalEfficiency}&#39;</code></pre>
+<p>Anything with <code>cpuEfficiency</code> below 0.3 is using less than
+30% of what it requested. These are your VPA (Vertical Pod Autoscaler)
+candidates. For teams with 50+ services and a ₹20 lakh monthly bill,
+rightsizing the bottom 20% of efficiency is typically a ₹3–5 lakh
+monthly saving — without touching a single line of application code.</p>
+<hr />
+<h2 id="question-5-what-does-one-cicd-pipeline-run-cost">Question 5:
+What Does One CI/CD Pipeline Run Cost?</h2>
+<p>This question makes platform engineers uncomfortable because the
+answer exists — it’s just that nobody has ever calculated it.</p>
+<p>Your CI/CD pipelines run on your cluster (or consume cluster-adjacent
+compute). Every <code>helm upgrade</code>, every
+<code>kubectl apply</code>, every integration test suite has a cost. If
+your pipelines run 200 times a day across 15 teams, and each run
+consumes meaningful CPU and memory for 4–8 minutes, that’s a non-trivial
+monthly line item hiding inside your “general compute” bucket.</p>
+<p><strong>Instrument pipeline jobs with cost labels:</strong></p>
+<pre class="yaml"><code># In your pipeline pod spec or job template
+metadata:
+  labels:
+    cost-center: ci-cd
+    team: payments
+    pipeline: release-deploy</code></pre>
+<p><strong>Then query:</strong></p>
+<pre class="bash"><code>curl -G http://opencost.kube-system.svc:9003/allocation \
+  --data-urlencode &#39;window=30d&#39; \
+  --data-urlencode &#39;aggregate=label:pipeline&#39; \
+  --data-urlencode &#39;accumulate=true&#39; | \
+  jq &#39;.data[] | {pipeline: .name, totalCost: .totalCost}&#39;</code></pre>
+<p><strong>Quick approximation without OpenCost:</strong></p>
+<pre class="bash"><code># Find CI namespace pod resource consumption
+kubectl top pods -n ci-cd --sort-by=cpu
+
+# Get average run duration from your CI tool logs, multiply by:
+# (CPU cores requested × node $/hour) + (memory GiB × memory $/hour)</code></pre>
+<p>If each pipeline run costs ₹12 and you’re running 6,000 runs/month,
+that’s ₹72,000/month on CI alone. Teams that see this number start
+making different decisions: caching aggressively, parallelising smarter,
+killing redundant test stages. The ones who don’t see it keep clicking
+“re-run pipeline” without consequence.</p>
+<hr />
+<h2 id="the-common-thread">The Common Thread</h2>
+<p>Every one of these questions is answerable. The tools exist: OpenCost
+(open-source, CNCF sandbox), Kubecost, native cloud cost allocation
+tags, VPA recommendations. The kubectl commands exist. The Prometheus
+metrics exist.</p>
+<p>What doesn’t exist on most platform teams is the 2–3 week investment
+to set up the attribution framework, label consistently, configure the
+tooling, and build the dashboards that turn raw cost data into
+actionable team-level visibility.</p>
+<p>That’s not a criticism — platform teams are stretched. But the cost
+of <em>not</em> building this visibility isn’t abstract. It’s ₹3–8 lakh
+per month in avoidable waste for a mid-size cluster, compounding every
+month you don’t look.</p>
+<hr />
+<h2 id="want-this-built-for-your-cluster">Want This Built for Your
+Cluster?</h2>
+<p>We run cost attribution engagements for platform and DevOps teams:
+OpenCost or Kubecost setup, namespace and tenant labelling strategy,
+Grafana cost dashboards, and a rightsizing report that identifies your
+top 10 waste sources with specific fixes.</p>
+<p>Teams typically see 20–35% cluster cost reduction within 60 days. The
+engagement pays for itself before the second invoice.</p>
+<p><strong>[Talk to us about our DevOps &amp; Platform Engineering
+service →]</strong></p>
+<p>If you’re running ₹10 lakh+/month on Kubernetes and can’t answer
+these five questions, that’s not an observability gap. It’s a revenue
+leak.</p>
+<hr />
+<p><em>Anushka B writes about platform engineering, FinOps, and the
+infrastructure decisions Indian SaaS teams avoid until they can’t. If
+this resonated, share it with your platform lead.</em></p>
+
+<hr>
+
+<p class="lede small"><em>AICloudStrategist · Founder-led. Enterprise-reviewed. · Written by Anushka B, Founder.</em></p>
+
+</article>
+
+<section class="cta-band">
+  <p>More writing every Tuesday and Thursday.</p>
+  <a class="cta" href="/blog.html">See all writing →</a>
+</section>
+
+<footer>
+  <p>AICloudStrategist · Rohini, Delhi 110085 · <a href="mailto:support@aicloudstrategist.com">support@aicloudstrategist.com</a></p>
+  <p class="legal"><a href="/privacy.html">Privacy</a> · <a href="/services.html">Services</a> · <a href="/proof.html">Proof</a> · <a href="/compare.html">Compare</a> · <a href="/blog.html">Writing</a> · <a href="/faq.html">FAQ</a></p>
+</footer>
+</main>
+</body>
+</html>
