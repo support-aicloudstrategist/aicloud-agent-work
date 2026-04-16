@@ -9,7 +9,7 @@
 
 Most Indian mid-market technology companies are running workloads that were never designed for the cloud they're running on. The data centre lease is expiring. The monolith is choking on traffic. The AWS account that started as a proof-of-concept in 2019 is now production — with no landing zone, no tagging, and infrastructure provisioned by hand. The cost of not migrating is compounding.
 
-Migration & Re-Architecture is our highest-complexity, highest-leverage engagement. It covers three distinct migration patterns, each with its own risk profile, tooling selection, and delivery approach:
+Migration & Re-Architecture is our most complex and highest-impact engagement. It covers three distinct migration patterns, each with its own risk profile, tooling selection, and delivery approach:
 
 1. **Data Centre → Cloud** — physical or virtualised on-premises workloads moved to AWS, Azure, or GCP using block-level continuous replication with AWS MGN, Azure Migrate, or GCP Migrate to Virtual Machines (M4CE).
 2. **Cloud → Cloud** — workloads stranded on the wrong cloud (legacy AWS in a GCP-first org, shadow Azure subscriptions, Oracle Cloud migrations) re-homed with minimal downtime.

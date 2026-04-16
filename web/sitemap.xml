@@ -5,7 +5,12 @@
   <url><loc>https://aicloudstrategist.com/proof.html</loc><priority>0.9</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/book.html</loc><priority>0.9</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/privacy.html</loc><priority>0.4</priority><changefreq>yearly</changefreq><lastmod>2026-04-15</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog.html</loc><priority>0.8</priority><changefreq>weekly</changefreq><lastmod>2026-04-16</lastmod></url>
+  <url><loc>https://aicloudstrategist.com/blog/ri-coverage-under-30-percent.html</loc><priority>0.7</priority><changefreq>monthly</changefreq><lastmod>2026-04-16</lastmod></url>
   <url><loc>https://aicloudstrategist.com/downloads/aws-cost-cutting-checklist-indian-smbs.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://aicloudstrategist.com/downloads/finops-maturity-self-assessment.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
   <url><loc>https://aicloudstrategist.com/downloads/aicloudstrategist-services-one-pager.pdf</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://aicloudstrategist.com/downloads/azure-cost-cutting-checklist-indian-smbs.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://aicloudstrategist.com/downloads/ai-gpu-cost-audit-checklist.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://aicloudstrategist.com/downloads/devops-maturity-self-assessment.pdf</loc><priority>0.7</priority><changefreq>monthly</changefreq></url>
 </urlset>
