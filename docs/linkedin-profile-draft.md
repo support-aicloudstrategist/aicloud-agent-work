@@ -138,10 +138,10 @@ AI / Machine Learning Infrastructure, MLOps, OpenTelemetry, ArgoCD, Flux, GitOps
 1. **Free 30-min Cloud Cost Health Check** → aicloudstrategist.com/book.html
    Use title: *"Free 30-min Cloud Cost Health Check — structured, written summary same day"*
 
-2. **AWS Cost Optimisation Checklist (PDF, 30 leak points)** → aicloudstrategist.com/downloads/aws-cost-cutting-checklist-indian-smbs.pdf
+2. **AWS Cost Optimisation Checklist (PDF, 30 leak points)** → aicloudstrategist.com/aws-checklist.html
    Use title: *"30 leak points in Indian SMB AWS accounts — the checklist"*
 
-3. **FinOps Maturity Self-Assessment (PDF)** → aicloudstrategist.com/downloads/finops-maturity-self-assessment.pdf
+3. **FinOps Maturity Self-Assessment (PDF)** → aicloudstrategist.com/finops-assessment.html
    Use title: *"Where does your FinOps practice sit? 10-minute self-assessment"*
 
 4. **AICloudStrategist Website** → aicloudstrategist.com
