@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orphaned EBS Volumes: The Quiet Compounding Cost Indian Engineering Teams Keep Missing — AICloudStrategist</title>
+<meta name="description" content="38 volumes, 4.2 TB, ₹4.2 lakh a year — for infrastructure nobody had touched in months. A pattern study on orphaned EBS volumes in Indian mid-market AWS accounts, with the 10-minute detection command and the governance fix.">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="canonical" href="https://aicloudstrategist.com/blog/orphaned-ebs-volumes.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://aicloudstrategist.com/blog/orphaned-ebs-volumes.html">
+<meta property="og:title" content="Orphaned EBS Volumes: The Quiet Compounding Cost Indian Engineering Teams Keep Missing">
+<meta property="og:description" content="38 volumes, 4.2 TB, ₹4.2 lakh a year — for infrastructure nobody had touched in months. The 10-minute detection command and the governance fix.">
+<meta property="og:site_name" content="AICloudStrategist">
+<meta property="article:published_time" content="2026-04-22">
+<meta property="article:author" content="Anushka B">
+<script defer data-domain="aicloudstrategist.com" src="https://analytics.aicloudstrategist.com/js/script.outbound-links.js"></script>
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/">AICloudStrategist</a>
+  <nav>
+    <a href="/services.html">Services</a>
+    <a href="/proof.html">Proof</a>
+    <a href="/compare.html">Compare</a>
+    <a href="/blog.html">Writing</a>
+    <a href="/book.html">Book a call</a>
+  </nav>
+</header>
+
+<main>
+<article class="blog-post">
+
+<header class="blog-header">
+  <p class="lede small"><a href="/blog.html">← All writing</a></p>
+  <h1>Orphaned EBS Volumes: The Quiet Compounding Cost Indian Engineering Teams Keep Missing</h1>
+  <p class="lede small">By Anushka B · Published 22 April 2026 · 5 min read</p>
+</header>
+
+<p>Every engineering team I talk to has done a cloud cost review at some point. Reserved Instance coverage, right-sizing EC2, maybe a pass at S3 storage tiers. What almost none of them have done is pull a list of every EBS volume currently sitting in <code>available</code> state — detached, idle, billing at full price, forgotten.</p>
+
+<p>In one mid-market engagement in ap-south-1 last year, that list came back with <strong>38 volumes, 4.2 TB of storage, and a quiet ₹4.2 lakh annual bill</strong> attached to infrastructure nobody had touched in months. No alert had fired. No ticket existed. The spend was just compounding in the background.</p>
+
+<h2>Why DeleteOnTermination defaults to false (and why that's the root cause)</h2>
+
+<p>When you launch an EC2 instance and attach an EBS volume — whether at launch time or afterwards — AWS sets <code>DeleteOnTermination</code> to <code>false</code> by default for any volume that isn't the root device. The root volume defaults to <code>true</code>; everything else defaults to <code>false</code>. The reasoning made sense when EBS was younger: detaching a data volume and reattaching it to a replacement instance is a legitimate operational pattern. Databases, persistent logs, shared storage — there are real use cases where you want a volume to outlive its host instance. AWS was being conservative, and in 2010 that was the right call.</p>
+
+<p>The problem is that most workloads in 2026 are not doing any of that. They're running application servers, microservices, and ephemeral build agents that get terminated and respawned by Auto Scaling. The data volumes those instances used — 20 GB here, 100 GB there — don't get cleaned up. They enter <code>available</code> state, and AWS keeps billing for them at the full provisioned storage rate: <strong>$0.096 per GB-month for gp3</strong> in ap-south-1, <strong>$0.114 per GB-month for gp2</strong>. A single forgotten 100 GB gp2 volume costs <strong>₹970 per month</strong>. Thirty-eight of them, accumulated over two years of sprint cycles and team turnover, costs you <strong>₹35,000 every month for nothing</strong>.</p>
+
+<h2>A pattern study: 38 volumes, 4.2 TB, ₹4.2 lakh per year</h2>
+
+<p>The engagement referenced above was a Bengaluru-based SaaS company — Series B, 60-person engineering team, monthly AWS spend of roughly ₹18 lakh. Not a small operation, but not an enterprise with a dedicated FinOps function either. They ran a quarterly cost review, had reasonable Reserved Instance coverage on their production RDS fleet, and believed their AWS environment was reasonably tidy.</p>
+
+<p>When we ran the initial discovery scan, the volume list told a different story. Thirty-eight EBS volumes in <code>available</code> state across ap-south-1a, ap-south-1b, and ap-south-1c. Total provisioned storage: <strong>4.2 TB</strong>. The breakdown: 24 volumes were gp2 (legacy, never migrated to gp3), averaging 87 GB each. Fourteen were gp3, averaging 140 GB each. Oldest orphan: 19 months. Most recent: 11 days — from a failed staging deployment that no one had cleaned up. Annualised cost at ap-south-1 list pricing: <strong>₹4,18,000</strong> (~$5,000 USD).</p>
+
+<p>Not catastrophic in isolation. Compounded with the S3 storage sprawl and unused Elastic IPs we found in the same review, the total came to <strong>₹11.2 lakh in recoverable annual spend — 6.2% of their total cloud bill</strong>. That's real money for a company that size.</p>
+
+<h2>The 10-minute detection command</h2>
+
+<p>You can surface every orphaned EBS volume in your AWS account in under ten minutes. Open your terminal, configure your credentials for the right account, and run:</p>
+
+<pre><code>aws ec2 describe-volumes \
+  --region ap-south-1 \
+  --filters Name=status,Values=available \
+  --query 'Volumes[*].{
+    ID:VolumeId,
+    SizeGB:Size,
+    Type:VolumeType,
+    AZ:AvailabilityZone,
+    Created:CreateTime,
+    IOPS:Iops
+  }' \
+  --output table</code></pre>
+
+<p>This returns every volume not currently attached to a running or stopped instance. Add <code>--output json</code> and pipe through <code>jq</code> if you want to calculate total provisioned GB on the spot:</p>
+
+<pre><code>aws ec2 describe-volumes \
+  --region ap-south-1 \
+  --filters Name=status,Values=available \
+  --query 'Volumes[*].Size' \
+  --output json | jq 'add'</code></pre>
+
+<p>Multiply that number by $0.096 (gp3) or $0.114 (gp2) and then by 12 for your annual orphan cost. If the number surprises you, you're not alone. Run this across every region you operate in — us-east-1, eu-west-1, wherever your teams have ever spun something up — and total the figure before drawing any conclusions.</p>
+
+<h2>The governance fix: tagging and a 30-day quarantine window</h2>
+
+<p>Deletion should be deliberate, not automatic. The correct fix is a quarantine pattern, not a nightly purge.</p>
+
+<p>When a volume enters <code>available</code> state, tag it immediately: <code>quarantine-start: &lt;ISO-8601-date&gt;</code>. An EventBridge rule watching for EBS state-change events to <code>available</code> handles this without any polling. Pair it with a Lambda function or a daily cron job that queries for all volumes where that tag exists and the date is more than 30 days old — then either deletes them or files a Jira ticket for manual review depending on your team's risk appetite.</p>
+
+<p>On the prevention side: update your launch templates and Auto Scaling group configurations to set <code>DeleteOnTermination: true</code> for all non-root volumes unless there's a documented reason otherwise. Enforce this as a policy check in your CI pipeline using a tool like <code>cfn-guard</code> or Open Policy Agent against your CloudFormation and Terraform plans. Tag every EBS volume at creation with <code>owner</code>, <code>team</code>, and <code>environment</code>. Any volume that reaches <code>available</code> state without those tags triggers an immediate alert. The tagging discipline pays dividends well beyond storage — it's the same metadata that makes cost allocation reports meaningful at the team and product level.</p>
+
+<h2>The CFO view: why this compounds</h2>
+
+<p>The ₹4.2 lakh figure in the pattern study above is a point-in-time snapshot. It compounds in two ways that matter to finance.</p>
+
+<p><strong>First, it grows monotonically.</strong> Every sprint cycle, every staging environment spun up and torn down, every developer testing a new database configuration — all of it generates orphaned volumes unless the deletion policy is enforced at the infrastructure layer. Without a quarantine workflow, the volume of orphaned storage in an active engineering organisation roughly tracks headcount growth. A team that adds five engineers per quarter can expect its orphaned EBS footprint to grow <strong>15–20% annually on spend alone</strong>.</p>
+
+<p><strong>Second, it obscures accountability.</strong> When cost is spread across dozens of untagged, ownerless volumes, it shows up as a diffuse line in the AWS Cost Explorer rather than attributable team or product spend. Finance sees the bill; engineering sees no actionable signal. That friction — the inability to connect cloud spend to business outcomes — is what makes cost governance feel like bureaucracy instead of engineering hygiene. Fix the tagging, fix the deletion policy, and you also fix the visibility problem.</p>
+
+<p>The ₹4.2 lakh number is not the point. The point is that it existed for over a year without being visible to anyone in the organisation.</p>
+
+<h2>Free Cloud Cost Health Check</h2>
+
+<p>If you want to run this audit across your full AWS environment — not just EBS, but idle load balancers, unattached Elastic IPs, forgotten snapshots, and Reserved Instance gaps — we offer a free 30-minute Cloud Cost Health Check. No sales follow-up. A structured review call, a written summary of what we find, and a prioritised remediation list you can action immediately.</p>
+
+<p><strong><a href="/book.html">Book your free Cloud Cost Health Check → aicloudstrategist.com/book.html</a></strong></p>
+
+<p>The cost of looking is zero. The cost of not looking is, apparently, ₹4.2 lakh a year.</p>
+
+<hr>
+
+<p class="lede small"><em>AICloudStrategist · Founder-led. Enterprise-reviewed. · Written by Anushka B, Founder.</em></p>
+
+</article>
+
+<section class="cta-band">
+  <p>More writing every Tuesday and Thursday.</p>
+  <a class="cta" href="/blog.html">See all writing →</a>
+</section>
+
+<footer>
+  <p>AICloudStrategist · Rohini, Delhi 110085 · <a href="mailto:support@aicloudstrategist.com">support@aicloudstrategist.com</a></p>
+  <p class="legal"><a href="/privacy.html">Privacy</a> · <a href="/services.html">Services</a> · <a href="/proof.html">Proof</a> · <a href="/compare.html">Compare</a> · <a href="/blog.html">Writing</a></p>
+</footer>
+</main>
+</body>
+</html>
