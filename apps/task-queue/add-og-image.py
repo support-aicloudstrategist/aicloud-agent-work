@@ -49,7 +49,7 @@ for rel_path, slug in MAP.items():
         skipped += 1
         continue
 
-    og_image_url = f"{OG_BASE}/{slug}.png"
+    og_image_url = f"{OG_BASE}/{slug}.jpg"
     inject = (
         f'<meta property="og:image" content="{og_image_url}">\n'
         f'<meta property="og:image:width" content="1200">\n'
@@ -65,6 +65,6 @@ for rel_path, slug in MAP.items():
 
     p.write_text(new_s, encoding="utf-8")
     patched += 1
-    print(f"OK: {rel_path} -> {slug}.png")
+    print(f"OK: {rel_path} -> {slug}.jpg")
 
 print(f"\nPatched: {patched} | Skipped (already had og:image): {skipped}")

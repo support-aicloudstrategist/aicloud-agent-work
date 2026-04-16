@@ -29,18 +29,20 @@ render() {
     sed "s|{{HEADLINE}}|${headline}|; s|{{FONT_SIZE}}|${font_size}|" "$TEMPLATE_SRC" > "$tmp_html"
 
     # Render via mao container (root-exec for cleanup since docker cp makes files root-owned)
+    # JPG @ quality 82 is ~5-10x smaller than PNG for the gradient backgrounds we use.
+    local tmp_jpg="${tmp_png%.png}.jpg"
     docker cp "$tmp_html" "claude-mao:${tmp_html}"
     docker exec -u root claude-mao chown mao:mao "$tmp_html" 2>/dev/null || true
-    docker exec claude-mao wkhtmltoimage -q --width 1200 --height 630 --quality 92 --format png "$tmp_html" "$tmp_png" 2>/dev/null || true
-    docker cp "claude-mao:${tmp_png}" "${OUT_DIR}/${slug}.png"
-    docker exec -u root claude-mao rm -f "$tmp_html" "$tmp_png"
+    docker exec claude-mao wkhtmltoimage -q --width 1200 --height 630 --quality 82 --format jpg "$tmp_html" "$tmp_jpg" 2>/dev/null || true
+    docker cp "claude-mao:${tmp_jpg}" "${OUT_DIR}/${slug}.jpg"
+    docker exec -u root claude-mao rm -f "$tmp_html" "$tmp_jpg"
     rm -f "$tmp_html"
 
-    if [ -f "${OUT_DIR}/${slug}.png" ]; then
-        size=$(stat -c%s "${OUT_DIR}/${slug}.png")
-        echo "  ${slug}.png (${size} bytes)"
+    if [ -f "${OUT_DIR}/${slug}.jpg" ]; then
+        size=$(stat -c%s "${OUT_DIR}/${slug}.jpg")
+        echo "  ${slug}.jpg (${size} bytes)"
     else
-        echo "  ${slug}.png FAILED"
+        echo "  ${slug}.jpg FAILED"
     fi
 }
 
