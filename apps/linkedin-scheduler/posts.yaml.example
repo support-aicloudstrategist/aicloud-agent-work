@@ -1,0 +1,115 @@
+# LinkedIn Scheduled Posts — schedule file
+# Published via /docker/linkedin-scheduler/post.py (hourly cron)
+# Format: each entry has id, publish_at (IST, "YYYY-MM-DD HH:MM"), text (multi-line)
+# Ids must be unique. Duplicate publishes are prevented by /docker/linkedin-scheduler/published.log
+#
+# After editing this file, NO restart needed. Cron reads it on each fire.
+# Dates in the past are re-checked — if not yet in published.log, they publish on next cron.
+
+- id: launch-story
+  publish_at: "2026-04-22 10:00"
+  text: |
+    Seven years into working independently across DevOps, cloud engineering, and AI infrastructure — with Indian startups scaling from seed to Series B, and enterprise teams running production workloads on AWS, Azure, and GCP — one pattern kept showing up.
+
+    The Indian mid-market founder or CFO running an INR 5–20L per month cloud bill almost never gets senior-architect attention on the cost side. They get a vendor call. They get a 20-page proposal from a big consultancy. They get dashboards their engineering team never has time to act on.
+
+    That gap is why I started AICloudStrategist.
+
+    A focused practice, not an agency. Founder-led delivery with senior-architect oversight — 22+ years of Fortune 500 and global-consulting weight reviews every finding before it reaches you. Founder-level responsiveness, enterprise-grade rigour.
+
+    Concrete outcome: 20–30% verified cloud-spend reduction in four weeks. Open-source tooling (OpenCost, Infracost, OpenTelemetry, Terraform, ArgoCD) — you own everything we deploy. INR-first pricing.
+
+    Based in Rohini, Delhi. Working with Indian SMBs on AWS, Azure, and GCP.
+
+    If you are spending INR 5L or more a month on cloud and nobody has run a structured cost review in the last 12 months — this is probably worth 30 minutes of your time.
+
+    aicloudstrategist.com/book.html
+
+    Founder-led. Enterprise-reviewed.
+
+- id: ri-coverage-tip
+  publish_at: "2026-04-24 10:00"
+  text: |
+    If your AWS Reserved Instance coverage is below 70% for stable workloads, you are paying a premium you do not have to.
+
+    Here is a check you can run in 15 minutes on your own account:
+
+    AWS Cost Explorer → Reservations → Coverage Report. Set granularity to Monthly, date range to last three months. Group by Instance Type. Filter to ap-south-1. Sort by On-Demand Cost, descending.
+
+    Any row where coverage is below 70% and On-Demand cost is above $500 a month is a purchase decision waiting to be made.
+
+    The reference that matters for Indian accounts: a t3.xlarge On-Demand in ap-south-1 runs $0.1856/hour. The same instance on a 1-year No-Upfront Reserved runs $0.1178/hour. That is 36.5% off — for a keystroke.
+
+    Scale that across 20 t3.xlarge instances and the annual exposure is about ₹8 lakh. Add m5 and r5 families typical of mid-market accounts, and the number reaches ₹35L–₹1Cr a year.
+
+    If you want a second set of eyes on yours, we run a free 30-minute Cloud Cost Health Check. You share a 7-day CUR sample. We send back a two-page written summary the same day.
+
+    aicloudstrategist.com/book.html
+
+    #FinOps #AWS #CloudCost
+
+- id: gcp-egress-war-story
+  publish_at: "2026-04-29 10:00"
+  text: |
+    A company we worked with had tripled their GCP bill in eight months. The engineering lead insisted nothing had changed.
+
+    Something had.
+
+    Their billing export showed $14,000 a month in inter-region data transfer — us-central1 to us-east1, firing continuously. All day, every day.
+
+    Their application ran in us-central1. Their analytics warehouse had been quietly spun up in us-east1 during a late-night sprint months earlier. Every query, every pipeline flush, every dbt run was crossing a regional boundary. 94% of their entire egress bill was that single topology mistake.
+
+    The fix took one weekend. Migrate the warehouse back to us-central1. Update three Terraform files.
+
+    The next billing cycle: egress from $14,800 to under $900. Over ₹14 lakh a year, recovered. No new architecture. No vendor negotiation. One region flag in an IaC file.
+
+    The most expensive cloud mistakes are never the dramatic ones. They are the quiet ones — a region chosen at 2am, an auto-scaler that forgot to scale down, a Reserved Instance that expired without anyone noticing. They compound for months before anyone asks the right question.
+
+    Free 30-minute Cloud Cost Health Check: aicloudstrategist.com/book.html
+
+    Founder-led. Enterprise-reviewed.
+
+    #GCP #FinOps
+
+- id: indian-market-observation
+  publish_at: "2026-05-01 10:00"
+  text: |
+    Indian cloud spending crossed $15 billion in 2024. A significant share of that growth came from companies that were not structured to manage cloud finances at scale.
+
+    What I see in conversations across NCR and Bengaluru mid-market companies: teams that adopted cloud fast during 2020–2022 are now 3–4 years into architectures built for speed, not cost efficiency. Nobody reviewed the baseline. The bill grew with the business, so it looked normal.
+
+    Egress charges. Orphaned EBS snapshots. Over-provisioned RDS instances. Stale GKE node pools. These do not appear as flagged line items in a quarterly review. They compound quietly. ₹2–3L a month in avoidable spend is not unusual for a 100-person company running a reasonable cloud workload.
+
+    The companies getting ahead of this are the ones asking the cost question before the CFO does.
+
+    I started AICloudStrategist because this pattern repeats everywhere — and the savings are repeatable once someone actually looks, with the right senior-architect review in place.
+
+    If this resonates, share it with your CTO, or drop me a message.
+
+    Founder-led. Enterprise-reviewed.
+    aicloudstrategist.com
+
+    #CloudCosts #FinOps
+
+- id: ai-gpu-reality
+  publish_at: "2026-05-06 10:00"
+  text: |
+    The single fastest-growing line item in mid-market Indian cloud bills right now: AI infrastructure.
+
+    It is also the least governed.
+
+    A common pattern: a team builds an AI feature. The data scientist provisions SageMaker endpoints or Vertex AI instances. The platform team does not review them. Three quarters later the GPU bill is ₹8L/month with no clarity on cost-per-inference, no autoscaling on endpoints, and training jobs running on On-Demand p4d instances when spot capacity was 85% available at a 70% discount.
+
+    The practical check most teams have never run: cost-per-1,000-inferences, per endpoint.
+
+    If a real-time inference endpoint serves 3 requests/sec on average but runs on g5.2xlarge, the latency SLA is probably being met by g5.xlarge at half the cost. If a summarisation endpoint sees 40% prompt repetition in 24 hours, a semantic cache cuts 40% of the spend immediately. If fine-tuning jobs run On-Demand, spot capacity with checkpointing usually delivers 60–70% off.
+
+    Before you make the next build-vs-buy call — self-hosted vs OpenAI vs Anthropic vs Bedrock — you need these numbers. Otherwise you are guessing.
+
+    We run a free 30-minute AI Cost Health Check for teams in this position. Two-page written summary, same day.
+
+    aicloudstrategist.com/book.html
+
+    Founder-led. Enterprise-reviewed.
+
+    #AI #GPU #FinOps #MLOps
