@@ -1,6 +1,6 @@
 # Implementation Sprint
 
-**Service 4 of 6 — AICloudStrategist**
+**Service 4 of 9 — AICloudStrategist**
 **Fixed Price: ₹1,50,000 per workstream | Duration: 4–6 weeks**
 
 ---
@@ -9,7 +9,7 @@
 
 The FinOps QuickStart, Reliability & Observability Sprint, and Cloud Security Posture Review produce ranked backlogs. The Implementation Sprint executes them.
 
-This is the hands-on delivery engagement. AICloudStrategist engineers work directly in the client's environment — writing Terraform, opening and merging pull requests, scheduling change windows, running rollbacks if needed, and handing over working infrastructure with documentation. Every change ships through a GitOps pipeline, every PR shows Infracost's cost delta before merge, and every post-implementation environment is monitored by OpenCost for 30 days after handover.
+This is the hands-on delivery engagement. our engineers work directly in the client's environment — writing Terraform, opening and merging pull requests, scheduling change windows, running rollbacks if needed, and handing over working infrastructure with documentation. Every change ships through a GitOps pipeline, every PR shows Infracost's cost delta before merge, and every post-implementation environment is monitored by OpenCost for 30 days after handover.
 
 The sprint is structured around **workstreams** — discrete, independently deliverable slices of infrastructure change. A typical engagement covers 3–5 workstreams over 4–6 weeks. Each workstream is fixed-scope, fixed-fee, and independently verifiable. Clients can commission one workstream at a time or a bundled programme.
 
@@ -396,6 +396,6 @@ The Implementation Sprint is specifically designed to address all three: a singl
 
 ---
 
-*AICloudStrategist is a founder-led cloud advisory based in Rohini, Delhi. All implementation work is executed directly by the founding team. No offshore subcontracting. No junior engineer handoffs. No change ships without a tested rollback procedure.*
+*AICloudStrategist is a founder-led cloud advisory based in Rohini, Delhi. All implementation work is executed directly by the founder with senior-architect oversight on every engagement. No offshore subcontracting. No junior engineer hand-offs. No change ships without a tested rollback procedure.*
 
 *For enquiries: connect via LinkedIn or the contact form at aicloudstrategist.com*

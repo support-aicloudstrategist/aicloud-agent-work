@@ -1,6 +1,6 @@
 # Migration & Re-Architecture
 
-**Service 5 of 6 — AICloudStrategist**
+**Service 5 of 9 — AICloudStrategist**
 **Fixed Price: ₹9,00,000–₹28,00,000 | Duration: 8–16 weeks**
 
 ---
@@ -9,7 +9,7 @@
 
 Most Indian mid-market technology companies are running workloads that were never designed for the cloud they're running on. The data centre lease is expiring. The monolith is choking on traffic. The AWS account that started as a proof-of-concept in 2019 is now production — with no landing zone, no tagging, and infrastructure provisioned by hand. The cost of not migrating is compounding.
 
-Migration & Re-Architecture is AICloudStrategist's highest-complexity, highest-leverage engagement. It covers three distinct migration patterns, each with its own risk profile, tooling selection, and delivery approach:
+Migration & Re-Architecture is our highest-complexity, highest-leverage engagement. It covers three distinct migration patterns, each with its own risk profile, tooling selection, and delivery approach:
 
 1. **Data Centre → Cloud** — physical or virtualised on-premises workloads moved to AWS, Azure, or GCP using block-level continuous replication with AWS MGN, Azure Migrate, or GCP Migrate to Virtual Machines (M4CE).
 2. **Cloud → Cloud** — workloads stranded on the wrong cloud (legacy AWS in a GCP-first org, shadow Azure subscriptions, Oracle Cloud migrations) re-homed with minimal downtime.
@@ -76,7 +76,7 @@ Each wave follows the same loop: **Replicate → Validate → Cutover → Stabil
 
 For **Replatform** workloads (e.g., self-managed MySQL → RDS/Cloud SQL, self-managed Kafka → MSK/Confluent Cloud): database migration runs via AWS DMS or equivalent with CDC (Change Data Capture) for near-zero downtime; application connection strings updated in Terraform.
 
-For **Refactor / Strangler Fig** workloads (monolith decomposition): AICloudStrategist deploys an API gateway or edge proxy in front of the monolith on Day 1; new microservices are extracted domain-by-domain and routed through the proxy; the monolith handles only the domains not yet extracted. Traffic percentage shifts are controlled via feature flags. No big-bang rewrite. Each extracted service ships to production independently with its own CI/CD pipeline before the next extraction begins.
+For **Refactor / Strangler Fig** workloads (monolith decomposition): we deploy an API gateway or edge proxy in front of the monolith on Day 1; new microservices are extracted domain-by-domain and routed through the proxy; the monolith handles only the domains not yet extracted. Traffic percentage shifts are controlled via feature flags. No big-bang rewrite. Each extracted service ships to production independently with its own CI/CD pipeline before the next extraction begins.
 
 | Week | Activity | Milestone |
 |------|----------|-----------|
@@ -208,7 +208,7 @@ Decommission is executed by the client with AICloudStrategist on an async call. 
 
 ## Out of Scope
 
-- **Network circuit provisioning** — AWS Direct Connect, Azure ExpressRoute, or GCP Interconnect order and negotiation is client-owned; AICloudStrategist configures the virtual gateway once the circuit is live.
+- **Network circuit provisioning** — AWS Direct Connect, Azure ExpressRoute, or GCP Interconnect order and negotiation is client-owned; we configure the virtual gateway once the circuit is live.
 - **Application code changes** (except Refactor workstreams, where code changes are explicitly in scope per workstream agreement)
 - **Licensing negotiation** — Microsoft BYOL, Oracle licensing compliance on cloud, SAP HANA licensing; AICloudStrategist flags licensing risks but does not negotiate vendor contracts.
 - **Data centre contract termination** — lease negotiations, colocation exit fees, hardware disposal.

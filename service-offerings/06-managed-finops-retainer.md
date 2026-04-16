@@ -1,17 +1,17 @@
 # Managed FinOps Retainer
 
-**Service 6 of 6 — AICloudStrategist**
+**Service 6 of 9 — AICloudStrategist**
 **Monthly Retainer | Ongoing after QuickStart or Implementation Sprint**
 
 ---
 
 ## Overview
 
-The Managed FinOps Retainer is AICloudStrategist's ongoing cloud cost governance service — the operating layer that keeps the savings realised in a QuickStart or Implementation Sprint from eroding back into the bill over time.
+The Managed FinOps Retainer is our ongoing cloud cost governance service — the operating layer that keeps the savings realised in a QuickStart or Implementation Sprint from eroding back into the bill over time.
 
 Cloud cost is not a project. Reserved Instances expire. Workloads scale. Engineers provision services without tagging. Commitment portfolios drift out of alignment. Without continuous oversight, most organisations return to within 80% of their pre-engagement spend within six months of a one-time optimisation effort.
 
-The retainer replaces the expensive cycle of periodic engagements with a structured, month-to-month operating rhythm: weekly anomaly triage, monthly executive-grade reporting, and a quarterly strategic deep-dive. AICloudStrategist acts as the client's embedded FinOps function — the role most Indian mid-market companies cannot justify hiring full-time at ₹40–80L per year.
+The retainer replaces the expensive cycle of periodic engagements with a structured, month-to-month operating rhythm: weekly anomaly triage, monthly executive-grade reporting, and a quarterly strategic deep-dive. we act as the client's embedded FinOps function — the role most Indian mid-market companies cannot justify hiring full-time at ₹40–80L per year.
 
 > **Positioning:** This is not a dashboard subscription or a monitoring tool hand-off. Anushka B (7+ years in cloud/DevOps/automation) and a senior architect with 22+ years of Fortune 500 cloud economics experience remain active partners — reading anomalies, adjusting commitment portfolios, enforcing tagging governance, and preparing board-ready cost reports every month.
 

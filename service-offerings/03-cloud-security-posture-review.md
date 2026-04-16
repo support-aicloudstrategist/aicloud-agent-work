@@ -1,6 +1,6 @@
 # Cloud Security Posture Review
 
-**Service 3 of 6 — AICloudStrategist**
+**Service 3 of 9 — AICloudStrategist**
 **Fixed Price: ₹2,50,000–₹5,00,000 | Duration: 2 weeks**
 
 ---

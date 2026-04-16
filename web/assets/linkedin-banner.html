@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1584px;
+    height: 396px;
+    background: linear-gradient(135deg, #0B2545 0%, #13315C 100%);
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Subtle decorative vertical bars on far right */
+  .decor {
+    position: absolute;
+    right: 48px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+    opacity: 0.18;
+  }
+  .decor div {
+    width: 4px;
+    height: 200px;
+    background: #FCA311;
+  }
+  .decor div:nth-child(2) { height: 140px; margin-top: 30px; }
+  .decor div:nth-child(3) { height: 180px; margin-top: 10px; }
+  /* Content block, centre-right */
+  .content {
+    position: absolute;
+    left: 560px;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 900px;
+  }
+  .brand {
+    font-size: 72px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .tagline {
+    font-size: 32px;
+    font-weight: 600;
+    color: #FCA311;
+    letter-spacing: 0.3px;
+    margin-bottom: 24px;
+  }
+  .pitch {
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .services {
+    font-size: 18px;
+    font-weight: 400;
+    color: #C9D5E5;
+    letter-spacing: 0.6px;
+  }
+  .url {
+    position: absolute;
+    bottom: 28px;
+    right: 48px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #FCA311;
+    letter-spacing: 0.4px;
+  }
+</style>
+</head>
+<body>
+  <div class="decor"><div></div><div></div><div></div></div>
+  <div class="content">
+    <div class="brand">AICloudStrategist</div>
+    <div class="tagline">Founder-led. Enterprise-reviewed.</div>
+    <div class="pitch">Cut your cloud bill 20&ndash;30% in four weeks.</div>
+    <div class="services">FinOps &middot; Cloud &amp; AI Architecture &middot; DevOps &middot; Security</div>
+  </div>
+  <div class="url">aicloudstrategist.com</div>
+</body>
+</html>

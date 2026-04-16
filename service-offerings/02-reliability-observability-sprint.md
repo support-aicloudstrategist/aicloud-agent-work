@@ -1,6 +1,6 @@
 # Reliability & Observability Sprint
 
-**Service 2 of 6 — AICloudStrategist**
+**Service 2 of 9 — AICloudStrategist**
 **Fixed Price: ₹1,00,000–₹2,00,000 | Duration: 3 weeks**
 
 ---
