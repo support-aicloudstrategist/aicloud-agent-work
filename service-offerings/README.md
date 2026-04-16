@@ -1,6 +1,6 @@
 # Service Offerings — Consolidated Reference
 
-Eight fixed-fee cloud services for Indian SMBs and mid-market tech companies. Each engagement is scoped, time-boxed, and designed to be stacked sequentially as a client matures.
+Nine fixed-fee cloud services for Indian SMBs and mid-market tech companies. Each engagement is scoped, time-boxed, and designed to be stacked sequentially as a client matures.
 
 ---
 
@@ -62,6 +62,13 @@ End-to-end review of AI/ML infrastructure — from training pipelines and GPU fl
 
 ---
 
+### 09 · [DevOps & Platform Engineering](09-devops-platform-engineering.md)
+Build or modernise the developer platform that ships your product. CI/CD pipelines, GitOps deployment (ArgoCD / Flux), IaC governance with policy-as-code, Kubernetes platform engineering, secrets management, and lightweight internal developer platform primitives. Engagement is measured against DORA metrics — lead time, deployment frequency, change failure rate, MTTR — and targets a visible tier movement within 60 days of delivery.
+
+**Price:** ₹1,50,000 – ₹3,50,000 &nbsp;|&nbsp; **Timeline:** 3–4 weeks
+
+---
+
 ## Typical Client Journey
 
 Most clients move through four stages, though any service can be purchased standalone.
@@ -101,6 +108,12 @@ The **Cloud Architecture Review** (Service 07) and **AI Architecture Review** (S
 | Evaluating self-hosted LLMs vs OpenAI/Anthropic/Bedrock APIs | AI Architecture Review | — |
 | Moving AI feature from POC to production scale | AI Architecture Review | Implementation Sprint |
 | SageMaker / Vertex AI / Azure ML endpoints running 24×7 with no autoscaling review | AI Architecture Review | Implementation Sprint |
+| Deployments take >30 min or require a senior engineer on-call | DevOps & Platform Engineering | Implementation Sprint |
+| New engineers take >4 weeks to deploy their first production change | DevOps & Platform Engineering | — |
+| Manual changes accumulating; console edits nobody commits; IaC coverage <70% | DevOps & Platform Engineering | Cloud Architecture Review |
+| "We can't ship Fridays" / release anxiety culture | DevOps & Platform Engineering | Reliability Sprint |
+| Growing from 10 to 50+ engineers; existing deployment pattern breaking | DevOps & Platform Engineering | Cloud Architecture Review |
+| Kubernetes adopted but nobody confident operating it | DevOps & Platform Engineering | Reliability Sprint |
 
 ---
 
@@ -208,3 +221,15 @@ Deduplicated across all six service offering documents.
 - MLflow — Open-source ML lifecycle platform: https://mlflow.org
 - SageMaker Inference Recommender: https://docs.aws.amazon.com/sagemaker/latest/dg/inference-recommender.html
 - Anthropic API Pricing and Token Economics: https://www.anthropic.com/pricing
+
+**DevOps & Platform Engineering (Service 09)**
+- DORA — Accelerate State of DevOps Report: https://dora.dev/research/
+- Google Cloud — Four Keys / DORA Metrics: https://cloud.google.com/blog/products/devops-sre/using-the-four-keys-to-measure-your-devops-performance
+- Nicole Forsgren, Jez Humble, Gene Kim — Accelerate (IT Revolution, 2018)
+- Matthew Skelton, Manuel Pais — Team Topologies: https://teamtopologies.com/
+- Backstage — Spotify's Internal Developer Platform: https://backstage.io
+- ArgoCD Documentation: https://argo-cd.readthedocs.io/
+- Flux Documentation: https://fluxcd.io/flux/
+- OpenTofu (open-source Terraform fork): https://opentofu.org/
+- Open Policy Agent / Gatekeeper: https://www.openpolicyagent.org/
+- Charity Majors — Platform Thinking: https://charity.wtf/
