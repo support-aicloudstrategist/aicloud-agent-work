@@ -4,20 +4,23 @@
 # Usage:
 #   vk projects                          - list all projects with IDs
 #   vk tree                              - project tree with task counts
-#   vk tasks <project_id>                - list tasks in a project
+#   vk tasks <project_id>                - list tasks in a project (incl labels)
+#   vk all                               - list every task across every project
 #   vk task <task_id>                    - show one task as JSON
 #   vk add <project_id> "title" [desc]   - create a task
 #   vk done <task_id>                    - mark task done
 #   vk reopen <task_id>                  - mark task undone
 #   vk label <task_id> <label_name>      - attach label to task
+#   vk unlabel <task_id> <label_name>    - detach label from task
 #   vk prio <task_id> <1-5>              - priority (5=do now, 1=low)
 #   vk due <task_id> <YYYY-MM-DD>        - set due date
 #   vk create-project <title> [desc]     - create new project
 #   vk labels                            - list all labels
 #   vk create-label <name> [hex_color]   - create a label
-#   vk search "<query>"                  - search tasks
+#   vk search "<query>"                  - search tasks by title
 #
 # Token read from /docker/vikunja/.admin-creds.
+# End of help block.
 
 set -euo pipefail
 
@@ -31,16 +34,74 @@ fi
 H_AUTH="Authorization: Bearer ${TOKEN}"
 H_JSON="Content-Type: application/json"
 
+py() { python3 -c "$1"; }
+
+# Call a JSON API; exit non-zero if response has an error code
+api_call() {
+    local method="$1"
+    local path="$2"
+    local body="${3:-}"
+    local tmp
+    tmp=$(mktemp)
+    local http_code
+    if [ -z "$body" ]; then
+        http_code=$(curl -sS -o "$tmp" -w "%{http_code}" -X "$method" -H "$H_AUTH" "$API$path")
+    else
+        http_code=$(curl -sS -o "$tmp" -w "%{http_code}" -X "$method" -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API$path")
+    fi
+    if [ "$http_code" -ge 400 ]; then
+        echo "ERROR: $method $path -> HTTP $http_code" >&2
+        cat "$tmp" >&2
+        echo "" >&2
+        rm -f "$tmp"
+        exit 1
+    fi
+    cat "$tmp"
+    rm -f "$tmp"
+}
+
+# Cache of project_id -> table_view_id (for label-populated listing)
+VIEWS_CACHE="/tmp/vk-views-cache.json"
+get_table_view_id() {
+    local pid="$1"
+    # Refresh cache if older than 5 min
+    if [ ! -f "$VIEWS_CACHE" ] || [ "$(find "$VIEWS_CACHE" -mmin +5 2>/dev/null)" ]; then
+        local map="{}"
+        local projects
+        projects=$(api_call GET "/projects")
+        map=$(echo "$projects" | TOKEN="$TOKEN" API="$API" py '
+import os, sys, json, urllib.request
+projects = json.load(sys.stdin) or []
+out = {}
+for p in projects:
+    pid = str(p.get("id"))
+    req = urllib.request.Request(os.environ["API"] + "/projects/" + pid + "/views",
+                                 headers={"Authorization": "Bearer " + os.environ["TOKEN"]})
+    try:
+        views = json.loads(urllib.request.urlopen(req, timeout=10).read()) or []
+    except Exception:
+        continue
+    for v in views:
+        if v.get("view_kind") == "table":
+            out[pid] = v.get("id")
+            break
+print(json.dumps(out))
+')
+        echo "$map" > "$VIEWS_CACHE"
+    fi
+    py "
+import json, sys
+cache = json.load(open('$VIEWS_CACHE'))
+print(cache.get('$pid', ''))
+"
+}
+
 cmd="${1:-}"
 shift || true
 
-py() {
-    python3 -c "$1"
-}
-
 case "$cmd" in
 projects)
-    curl -s -H "$H_AUTH" "$API/projects" | py '
+    api_call GET "/projects" | py '
 import sys, json
 for p in json.load(sys.stdin) or []:
     pid = p.get("id")
@@ -52,7 +113,7 @@ for p in json.load(sys.stdin) or []:
     ;;
 
 tree)
-    curl -s -H "$H_AUTH" "$API/projects" | TOKEN="$TOKEN" API="$API" py '
+    api_call GET "/projects" | TOKEN="$TOKEN" API="$API" py '
 import os, sys, json, urllib.request
 API = os.environ["API"]
 TOKEN = os.environ["TOKEN"]
@@ -74,7 +135,12 @@ for p in json.load(sys.stdin) or []:
 tasks)
     pid="${1:-}"
     if [ -z "$pid" ]; then echo "usage: vk tasks <project_id>"; exit 1; fi
-    curl -s -H "$H_AUTH" "$API/projects/$pid/tasks" | py '
+    view_id=$(get_table_view_id "$pid")
+    if [ -z "$view_id" ]; then
+        echo "ERROR: no table view found for project $pid" >&2
+        exit 1
+    fi
+    api_call GET "/projects/$pid/views/$view_id/tasks" | py '
 import sys, json
 tasks = json.load(sys.stdin) or []
 if not tasks:
@@ -97,10 +163,56 @@ for t in tasks:
 '
     ;;
 
+all)
+    # Iterate every project and print labeled tasks
+    api_call GET "/projects" | TOKEN="$TOKEN" API="$API" py '
+import os, sys, json, urllib.request
+API = os.environ["API"]
+TOKEN = os.environ["TOKEN"]
+projects = json.load(sys.stdin) or []
+for p in projects:
+    pid = p.get("id")
+    if p.get("is_archived"):
+        continue
+    # Find table view
+    vreq = urllib.request.Request(API + "/projects/" + str(pid) + "/views", headers={"Authorization": "Bearer " + TOKEN})
+    views = []
+    try:
+        views = json.loads(urllib.request.urlopen(vreq, timeout=10).read()) or []
+    except Exception:
+        continue
+    view_id = None
+    for v in views:
+        if v.get("view_kind") == "table":
+            view_id = v.get("id")
+            break
+    if not view_id:
+        continue
+    treq = urllib.request.Request(API + "/projects/" + str(pid) + "/views/" + str(view_id) + "/tasks", headers={"Authorization": "Bearer " + TOKEN})
+    try:
+        tasks = json.loads(urllib.request.urlopen(treq, timeout=10).read()) or []
+    except Exception:
+        continue
+    if not tasks:
+        continue
+    tasks.sort(key=lambda t: (t.get("done", False), -(t.get("priority") or 0), t.get("id")))
+    print("\n== %s (id=%d) ==" % (p.get("title", ""), pid))
+    for t in tasks:
+        mark = "[x]" if t.get("done") else "[ ]"
+        prio = t.get("priority") or 0
+        due = t.get("due_date", "") or ""
+        due_s = " due:" + due[:10] if due and not due.startswith("0001-01-01") else ""
+        prio_s = " p%d" % prio if prio else ""
+        labels = t.get("labels") or []
+        lab_s = " [" + ", ".join(l.get("title", "") for l in labels) + "]" if labels else ""
+        print("%5d  %s %s%s%s%s" % (t.get("id"), mark, t.get("title", ""), prio_s, due_s, lab_s))
+'
+    ;;
+
 task)
     tid="${1:-}"
     if [ -z "$tid" ]; then echo "usage: vk task <task_id>"; exit 1; fi
-    curl -s -H "$H_AUTH" "$API/tasks/$tid" | python3 -m json.tool
+    api_call GET "/tasks/$tid" | python3 -m json.tool
     ;;
 
 add)
@@ -114,7 +226,7 @@ add)
 import os, json
 print(json.dumps({"title": os.environ["TITLE"], "description": os.environ.get("DESC", "")}))
 ')
-    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/projects/$pid/tasks" | py '
+    api_call PUT "/projects/$pid/tasks" "$body" | py '
 import sys, json
 t = json.load(sys.stdin)
 print("created task " + str(t.get("id")) + ": " + str(t.get("title", "")))
@@ -124,7 +236,7 @@ print("created task " + str(t.get("id")) + ": " + str(t.get("title", "")))
 done)
     tid="${1:-}"
     if [ -z "$tid" ]; then echo "usage: vk done <task_id>"; exit 1; fi
-    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d '{"done":true}' "$API/tasks/$tid" | py '
+    api_call POST "/tasks/$tid" '{"done":true}' | py '
 import sys, json
 t = json.load(sys.stdin)
 print("done: [" + str(t.get("id")) + "] " + str(t.get("title", "")))
@@ -134,7 +246,7 @@ print("done: [" + str(t.get("id")) + "] " + str(t.get("title", "")))
 reopen)
     tid="${1:-}"
     if [ -z "$tid" ]; then echo "usage: vk reopen <task_id>"; exit 1; fi
-    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d '{"done":false}' "$API/tasks/$tid" | py '
+    api_call POST "/tasks/$tid" '{"done":false}' | py '
 import sys, json
 t = json.load(sys.stdin)
 print("reopened: [" + str(t.get("id")) + "] " + str(t.get("title", "")))
@@ -145,7 +257,7 @@ prio)
     tid="${1:-}"
     p="${2:-}"
     if [ -z "$tid" ] || [ -z "$p" ]; then echo "usage: vk prio <task_id> <1-5>"; exit 1; fi
-    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d "{\"priority\":$p}" "$API/tasks/$tid" >/dev/null
+    api_call POST "/tasks/$tid" "{\"priority\":$p}" >/dev/null
     echo "priority set to $p"
     ;;
 
@@ -153,7 +265,7 @@ due)
     tid="${1:-}"
     d="${2:-}"
     if [ -z "$tid" ] || [ -z "$d" ]; then echo "usage: vk due <task_id> <YYYY-MM-DD>"; exit 1; fi
-    curl -sX POST -H "$H_AUTH" -H "$H_JSON" -d "{\"due_date\":\"${d}T00:00:00Z\"}" "$API/tasks/$tid" >/dev/null
+    api_call POST "/tasks/$tid" "{\"due_date\":\"${d}T00:00:00Z\"}" >/dev/null
     echo "due date set to $d"
     ;;
 
@@ -161,7 +273,8 @@ label)
     tid="${1:-}"
     lname="${2:-}"
     if [ -z "$tid" ] || [ -z "$lname" ]; then echo "usage: vk label <task_id> <label_name>"; exit 1; fi
-    lid=$(curl -s -H "$H_AUTH" "$API/labels" | LNAME="$lname" py '
+    # Find label id; create if missing
+    lid=$(api_call GET "/labels" | LNAME="$lname" py '
 import os, sys, json
 name = os.environ["LNAME"].lower()
 for l in json.load(sys.stdin) or []:
@@ -174,14 +287,31 @@ for l in json.load(sys.stdin) or []:
 import os, json
 print(json.dumps({"title": os.environ["LNAME"]}))
 ')
-        lid=$(curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/labels" | py '
+        lid=$(api_call PUT "/labels" "$body" | py '
 import sys, json
 print(json.load(sys.stdin).get("id"))
 ')
         echo "created label '$lname' id=$lid"
     fi
-    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "{\"label_id\":$lid}" "$API/tasks/$tid/labels" >/dev/null
+    api_call PUT "/tasks/$tid/labels" "{\"label_id\":$lid}" >/dev/null
     echo "labeled task $tid with '$lname'"
+    ;;
+
+unlabel)
+    tid="${1:-}"
+    lname="${2:-}"
+    if [ -z "$tid" ] || [ -z "$lname" ]; then echo "usage: vk unlabel <task_id> <label_name>"; exit 1; fi
+    lid=$(api_call GET "/labels" | LNAME="$lname" py '
+import os, sys, json
+name = os.environ["LNAME"].lower()
+for l in json.load(sys.stdin) or []:
+    if l.get("title", "").lower() == name:
+        print(l.get("id"))
+        break
+')
+    if [ -z "$lid" ]; then echo "no label '$lname'"; exit 1; fi
+    api_call DELETE "/tasks/$tid/labels/$lid" >/dev/null
+    echo "removed label '$lname' from task $tid"
     ;;
 
 create-project)
@@ -192,7 +322,7 @@ create-project)
 import os, json
 print(json.dumps({"title": os.environ["TITLE"], "description": os.environ.get("DESC", "")}))
 ')
-    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/projects" | py '
+    api_call PUT "/projects" "$body" | py '
 import sys, json
 p = json.load(sys.stdin)
 print("created project " + str(p.get("id")) + ": " + str(p.get("title", "")))
@@ -200,7 +330,7 @@ print("created project " + str(p.get("id")) + ": " + str(p.get("title", "")))
     ;;
 
 labels)
-    curl -s -H "$H_AUTH" "$API/labels" | py '
+    api_call GET "/labels" | py '
 import sys, json
 for l in json.load(sys.stdin) or []:
     color = l.get("hex_color") or "-"
@@ -219,7 +349,7 @@ if os.environ.get("COLOR"):
     d["hex_color"] = os.environ["COLOR"]
 print(json.dumps(d))
 ')
-    curl -sX PUT -H "$H_AUTH" -H "$H_JSON" -d "$body" "$API/labels" | py '
+    api_call PUT "/labels" "$body" | py '
 import sys, json
 l = json.load(sys.stdin)
 print("created label " + str(l.get("id")) + ": " + str(l.get("title", "")))
@@ -229,17 +359,42 @@ print("created label " + str(l.get("id")) + ": " + str(l.get("title", "")))
 search)
     q="${1:-}"
     if [ -z "$q" ]; then echo 'usage: vk search "<query>"'; exit 1; fi
-    qenc=$(Q="$q" py 'import os, urllib.parse; print(urllib.parse.quote(os.environ["Q"]))')
-    curl -s -H "$H_AUTH" "$API/tasks/all?s=$qenc" | py '
-import sys, json
-for t in json.load(sys.stdin) or []:
-    mark = "[x]" if t.get("done") else "[ ]"
-    print("%5d  %s %s" % (t.get("id"), mark, t.get("title", "")))
+    # tasks_all is gated; iterate via project tasks endpoints instead
+    api_call GET "/projects" | TOKEN="$TOKEN" API="$API" Q="$q" py '
+import os, sys, json, urllib.request
+API = os.environ["API"]
+TOKEN = os.environ["TOKEN"]
+q = os.environ["Q"].lower()
+for p in json.load(sys.stdin) or []:
+    pid = p.get("id")
+    if p.get("is_archived"):
+        continue
+    req = urllib.request.Request(API + "/projects/" + str(pid) + "/tasks", headers={"Authorization": "Bearer " + TOKEN})
+    try:
+        tasks = json.loads(urllib.request.urlopen(req, timeout=10).read()) or []
+    except Exception:
+        continue
+    for t in tasks:
+        title = t.get("title", "")
+        if q in title.lower():
+            mark = "[x]" if t.get("done") else "[ ]"
+            print("%5d  %s %s  (project %d)" % (t.get("id"), mark, title, pid))
 '
     ;;
 
 ""|help|-h|--help)
-    sed -n '2,20p' "$0" | sed 's|^# \{0,1\}||'
+    # Print help block: every leading-# line from top of script until 'End of help block.'
+    py '
+import sys, re
+lines = open("'"$0"'").read().splitlines()
+for ln in lines[1:]:  # skip shebang
+    if ln.startswith("# End of help block."):
+        break
+    if ln.startswith("#"):
+        print(re.sub(r"^# ?", "", ln))
+    elif ln.strip() == "":
+        print("")
+'
     ;;
 
 *)
