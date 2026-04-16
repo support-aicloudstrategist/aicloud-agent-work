@@ -114,3 +114,55 @@ footer .legal a { margin: 0 8px; color: var(--muted); }
   .nav { padding: 14px 18px; }
   .nav nav a { margin-left: 14px; font-size: 0.9rem; }
 }
+
+/* Comparison table */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.95rem;
+}
+.compare-table th, .compare-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e3e8ee;
+  vertical-align: top;
+}
+.compare-table th {
+  background: #0B2545;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.compare-table td:first-child {
+  background: #f5f7fa;
+  font-weight: 600;
+  width: 20%;
+}
+.compare-table tbody tr:hover {
+  background: #fffaf0;
+}
+@media (max-width: 700px) {
+  .compare-table { font-size: 0.8rem; }
+  .compare-table th, .compare-table td { padding: 8px 6px; }
+}
+
+/* Pricing calculator */
+.calc {
+  background: #f5f7fa;
+  border-left: 4px solid #0B2545;
+  padding: 1.5em;
+  margin: 1.5em 0;
+  border-radius: 4px;
+}
+.calc label { display: block; font-weight: 600; margin-bottom: 8px; }
+.calc input[type=number] {
+  width: 200px; padding: 10px 12px; font-size: 1rem;
+  border: 1px solid #ccc; border-radius: 4px;
+}
+.calc .result {
+  margin-top: 1.5em; padding: 1em; background: #fff;
+  border: 1px solid #e3e8ee; border-radius: 4px;
+}
+.calc .result h4 { margin: 0 0 8px 0; color: #0B2545; }
+.calc .big-num { font-size: 1.6rem; font-weight: 700; color: #FCA311; }

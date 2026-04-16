@@ -20,6 +20,7 @@
   <nav>
     <a href="/services.html" class="active">Services</a>
     <a href="/proof.html">Proof</a>
+    <a href="/compare.html">Compare</a>
     <a href="/blog.html">Writing</a>
     <a href="/book.html">Book a call</a>
   </nav>
@@ -87,6 +88,66 @@
     <p>The embedded FinOps function most companies can't justify hiring full-time. Continuous OpenCost monitoring, weekly anomaly triage, monthly executive reporting, quarterly deep-dive architecture reviews, and active Reserved Instance / Savings Plan portfolio management. Tier sized to your monthly cloud spend. 60-day exit clause.</p>
     <p class="badge">Recurring · Strongest fit</p>
   </article>
+</section>
+
+<section class="calc-section">
+  <h2>Quick estimate</h2>
+  <p class="lede small">Tell us your rough monthly cloud spend and we will suggest a starting service and a conservative recoverable range. The numbers are based on what we typically see in Indian mid-market accounts with no prior cost governance. Your actual savings ceiling depends on your architecture — the free 30-min Health Check turns this estimate into a specific written number.</p>
+  <div class="calc">
+    <label for="spend-input">Your approximate monthly cloud spend (INR)</label>
+    <input type="number" id="spend-input" min="100000" step="50000" placeholder="e.g. 1500000" />
+    <div class="result" id="calc-result" style="display:none;">
+      <h4 id="calc-suggest"></h4>
+      <p><strong>Conservative monthly savings range:</strong> <span class="big-num" id="calc-savings"></span></p>
+      <p><strong>Annualised:</strong> <span id="calc-annual"></span></p>
+      <p><strong>Suggested first engagement:</strong> <span id="calc-service"></span></p>
+      <p><a class="cta" href="/book.html">Book a free Health Check to confirm →</a></p>
+    </div>
+  </div>
+  <script>
+    (function(){
+      var input = document.getElementById('spend-input');
+      var box = document.getElementById('calc-result');
+      var suggest = document.getElementById('calc-suggest');
+      var save = document.getElementById('calc-savings');
+      var annual = document.getElementById('calc-annual');
+      var svc = document.getElementById('calc-service');
+      function fmtINR(n){
+        if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+        if (n >= 100000) return '₹' + (n/100000).toFixed(1) + ' L';
+        return '₹' + Math.round(n).toLocaleString('en-IN');
+      }
+      function update(){
+        var v = parseInt(input.value, 10);
+        if (!v || v < 100000) { box.style.display = 'none'; return; }
+        var lo = Math.round(v * 0.18);
+        var hi = Math.round(v * 0.28);
+        var msg, service;
+        if (v < 300000) {
+          msg = 'Below our typical engagement band.';
+          service = 'Start with the free 30-min Health Check and our self-service checklists — paid engagements do not have enough recoverable spend to justify the fee at this band.';
+        } else if (v < 800000) {
+          msg = 'FinOps QuickStart territory.';
+          service = 'FinOps QuickStart (₹75,000 – ₹1,50,000, 2 weeks). Direct path to verified savings.';
+        } else if (v < 2500000) {
+          msg = 'Core QuickStart band.';
+          service = 'FinOps QuickStart followed by a Managed FinOps Retainer (₹45,000 – ₹90,000 / month). The retainer locks in the savings.';
+        } else if (v < 6000000) {
+          msg = 'QuickStart plus architecture review territory.';
+          service = 'FinOps QuickStart + Cloud Architecture Review. Two engagements, ~6 weeks total. Managed Retainer at the Growth tier after.';
+        } else {
+          msg = 'Strategic engagement territory.';
+          service = 'FinOps QuickStart + Implementation Sprint + Managed Retainer at the Enterprise tier. Gain-share structure usually makes commercial sense at this spend band.';
+        }
+        suggest.textContent = msg;
+        save.textContent = fmtINR(lo) + ' – ' + fmtINR(hi) + ' / month';
+        annual.textContent = fmtINR(lo*12) + ' – ' + fmtINR(hi*12);
+        svc.textContent = service;
+        box.style.display = 'block';
+      }
+      input.addEventListener('input', update);
+    })();
+  </script>
 </section>
 
 <section class="terms">
