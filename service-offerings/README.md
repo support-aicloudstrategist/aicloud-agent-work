@@ -1,6 +1,6 @@
 # Service Offerings — Consolidated Reference
 
-Six fixed-fee cloud services for Indian SMBs and mid-market tech companies. Each engagement is scoped, time-boxed, and designed to be stacked sequentially as a client matures.
+Eight fixed-fee cloud services for Indian SMBs and mid-market tech companies. Each engagement is scoped, time-boxed, and designed to be stacked sequentially as a client matures.
 
 ---
 
@@ -48,6 +48,20 @@ Ongoing monthly cloud cost governance that preserves savings realised in QuickSt
 
 ---
 
+### 07 · [Cloud Architecture Review & Consulting](07-cloud-architecture-review.md)
+A senior-architect-grade review of your AWS, Azure, or GCP architecture against Well-Architected Framework pillars. Produces a current-state architecture map, a gap analysis scored by risk and cost impact, a prioritised remediation roadmap with named owners, and IaC-ready recommendations. Covers compute, storage, networking, databases, IAM, DR, and multi-region topology.
+
+**Price:** ₹1,25,000 – ₹2,50,000 &nbsp;|&nbsp; **Timeline:** 2–3 weeks
+
+---
+
+### 08 · [AI Architecture Review & Consulting](08-ai-architecture-review.md)
+End-to-end review of AI/ML infrastructure — from training pipelines and GPU fleet management to inference endpoints, model serving, and the operational layer. Delivers cost-per-unit economics (cost per training run, per 1K inferences, per model iteration), a GPU right-sizing plan, an MLOps maturity assessment, and a reusable build-vs-buy decision framework for self-hosted vs managed AI APIs.
+
+**Price:** ₹1,50,000 – ₹3,00,000 &nbsp;|&nbsp; **Timeline:** 2–3 weeks
+
+---
+
 ## Typical Client Journey
 
 Most clients move through four stages, though any service can be purchased standalone.
@@ -61,6 +75,8 @@ Most clients move through four stages, though any service can be purchased stand
 **Stage 4 — Retainer:** After implementation, savings erode without ongoing governance. The Managed FinOps Retainer locks in a continuous oversight layer: anomaly detection, portfolio rebalancing, executive reporting, and a named FinOps owner. Appropriate once monthly cloud spend exceeds ₹8L and cost governance is a recurring business requirement.
 
 For clients with an imminent data centre exit or a stranded cloud account, the **Migration & Re-Architecture** engagement operates outside this linear sequence and is scoped independently.
+
+The **Cloud Architecture Review** (Service 07) and **AI Architecture Review** (Service 08) sit alongside the diagnostic services as specialised alternatives to the FinOps QuickStart. They are chosen when the primary concern is architectural risk or AI/GPU spend governance rather than generalised cost optimisation. Both produce roadmaps that feed naturally into an Implementation Sprint.
 
 ---
 
@@ -78,6 +94,13 @@ For clients with an imminent data centre exit or a stranded cloud account, the *
 | RI/SP coverage below 40% on stable workloads | FinOps QuickStart | Managed Retainer |
 | Alert fatigue; threshold-only monitors; no SLOs defined | Reliability Sprint | Implementation Sprint |
 | BFSI / healthtech / edtech; personal data in cloud; regulatory audit pending | Security Posture Review | Implementation Sprint |
+| Preparing for Series A/B funding round; investor due-diligence on infrastructure | Cloud Architecture Review | Security Posture Review |
+| Post-incident review; systemic architectural weaknesses suspected | Cloud Architecture Review | Reliability Sprint |
+| Original infra architect has left; team is operating inherited decisions | Cloud Architecture Review | Implementation Sprint |
+| GPU bill tripled in two quarters; no cost-per-inference visibility | AI Architecture Review | Managed FinOps Retainer |
+| Evaluating self-hosted LLMs vs OpenAI/Anthropic/Bedrock APIs | AI Architecture Review | — |
+| Moving AI feature from POC to production scale | AI Architecture Review | Implementation Sprint |
+| SageMaker / Vertex AI / Azure ML endpoints running 24×7 with no autoscaling review | AI Architecture Review | Implementation Sprint |
 
 ---
 
@@ -165,3 +188,23 @@ Deduplicated across all six service offering documents.
 - Sam Newman — Monolith to Microservices (O'Reilly, 2019)
 - TOGAF Cloud Migration Patterns — Architecture Vision, Migration Planning, Transition Architecture
 - Gartner — 3 Journeys for Migrating a Data Center to Cloud IaaS
+
+**Cloud Architecture Review (Service 07)**
+- AWS Well-Architected Framework (2025): https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html
+- Azure Well-Architected Framework: https://learn.microsoft.com/en-us/azure/well-architected/
+- Google Cloud Architecture Framework: https://cloud.google.com/architecture/framework
+- Steampipe — Open-source cloud inventory: https://steampipe.io
+- Cloudcraft — Cloud architecture visualisation: https://www.cloudcraft.co
+- TOGAF Standard — Architecture governance: https://www.opengroup.org/togaf
+
+**AI / ML Architecture Review (Service 08)**
+- AWS Well-Architected Machine Learning Lens (2025): https://docs.aws.amazon.com/wellarchitected/latest/machine-learning-lens/
+- Google Cloud MLOps Best Practices: https://cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning
+- Azure ML Well-Architected: https://learn.microsoft.com/en-us/azure/well-architected/service-guides/azure-machine-learning
+- NVIDIA GPU Cloud Optimisation Guide: https://docs.nvidia.com/deeplearning/frameworks/
+- Chip Huyen — Designing Machine Learning Systems (O'Reilly, 2022)
+- Stanford MLSys Seminar: https://mlsys.stanford.edu
+- FinOps Foundation — AI/ML Working Group: https://www.finops.org/wg/ai-ml/
+- MLflow — Open-source ML lifecycle platform: https://mlflow.org
+- SageMaker Inference Recommender: https://docs.aws.amazon.com/sagemaker/latest/dg/inference-recommender.html
+- Anthropic API Pricing and Token Economics: https://www.anthropic.com/pricing

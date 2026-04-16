@@ -2,6 +2,8 @@
 
 **Voice:** Anushka B, Founder. 7+ years DevOps / Cloud / Automation. Tagline: **Founder-led. Enterprise-reviewed.** When depth is relevant, reference "senior-architect oversight — 22+ years of Fortune 500 and global-consulting weight in every review." Never claim the 22 years as personal tenure.
 
+**Service mix to reference in outreach:** FinOps QuickStart (lead), Cloud Architecture Review, AI Architecture Review (hot topic for 2026), Security Posture Review, Reliability Sprint, Implementation Sprint, Migration & Re-architecture, Managed FinOps Retainer. Lead with whichever matches the prospect's stated pain point.
+
 ---
 
 ## 1. Warm-Network WhatsApp / LinkedIn Opener
