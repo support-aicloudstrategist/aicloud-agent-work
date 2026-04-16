@@ -10,7 +10,7 @@
 
 The FinOps QuickStart is a structured, two-week cost intelligence engagement that gives Indian SMBs and mid-market technology companies their first clear, honest picture of cloud spend — without requiring a platform migration, architectural overhaul, or proprietary software licence.
 
-In two weeks, AICloudStrategist delivers a ranked savings backlog with verified INR figures, a tagging and cost-allocation baseline, and a 90-day implementation plan — all using open-source tooling that stays with the client after the engagement ends. No vendor licensing fees. No recurring lock-in.
+In two weeks, we deliver a ranked savings backlog with verified INR figures, a tagging and cost-allocation baseline, and a 90-day implementation plan — all using open-source tooling that stays with the client after the engagement ends. No vendor licensing fees. No recurring lock-in.
 
 The engagement is deliberately scoped as a diagnostic sprint, not a transformation programme. The goal is speed to insight: clients typically surface 15–30% in addressable monthly spend within the first seven days of analysis. The second week converts findings into a prioritised action plan their own team can execute — or which transitions cleanly into an AICloudStrategist Implementation Sprint or Managed FinOps Retainer.
 

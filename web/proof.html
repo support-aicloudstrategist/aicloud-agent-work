@@ -49,6 +49,22 @@
     <p><strong>Action (6 weeks):</strong> Cluster autoscaler tuned with PodDisruptionBudgets + custom HPA on actual QPS. Replicated analytics warehouse to asia-south1 with scheduled sync (egress dropped 94%). Disk reclamation cron with 7-day quarantine before deletion. 1-year committed-use discount on the India baseline. Cloud SQL right-sized after 30 days of observation. Cost-per-tenant dashboard built on BigQuery billing export.</p>
     <p><strong>Outcome:</strong> <strong>27% cloud-bill reduction</strong> (~₹4.9L/month) sustained for 8+ months with zero customer-facing incidents during the transition. Engineering OKR now includes cost-per-tenant ceiling; new feature PRs include a cost impact estimate from Infracost.</p>
   </article>
+
+  <article>
+    <h3>Case 3 — AI-first startup, AWS with GPU fleet, ~₹22L/month spend</h3>
+    <p><strong>Context:</strong> 30-person seed-to-Series-A generative AI product built on AWS. Inference workload on SageMaker real-time endpoints, fine-tuning jobs on p4d.24xlarge On-Demand, feature store backed by DynamoDB. GPU spend grew 4× in two quarters as the product scaled, with no cost-per-inference visibility. Leadership had no answer for the board when the AI infrastructure line item crossed ₹20L/month.</p>
+    <p><strong>Findings:</strong> Two real-time inference endpoints provisioned on g5.2xlarge instances serving 3 req/s average, 12 req/s peak — latency SLA met by g5.xlarge at half the cost. Fine-tuning jobs running on On-Demand p4d instances when spot capacity in us-east-1 had 85% availability at 70% discount. No inference caching for a summarisation endpoint where 40% of requests had identical prompts in a 24-hour window. DynamoDB feature store in provisioned capacity mode running at 11% utilisation — on-demand billing would have been cheaper at that pattern. Model artifacts in S3 Standard when 95% of files were inference-only reads of the latest version.</p>
+    <p><strong>Action (4 weeks):</strong> Right-sized real-time endpoints to g5.xlarge with autoscaling (min 1, max 4). Migrated 80% of fine-tuning workloads to spot p4d with checkpointing (recovery tested). Added a Redis semantic cache for the summarisation endpoint. Switched DynamoDB to on-demand. S3 lifecycle rules moved older model artifacts to Glacier Instant Retrieval. Built cost-per-1K-inferences dashboard per endpoint, tagged by product feature.</p>
+    <p><strong>Outcome:</strong> <strong>41% AI infrastructure reduction</strong> (~₹9.1L/month) verified across 3 billing cycles. GPU idle time dropped from 47% to under 10%. Cost-per-1K-inferences now tracked against product feature margins; the build-vs-buy decision for a new RAG feature was made with actual numbers for the first time.</p>
+  </article>
+
+  <article>
+    <h3>Case 4 — Fintech platform, AWS, DevOps & platform engineering</h3>
+    <p><strong>Context:</strong> 55-person Series B fintech serving Indian SMBs with a payments and reconciliation product. Deployments took 45–90 minutes, required a senior engineer on-call, and were informally banned on Fridays. New engineers took 5–6 weeks to reach their first production deploy. No staging environment existed in any meaningful form — "staging" had drifted from production for over two years. MTTR on production incidents averaged 2.4 hours.</p>
+    <p><strong>Findings:</strong> CI pipeline running a monolithic 34-minute test suite with zero caching or parallelism. Deployments executed via a shell script on a bastion host — no IaC for the deployment mechanism itself. Terraform coverage at 52% of production resources; the rest was a mix of CloudFormation remnants, console edits, and one engineer's personal Ansible playbook. Secrets in environment variables baked into AMIs. Kubernetes adopted 18 months earlier for one service, never adopted for the rest — cluster running underutilised. No policy-as-code: seven production deployments in the last quarter had shipped with `:latest` image tags.</p>
+    <p><strong>Action (4 weeks):</strong> GitHub Actions pipelines rebuilt with matrix parallelism and aggressive caching (CI time dropped from 34 to 8 minutes). ArgoCD deployed, five services migrated to GitOps with progressive rollout. Terraform module library built — coverage raised from 52% to 94%. AWS Secrets Manager integration; secrets pulled from environment variables. OPA Gatekeeper policies on the cluster. Infracost integrated into PRs. Internal developer CLI (<code>devctl</code>) for service scaffolding and preview environments. Two enablement sessions with the full engineering team, including a live rollback rehearsal.</p>
+    <p><strong>Outcome (measured 60 days post-delivery):</strong> <strong>Lead time for changes reduced from 9 days to 4 hours.</strong> Deployment frequency increased from 2 per week to 11 per week. Change failure rate dropped from 24% to 8%. MTTR fell from 2.4 hours to 38 minutes. Team moved from DORA "Low" tier to "High" tier on three of the four metrics. Friday deploys became routine.</p>
+  </article>
 </section>
 
 <section class="stack">
@@ -56,9 +72,12 @@
   <ul>
     <li><strong>Cost visibility:</strong> OpenCost (CNCF) + native cloud billing exports (FOCUS-conformant)</li>
     <li><strong>Pre-deploy guardrails:</strong> Infracost in PR pipelines</li>
-    <li><strong>Observability:</strong> OpenTelemetry + Grafana + Prometheus</li>
-    <li><strong>Security baseline:</strong> CIS Controls v8 mapping, AWS Security Hub / Azure Defender / GCP SCC</li>
-    <li><strong>IaC:</strong> Terraform with module catalog, drift detection</li>
+    <li><strong>Observability:</strong> OpenTelemetry + Grafana + Prometheus + Loki + Tempo (LGTM stack)</li>
+    <li><strong>Security baseline:</strong> CIS Benchmarks v8, NIST CSF 2.0, AWS Security Hub / Azure Defender / GCP SCC, Prowler, ScoutSuite</li>
+    <li><strong>IaC &amp; GitOps:</strong> Terraform / OpenTofu with module catalog, ArgoCD / Flux for deployment, OPA Gatekeeper + Checkov + tfsec for policy-as-code</li>
+    <li><strong>CI/CD:</strong> GitHub Actions, GitLab CI, Argo Rollouts for progressive delivery</li>
+    <li><strong>AI/ML:</strong> SageMaker Inference Recommender, NVIDIA DCGM for GPU telemetry, MLflow, custom cost-per-inference dashboards</li>
+    <li><strong>Architecture frameworks:</strong> AWS / Azure / GCP Well-Architected, DORA metrics for DevOps, FinOps Foundation Maturity Model</li>
   </ul>
 </section>
 

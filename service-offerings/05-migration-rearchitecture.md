@@ -118,9 +118,9 @@ Pricing is based on workload footprint. A "workload" is one independently deploy
 | Phase 3 completion | 20% | Final wave cutover live |
 | Phase 4 handover | 15% | Decommission checklist complete, documentation delivered |
 
-**Expenses:** Cloud costs during parallel-run (source + target running simultaneously) are borne by the client. AICloudStrategist provides a parallel-run cost estimate per wave before Phase 2 begins; typical parallel-run window is 72 hours per wave.
+**Expenses:** Cloud costs during parallel-run (source + target running simultaneously) are borne by the client. we provide a parallel-run cost estimate per wave before Phase 2 begins; typical parallel-run window is 72 hours per wave.
 
-**Gain-share option (Mid and Large tiers):** For clients migrating from data centre to cloud, AICloudStrategist offers a reduced fixed fee (−20%) in exchange for a gain-share of 20% of verified net infrastructure cost reduction against the pre-migration on-premises TCO baseline, measured over 12 months. Requires client agreement to TCO baseline methodology before engagement start.
+**Gain-share option (Mid and Large tiers):** For clients migrating from data centre to cloud, we offer a reduced fixed fee (−20%) in exchange for a gain-share of 20% of verified net infrastructure cost reduction against the pre-migration on-premises TCO baseline, measured over 12 months. Requires client agreement to TCO baseline methodology before engagement start.
 
 ---
 

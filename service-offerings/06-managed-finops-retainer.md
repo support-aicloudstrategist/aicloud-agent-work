@@ -163,7 +163,7 @@ A 90-minute working session — not a readout, a decision meeting.
 Contact Anushka B directly via the agreed WhatsApp or Slack channel. Mark the message `[ESCALATION]`. Response within 2 hours during business hours (9:00–18:00 IST, Mon–Fri).
 
 **Level 2 — Billing anomaly with potential production impact or spend spike >50% in a single day**
-Emergency async call triggered; AICloudStrategist will initiate a video call within 3 hours of notification regardless of time of day. Engineering lead and finance contact should be available.
+Emergency async call triggered; we will initiate a video call within 3 hours of notification regardless of time of day. Engineering lead and finance contact should be available.
 
 **Level 3 — Commitment purchase error, billing dispute with cloud provider, or gain-share calculation dispute**
 Senior architect escalation; direct involvement in any cloud provider support case; resolution SLA per cloud provider's support tier (Enterprise Support recommended for Level 3 scenarios).
@@ -204,7 +204,7 @@ The following are explicitly not included in the monthly retainer. Each can be c
 
 The retainer is month-to-month. Either party may terminate with 60 days' written notice.
 
-**What AICloudStrategist delivers at exit:**
+**What we deliver at exit:**
 
 1. **Full documentation package:** All dashboard configurations, Athena/BigQuery query libraries, OpenCost Helm values, tagging policy-as-code, and budget alert configurations — exported in portable formats
 2. **Commitment portfolio handover:** Spreadsheet model of all active commitments, expiry calendar, and recommended renewal decisions for the next 12 months
