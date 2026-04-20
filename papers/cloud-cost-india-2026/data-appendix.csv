@@ -1,0 +1,73 @@
+metric,value,notes,source
+sample_size_interviews,34,2026-01-15 to 2026-04-12,primary
+sample_size_inbound,128,2026-04-01 to 2026-04-20,primary
+sample_size_pricing,11,buyer-side conversations,primary
+employees_range_min,32,smallest company in sample,primary
+employees_range_max,215,largest company in sample,primary
+monthly_spend_min_inr,320000,smallest cloud spend (INR),primary
+monthly_spend_max_inr,4800000,largest cloud spend (INR),primary
+monthly_spend_median_inr,1140000,median cloud spend (INR),primary
+finops_maturity_crawl_pct,54,Crawl-level FinOps,primary
+finops_maturity_walk_pct,35,Walk-level FinOps,primary
+finops_maturity_run_pct,11,Run-level FinOps,primary
+us_enterprise_crawl_pct,38,comparator,Flexera 2024
+us_enterprise_walk_pct,42,comparator,Flexera 2024
+us_enterprise_run_pct,20,comparator,Flexera 2024
+commercial_finops_adoption_pct,12,4 of 34 companies,primary
+commercial_cnapp_adoption_pct,9,3 of 34 companies,primary
+native_cost_tool_adoption_pct,91,Cost Explorer / Azure CM,primary
+native_security_tool_adoption_pct,74,Security Hub / Defender / SCC,primary
+waste_ri_sp_frequency_pct,91,accounts with low RI/SP coverage,primary
+waste_ri_sp_median_coverage_pct,34,median Savings Plan coverage,primary
+waste_ri_sp_recoverable_min_pct,10,recoverable as % of bill,primary
+waste_ri_sp_recoverable_max_pct,22,recoverable as % of bill,primary
+waste_oversized_frequency_pct,74,oversized EC2/RDS,primary
+waste_oversized_recoverable_min_pct,7,recoverable as % of bill,primary
+waste_oversized_recoverable_max_pct,15,recoverable as % of bill,primary
+waste_nat_frequency_pct,62,NAT Gateway processing leaks,primary
+waste_ebs_frequency_pct,56,orphaned EBS + snapshots,primary
+waste_egress_frequency_pct,41,cross-region egress,primary
+waste_idle_frequency_pct,38,idle services,primary
+waste_storage_frequency_pct,32,over-priced storage tier,primary
+blended_recoverable_min_pct,24,blended recoverable spend % of bill,primary
+blended_recoverable_max_pct,31,blended recoverable spend % of bill,primary
+us_enterprise_recoverable_min_pct,12,comparator,Flexera 2024
+us_enterprise_recoverable_max_pct,18,comparator,Flexera 2024
+decision_committee_avg,2.7,mean size,primary
+decision_committee_median,3,median size,primary
+decision_committee_mode,2,mode size,primary
+decision_committee_us_benchmark,6.8,Gartner 2023 B2B comparator,Gartner
+sales_cycle_proposal_median_days,4,first contact to proposal,primary
+sales_cycle_signature_median_days,11,proposal to signature,primary
+sales_cycle_total_median_days,18,end-to-end,primary
+sales_cycle_close_31d_pct,73,engagements closed within 31 days,primary
+warm_origin_closed_won_pct,67,warm-referral share of closed-won,primary
+cold_origin_closed_won_pct,19,cold-outbound share of closed-won,primary
+cold_cycle_multiplier,2.4,cold cycles vs warm cycles,primary
+pricing_flat_proposed,17,pure flat retainer proposals,primary
+pricing_flat_won,4,pure flat retainer won,primary
+pricing_flat_close_rate_pct,24,close rate pure flat,primary
+pricing_hybrid_proposed,19,hybrid (base+gain-share),primary
+pricing_hybrid_won,10,hybrid won,primary
+pricing_hybrid_close_rate_pct,53,close rate hybrid,primary
+pricing_gainshare_proposed,5,pure gain-share proposals,primary
+pricing_gainshare_won,2,pure gain-share won,primary
+pricing_gainshare_close_rate_pct,40,close rate pure gain-share,primary
+single_cloud_primary_pct,76,primary cloud only,primary
+single_cloud_aws_pct,58,AWS share of single-cloud,primary
+single_cloud_azure_pct,32,Azure share of single-cloud,primary
+single_cloud_gcp_pct,10,GCP share of single-cloud,primary
+multi_cloud_architecture_pct,24,multi-cloud by architecture,primary
+multi_cloud_workload_pct,7,multi-cloud by workload distribution,primary
+gpu_spend_above_5L_count,3,companies with >₹5L/mo GPU,primary
+fx_rate_inr_per_usd,84,conversion rate used,2026-04-15
+saas_cloud_spend_pool_2024_cr_min,22000,Indian SaaS cloud spend ₹ crore 2024,triangulated
+saas_cloud_spend_pool_2024_cr_max,27000,Indian SaaS cloud spend ₹ crore 2024,triangulated
+midmarket_cloud_spend_2024_cr_min,5000,mid-market share ₹ crore 2024,triangulated
+midmarket_cloud_spend_2024_cr_max,7500,mid-market share ₹ crore 2024,triangulated
+midmarket_cloud_spend_2027_cr_min,8000,projection ₹ crore 2027,triangulated
+midmarket_cloud_spend_2027_cr_max,12000,projection ₹ crore 2027,triangulated
+trusted_advisor_ignored_pct,73,Gartner 2024 FinOps survey,Gartner
+trusted_advisor_ignored_median_days,42,time-to-action for actioned items,Gartner
+trusted_advisor_sample_size,412,Gartner practitioner sample,Gartner
+coder_reliability_cohen_kappa,0.78,two-coder reliability on 20-record subsample,primary
